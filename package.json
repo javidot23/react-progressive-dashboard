@@ -1,0 +1,55 @@
+{
+  "name": "react-progressive-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "20.20.1",
+    "npm": ">=10 <11"
+  },
+  "packageManager": "npm@10.8.2",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.81.5",
+    "@tanstack/react-virtual": "3.14.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-router": "7.16.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.7",
+    "@babel/preset-env": "7.29.7",
+    "@babel/preset-react": "7.29.7",
+    "@babel/preset-typescript": "7.29.7",
+    "@eslint/js": "9.28.0",
+    "@tanstack/react-query-devtools": "5.81.5",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.3.0",
+    "@types/jest": "30.0.0",
+    "@types/node": "22.15.29",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.5",
+    "@vitejs/plugin-react": "4.5.1",
+    "autoprefixer": "10.4.21",
+    "babel-jest": "30.4.1",
+    "eslint": "9.28.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.2.0",
+    "jest": "30.4.2",
+    "jest-environment-jsdom": "30.4.1",
+    "postcss": "8.5.19",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.7.3",
+    "typescript-eslint": "8.33.1",
+    "vite": "6.4.3"
+  }
+}

@@ -1,0 +1,26 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - navigation "Manage sections" [ref=e4]:
+      - generic [ref=e5]:
+        - link "Summary" [ref=e6] [cursor=pointer]:
+          - /url: "#summary"
+        - link "Inventory" [ref=e7] [cursor=pointer]:
+          - /url: "#inventory"
+        - link "Demand" [ref=e8] [cursor=pointer]:
+          - /url: "#demand"
+        - link "Supply" [ref=e9] [cursor=pointer]:
+          - /url: "#supply"
+        - link "Sales" [ref=e10] [cursor=pointer]:
+          - /url: "#sales"
+    - main [ref=e11]:
+      - region [ref=e12]:
+        - generic "Loading Summary" [ref=e13]
+      - region [ref=e20]:
+        - generic "Loading Inventory" [ref=e21]
+      - region [ref=e28]:
+        - generic "Loading Demand" [ref=e29]
+      - region "Supply" [ref=e36]:
+        - generic "Loading Supply" [ref=e37]
+      - region "Sales" [ref=e44]:
+        - generic "Loading Sales" [ref=e45]
+  - button "Open Tanstack query devtools" [ref=e102] [cursor=pointer]
