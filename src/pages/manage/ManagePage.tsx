@@ -185,6 +185,7 @@ export default function ManagePage() {
       event.preventDefault();
       activateSection(id);
       preloadSection(id);
+      setActiveId(id);
 
       navigate(
         {
@@ -207,6 +208,7 @@ export default function ManagePage() {
       navigate,
       preloadSection,
       scrollToSection,
+      setActiveId,
     ],
   );
 
@@ -221,6 +223,7 @@ export default function ManagePage() {
     const id = getSectionIdFromHash(location.hash);
     activateSection(id);
     preloadSection(id);
+    setActiveId(id);
     scrollToSection(id, "auto");
   }, [
     activateSection,
@@ -230,6 +233,7 @@ export default function ManagePage() {
     preloadSection,
     registrationVersion,
     scrollToSection,
+    setActiveId,
   ]);
 
   useEffect(() => {

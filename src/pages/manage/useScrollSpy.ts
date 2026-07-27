@@ -48,7 +48,7 @@ export function useScrollSpy(
     }
 
     return () => observer.disconnect();
-  }, [ids, nodes, registrationVersion]);
+  }, [disabled, ids, nodes, registrationVersion]);
 
   return [activeId, setActiveId];
 }
