@@ -1,12 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type MouseEvent,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useNavigationType } from "react-router";
 import {
   defaultInventoryFilters,
@@ -19,10 +12,31 @@ import {
 } from "./manageSections";
 import { ManageScrollProvider } from "./ManageScrollContext";
 import { ProgressiveSection } from "./ProgressiveSection";
-import { SectionNavigation } from "./SectionNavigation";
 import { useScrollSpy } from "./useScrollSpy";
+import { Navbar, NavbarItem, NavbarSelectEvent } from "../../components/Navbar";
+import {
+  DollarSign,
+  LayoutDashboard,
+  Package,
+  TrendingUp,
+  Truck,
+  type LucideIcon,
+} from "lucide-react";
 
 const manageSectionIds = manageSections.map((section) => section.id);
+const manageSectionIcons = {
+  summary: LayoutDashboard,
+  inventory: Package,
+  demand: TrendingUp,
+  supply: Truck,
+  sales: DollarSign,
+} satisfies Record<ManageSectionId, LucideIcon>;
+const manageNavbarItems = manageSections.map(({ id, label }) => ({
+  id,
+  label,
+  to: `#${id}`,
+  icon: manageSectionIcons[id],
+})) satisfies readonly NavbarItem[];
 
 export default function ManagePage() {
   const location = useLocation();
@@ -86,6 +100,7 @@ export default function ManagePage() {
     sectionNodes.current,
     registrationVersion,
     initialId,
+    isProgrammaticScrolling,
   );
   const scrollToSection = useCallback(
     (id: ManageSectionId, behavior: ScrollBehavior) => {
@@ -131,6 +146,7 @@ export default function ManagePage() {
           cleanup();
           programmaticScrollCleanup.current = null;
           programmaticTarget.current = null;
+          setActiveId(id);
           setIsProgrammaticScrolling(false);
         };
 
@@ -161,15 +177,14 @@ export default function ManagePage() {
         scheduleCompletion();
       });
     },
-    [],
+    [setActiveId],
   );
 
   const handleSelect = useCallback(
-    (id: ManageSectionId, event: MouseEvent<HTMLAnchorElement>) => {
+    (id: ManageSectionId, event: NavbarSelectEvent) => {
       event.preventDefault();
       activateSection(id);
       preloadSection(id);
-      setActiveId(id);
 
       navigate(
         {
@@ -192,7 +207,6 @@ export default function ManagePage() {
       navigate,
       preloadSection,
       scrollToSection,
-      setActiveId,
     ],
   );
 
@@ -207,7 +221,6 @@ export default function ManagePage() {
     const id = getSectionIdFromHash(location.hash);
     activateSection(id);
     preloadSection(id);
-    setActiveId(id);
     scrollToSection(id, "auto");
   }, [
     activateSection,
@@ -217,7 +230,6 @@ export default function ManagePage() {
     preloadSection,
     registrationVersion,
     scrollToSection,
-    setActiveId,
   ]);
 
   useEffect(() => {
@@ -267,11 +279,15 @@ export default function ManagePage() {
   return (
     <ManageScrollProvider value={{ activeId, isProgrammaticScrolling }}>
       <div className="min-h-screen bg-slate-50">
-        <SectionNavigation
-          sections={manageSections}
+        <Navbar
+          items={manageNavbarItems}
           activeId={activeId}
-          onIntent={preloadSection}
-          onSelect={handleSelect}
+          ariaLabel="Manage sections"
+          ariaCurrent="location"
+          className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-6 backdrop-blur"
+          listClassName="mx-auto max-w-6xl"
+          onIntent={(item) => preloadSection(item.id)}
+          onSelect={(item, event) => handleSelect(item.id, event)}
         />
 
         <main className="mx-auto max-w-6xl">

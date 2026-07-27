@@ -6,11 +6,12 @@ export function useScrollSpy(
   nodes: Map<ManageSectionId, HTMLElement>,
   registrationVersion: number,
   initialId: ManageSectionId,
+  disabled = false,
 ): [ManageSectionId, Dispatch<SetStateAction<ManageSectionId>>] {
   const [activeId, setActiveId] = useState<ManageSectionId>(initialId);
 
   useEffect(() => {
-    if (nodes.size === 0) return;
+    if (disabled || nodes.size === 0) return;
 
     const entriesById = new Map<ManageSectionId, IntersectionObserverEntry>();
     const observer = new IntersectionObserver(
