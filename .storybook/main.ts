@@ -6,8 +6,10 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
+    '@storybook/addon-a11y',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@storybook/addon-mdx-gfm',
     '@storybook/addon-onboarding',
   ],
   framework: {

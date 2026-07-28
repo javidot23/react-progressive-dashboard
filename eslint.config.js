@@ -6,7 +6,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage'] },
+  { ignores: ['dist', 'coverage', 'storybook-static'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ...storybook.configs['flat/recommended'],

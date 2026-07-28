@@ -22,11 +22,11 @@ import { ManageScrollProvider } from "./ManageScrollContext";
 import { ProgressiveSection } from "./ProgressiveSection";
 import { useScrollSpy } from "./useScrollSpy";
 import {
+  isUnmodifiedPrimaryClick,
   Navbar,
   NavbarItem,
   NavbarSelectEvent,
 } from "../../components/Navbar";
-import { isUnmodifiedPrimaryClick } from "../../components/navbarEvents";
 import {
   DollarSign,
   LayoutDashboard,
