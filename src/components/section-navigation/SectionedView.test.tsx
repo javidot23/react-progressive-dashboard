@@ -126,7 +126,7 @@ describe("SectionedView", () => {
   it.each([
     ["div", null],
     ["main", "main"],
-    ["section", null],
+    ["section", "region"],
   ] as const)(
     "usa %s como contenedor de contenido",
     (contentAs, expectedRole) => {
@@ -140,6 +140,14 @@ describe("SectionedView", () => {
           renderNavigation={() => <nav>Reports</nav>}
           renderSection={(section) => <article>{section.title}</article>}
           contentAs={contentAs}
+          contentProps={
+            contentAs === "section"
+              ? {
+                  "aria-label": "Report sections",
+                  id: "report-sections",
+                }
+              : { id: "report-content" }
+          }
           contentClassName="content-shell"
         />,
       );
@@ -148,9 +156,22 @@ describe("SectionedView", () => {
         `${contentAs}.content-shell`,
       );
       expect(content).not.toBeNull();
+      expect(content).toHaveAttribute(
+        "id",
+        contentAs === "section"
+          ? "report-sections"
+          : "report-content",
+      );
 
       if (expectedRole !== null) {
-        expect(screen.getByRole(expectedRole)).toBe(content);
+        expect(
+          screen.getByRole(
+            expectedRole,
+            contentAs === "section"
+              ? { name: "Report sections" }
+              : undefined,
+          ),
+        ).toBe(content);
       }
     },
   );
@@ -229,5 +250,30 @@ describe("SectionedView", () => {
     );
     expect(renderSection).not.toHaveBeenCalled();
     expect(container.querySelector("header")).toBeNull();
+  });
+
+  it("rechaza IDs duplicados antes de registrar refs", () => {
+    const duplicateSections = [
+      sections[0],
+      { ...sections[1], slug: "overview" as const },
+    ];
+    const getSectionRef = jest.fn(() => jest.fn());
+
+    expect(() =>
+      render(
+        <SectionedView
+          sections={duplicateSections}
+          activeId="overview"
+          isProgrammaticScrolling={false}
+          getSectionId={(section) => section.slug}
+          getSectionRef={getSectionRef}
+          renderNavigation={() => <nav>Reports</nav>}
+          renderSection={(section) => <article>{section.title}</article>}
+        />,
+      ),
+    ).toThrow(
+      'SectionedView requires unique section IDs. Duplicate ID: "overview".',
+    );
+    expect(getSectionRef).not.toHaveBeenCalled();
   });
 });

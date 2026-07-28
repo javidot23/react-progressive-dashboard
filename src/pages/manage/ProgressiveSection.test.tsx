@@ -5,6 +5,35 @@ import type { ManageSectionDefinition } from "./manageSections";
 import { ProgressiveSection } from "./ProgressiveSection";
 
 describe("ProgressiveSection", () => {
+  it("registra y desregistra el nodo externo de la sección", () => {
+    const sectionRef = jest.fn();
+    const load = jest.fn(async () => ({ default: () => null }));
+    const definition: ManageSectionDefinition = {
+      id: "inventory",
+      label: "Inventory",
+      placeholderMinHeight: inventoryInitialPlaceholderMinHeight,
+      load,
+      Component: lazy(load),
+    };
+
+    const { container, unmount } = render(
+      <ProgressiveSection
+        activationDisabled
+        activated={false}
+        definition={definition}
+        onActivate={jest.fn()}
+        sectionRef={sectionRef}
+      />,
+    );
+    const section = container.querySelector("#inventory");
+
+    expect(sectionRef).toHaveBeenCalledWith(section);
+
+    unmount();
+
+    expect(sectionRef).toHaveBeenLastCalledWith(null);
+  });
+
   it("conserva la altura mínima mientras una sección activada sigue cargando", () => {
     const load = jest.fn(
       () =>

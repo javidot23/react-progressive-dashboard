@@ -18,9 +18,27 @@ export function SectionedView<
   renderNavigation,
   renderSection,
   contentAs: Content = "div",
+  contentProps,
   rootClassName,
   contentClassName,
 }: SectionedViewProps<TId, TSection>) {
+  const sectionEntries = sections.map((section, index) => ({
+    id: getSectionId(section),
+    index,
+    section,
+  }));
+  const sectionIds = new Set<TId>();
+
+  for (const { id } of sectionEntries) {
+    if (sectionIds.has(id)) {
+      throw new Error(
+        `SectionedView requires unique section IDs. Duplicate ID: ${JSON.stringify(id)}.`,
+      );
+    }
+
+    sectionIds.add(id);
+  }
+
   const navigationContext: NavigationRenderContext<TId, TSection> = {
     activeId,
     isProgrammaticScrolling,
@@ -32,9 +50,8 @@ export function SectionedView<
       {renderHeader?.()}
       {renderNavigation(navigationContext)}
 
-      <Content className={contentClassName}>
-        {sections.map((section, index) => {
-          const id = getSectionId(section);
+      <Content {...contentProps} className={contentClassName}>
+        {sectionEntries.map(({ id, index, section }) => {
           const sectionContext: SectionRenderContext<TId> = {
             id,
             index,

@@ -1,4 +1,8 @@
-import type { ReactNode, RefCallback } from "react";
+import type {
+  HTMLAttributes,
+  ReactNode,
+  RefCallback,
+} from "react";
 
 export type SectionNavigationOrigin = "selection" | "history";
 export type SectionScrollBehavior = "auto" | "smooth";
@@ -81,6 +85,10 @@ export type SectionedViewProps<TId extends string, TSection> = {
     context: SectionRenderContext<TId>,
   ) => ReactNode;
   contentAs?: "div" | "main" | "section";
+  contentProps?: Omit<
+    HTMLAttributes<HTMLElement>,
+    "children" | "className"
+  >;
   rootClassName?: string;
   contentClassName?: string;
 };
