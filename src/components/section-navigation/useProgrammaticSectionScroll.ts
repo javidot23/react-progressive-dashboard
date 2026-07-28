@@ -12,6 +12,44 @@ type UseProgrammaticSectionScrollOptions<TId extends string> = {
   onFailure: (transactionId: number) => void;
 };
 
+const scrollIntentKeys = new Set([
+  "ArrowDown",
+  "ArrowUp",
+  "End",
+  "Home",
+  "PageDown",
+  "PageUp",
+]);
+
+function isEditableTarget(target: EventTarget | null) {
+  if (!(target instanceof Element)) return false;
+
+  return Boolean(
+    target.closest(
+      'input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"])',
+    ),
+  );
+}
+
+function isKeyboardScrollIntent(event: KeyboardEvent) {
+  if (
+    event.defaultPrevented ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    isEditableTarget(event.target)
+  ) {
+    return false;
+  }
+
+  return (
+    scrollIntentKeys.has(event.key) ||
+    event.key === " " ||
+    event.code === "Space"
+  );
+}
+
 export function getExpectedSectionScrollY(node: HTMLElement) {
   const targetTop = node.getBoundingClientRect().top + window.scrollY;
   const scrollMarginTop =
@@ -71,6 +109,7 @@ export function useProgrammaticSectionScroll<TId extends string>({
     let layoutFrame: number | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let listening = false;
+    let listeningForManualIntent = false;
     let alignmentConfirmationPending = false;
 
     const clearResources = () => {
@@ -78,6 +117,16 @@ export function useProgrammaticSectionScroll<TId extends string>({
         document.removeEventListener("scroll", handleScroll);
         document.removeEventListener("scrollend", handleScrollEnd);
         listening = false;
+      }
+
+      if (listeningForManualIntent) {
+        document.removeEventListener("wheel", handleManualScrollIntent);
+        document.removeEventListener(
+          "touchstart",
+          handleManualScrollIntent,
+        );
+        document.removeEventListener("keydown", handleKeyDown);
+        listeningForManualIntent = false;
       }
 
       resizeObserver?.disconnect();
@@ -176,6 +225,25 @@ export function useProgrammaticSectionScroll<TId extends string>({
     function handleScrollEnd() {
       scheduleAlignmentCheck(completion.settleDelay);
     }
+
+    function handleManualScrollIntent() {
+      fail();
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (isKeyboardScrollIntent(event)) {
+        fail();
+      }
+    }
+
+    document.addEventListener("wheel", handleManualScrollIntent, {
+      passive: true,
+    });
+    document.addEventListener("touchstart", handleManualScrollIntent, {
+      passive: true,
+    });
+    document.addEventListener("keydown", handleKeyDown);
+    listeningForManualIntent = true;
 
     initialFrame = window.requestAnimationFrame(() => {
       initialFrame = null;
