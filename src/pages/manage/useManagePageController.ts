@@ -14,7 +14,7 @@ import { useSectionNavigationController } from "../../components/section-navigat
 import {
   isUnmodifiedPrimaryClick,
   type NavbarSelectEvent,
-} from "../../components/navbarEvents";
+} from "../../components/Navbar";
 import {
   getSectionIdFromHash,
   manageSections,

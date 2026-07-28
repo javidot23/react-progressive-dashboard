@@ -1,0 +1,135 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Foundations/Component MDX Template" />
+
+# Component MDX Template
+
+Use this template when creating documentation files next to a component.
+
+---
+
+## Recommended Location
+
+Save the MDX file in the same folder as the component and story files, for example:
+
+```text
+src/components/atoms/Button.mdx
+src/components/molecules/Table.mdx
+```
+
+---
+
+## Template
+
+```mdx
+import { Meta, Canvas, Controls, Story } from "@storybook/blocks";
+import * as ComponentStories from "./ComponentName.stories";
+
+<Meta of={ComponentStories} />
+
+# ComponentName
+
+<!-- Brief, one-line description of what this component does -->
+A short description of the component and its purpose.
+
+---
+
+## When to Use
+
+- Use this component when...
+- Preferred for scenarios like...
+
+## When NOT to Use
+
+- Don't use this for... (suggest alternative component instead).
+- Avoid using when...
+
+---
+
+## Examples
+
+### Default
+
+<Canvas of={ComponentStories.Default} />
+
+### Variant A
+
+<Canvas of={ComponentStories.VariantA} />
+
+### Variant B
+
+<Canvas of={ComponentStories.VariantB} />
+
+{/* Add more examples as needed */}
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## Design Tokens Used
+
+| Token                     | Value       | Usage                          |
+|---------------------------|-------------|--------------------------------|
+| `--color-token-name`      | `#value`    | Describe where it's applied    |
+| `--spacing-token-name`    | `value`     | Describe where it's applied    |
+| `--font-token-name`       | `value`     | Describe where it's applied    |
+| `--radius-token-name`     | `value`     | Describe where it's applied    |
+
+---
+
+## Accessibility
+
+### Keyboard Interaction
+
+| Key          | Behavior                            |
+|--------------|-------------------------------------|
+| `Tab`        | Moves focus to / from the component |
+| `Enter`      | Activates the component             |
+| `Escape`     | Closes / dismisses (if applicable)  |
+
+### ARIA Attributes
+
+| Attribute        | Usage                                                  |
+|------------------|--------------------------------------------------------|
+| `role`           | Describe the role, if non-default                      |
+| `aria-label`     | Required when there is no visible text                 |
+| `aria-disabled`  | Applied when the component is in a disabled state      |
+| `aria-expanded`  | Applied when the component controls a collapsible area |
+
+### Guidelines
+
+- Meets WCAG 2.1 AA color contrast requirements.
+- Minimum touch target of 44x44px.
+- Focus indicator is visible and not suppressed.
+- Decorative icons include `aria-hidden="true"`.
+
+---
+
+## Do's and Don'ts
+
+| Do                                         | Don't                                         |
+|--------------------------------------------|-----------------------------------------------|
+| Use clear, concise labels                  | Use vague labels like "Click here"            |
+| Pair with appropriate variant for context  | Mix variants inconsistently in the same area  |
+| Provide accessible names for icon-only use | Rely solely on color to convey meaning        |
+
+---
+
+## Related Components
+
+- [RelatedComponentA](?path=/docs/category-relatedcomponenta--docs) - Use when...
+- [RelatedComponentB](?path=/docs/category-relatedcomponentb--docs) - Use when...
+
+---
+
+## Changelog
+
+| Version | Date       | Notes                          |
+|---------|------------|--------------------------------|
+| 1.0.0   | YYYY-MM-DD | Initial release                |
+| 1.1.0   | YYYY-MM-DD | Added variant X, fixed issue Y |
+```

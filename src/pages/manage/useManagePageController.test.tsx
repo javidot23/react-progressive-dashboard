@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import type { NavbarSelectEvent } from "../../components/navbarEvents";
+import type { NavbarSelectEvent } from "../../components/Navbar";
 import { useSectionNavigationController } from "../../components/section-navigation";
 import { useManagePageController } from "./useManagePageController";
 import { useManageSectionPreparation } from "./useManageSectionPreparation";
