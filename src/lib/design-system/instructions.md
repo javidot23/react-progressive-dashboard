@@ -117,7 +117,9 @@ Example — add a new alias:
 }
 ```
 
-Then use: `className="text-my-custom-accent"`
+The Tailwind 3 compatibility mapping in `tailwind.config.ts` exposes the
+variable as a utility, and the local PostCSS compatibility plugin emits it as
+a CSS custom property. Then use: `className="text-my-custom-accent"`.
 
 ### `app.css`
 - Font setup (`@font-face`)
