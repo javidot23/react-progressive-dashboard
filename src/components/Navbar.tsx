@@ -1,6 +1,8 @@
 import { LucideIcon } from "lucide-react";
-import type { MouseEvent } from "react";
 import { Link } from "react-router";
+import type { NavbarSelectEvent } from "./navbarEvents";
+
+export type { NavbarSelectEvent } from "./navbarEvents";
 
 export type NavbarItem = {
   id: string;
@@ -9,10 +11,6 @@ export type NavbarItem = {
   icon?: LucideIcon;
   iconPosition?: NavbarIconPosition;
 };
-
-export type NavbarSelectEvent =
-  | MouseEvent<HTMLAnchorElement>
-  | MouseEvent<HTMLButtonElement>;
 
 export type NavbarIconPosition = "top" | "right" | "bottom" | "left";
 

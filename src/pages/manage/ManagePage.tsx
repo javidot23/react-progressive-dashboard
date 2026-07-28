@@ -21,7 +21,12 @@ import {
 import { ManageScrollProvider } from "./ManageScrollContext";
 import { ProgressiveSection } from "./ProgressiveSection";
 import { useScrollSpy } from "./useScrollSpy";
-import { Navbar, NavbarItem, NavbarSelectEvent } from "../../components/Navbar";
+import {
+  Navbar,
+  NavbarItem,
+  NavbarSelectEvent,
+} from "../../components/Navbar";
+import { isUnmodifiedPrimaryClick } from "../../components/navbarEvents";
 import {
   DollarSign,
   LayoutDashboard,
@@ -297,6 +302,10 @@ export default function ManagePage() {
 
   const handleSelect = useCallback(
     (id: ManageSectionId, event: NavbarSelectEvent) => {
+      if (!isUnmodifiedPrimaryClick(event)) {
+        return;
+      }
+
       event.preventDefault();
       activateSection(id);
       prepareSection(id);
