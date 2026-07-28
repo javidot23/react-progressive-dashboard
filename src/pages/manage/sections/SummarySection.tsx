@@ -1,9 +1,9 @@
 export default function SummarySection() {
   return (
     <div>
-      <h1 id="summary-heading" className="text-4xl font-bold text-slate-950">
+      <h2 id="summary-heading" className="text-4xl font-bold text-slate-950">
         Competitor recall opens supply gap
-      </h1>
+      </h2>
       <p className="mt-3 max-w-2xl text-slate-600">
         Summary loads immediately. The remaining sections are split into
         separate chunks and activate progressively.

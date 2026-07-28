@@ -1,10 +1,18 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useLocation, useNavigate, useNavigationType } from "react-router";
 import {
   defaultInventoryFilters,
   inventoryRiskQueryOptions,
 } from "../../features/inventory/inventoryQueryOptions";
+import { useRouteView } from "../../hooks/useRouteView";
 import {
   getSectionIdFromHash,
   manageSections,
@@ -37,8 +45,35 @@ const manageNavbarItems = manageSections.map(({ id, label }) => ({
   to: `#${id}`,
   icon: manageSectionIcons[id],
 })) satisfies readonly NavbarItem[];
+const scrollAlignmentTolerance = 4;
+const scrollIdleDelay = 250;
+const scrollEndSettleDelay = 80;
+
+function getExpectedScrollY(node: HTMLElement) {
+  const targetTop = node.getBoundingClientRect().top + window.scrollY;
+  const scrollMarginTop =
+    Number.parseFloat(window.getComputedStyle(node).scrollMarginTop) || 0;
+  const documentHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+  );
+  const maximumScrollY = Math.max(0, documentHeight - window.innerHeight);
+
+  return Math.min(
+    Math.max(0, targetTop - scrollMarginTop),
+    maximumScrollY,
+  );
+}
+
+function isSectionAligned(node: HTMLElement) {
+  return (
+    Math.abs(window.scrollY - getExpectedScrollY(node)) <=
+    scrollAlignmentTolerance
+  );
+}
 
 export default function ManagePage() {
+  const routeHeadingRef = useRouteView("Manage");
   const location = useLocation();
   const navigate = useNavigate();
   const navigationType = useNavigationType();
@@ -52,10 +87,14 @@ export default function ManagePage() {
   );
   const sectionNodes = useRef(new Map<ManageSectionId, HTMLElement>());
   const [registrationVersion, setRegistrationVersion] = useState(0);
-  const programmaticTarget = useRef<ManageSectionId | null>(null);
+  const programmaticTarget = useRef<ManageSectionId | null>(
+    navigationType === "POP" ? initialId : null,
+  );
   const programmaticScrollFrame = useRef<number | null>(null);
   const programmaticScrollCleanup = useRef<(() => void) | null>(null);
-  const [isProgrammaticScrolling, setIsProgrammaticScrolling] = useState(false);
+  const [isProgrammaticScrolling, setIsProgrammaticScrolling] = useState(
+    () => navigationType === "POP",
+  );
   const registerNode = useCallback(
     (id: ManageSectionId, node: HTMLElement | null) => {
       const previous = sectionNodes.current.get(id);
@@ -81,11 +120,13 @@ export default function ManagePage() {
     });
   }, []);
 
-  const preloadSection = useCallback(
-    (id: ManageSectionId) => {
-      const definition = manageSections.find((section) => section.id === id);
-      void definition?.load().catch(() => undefined);
+  const preloadSectionChunk = useCallback((id: ManageSectionId) => {
+    const definition = manageSections.find((section) => section.id === id);
+    void definition?.load().catch(() => undefined);
+  }, []);
 
+  const prefetchSectionData = useCallback(
+    (id: ManageSectionId) => {
       if (id === "inventory") {
         void queryClient.prefetchInfiniteQuery(
           inventoryRiskQueryOptions(defaultInventoryFilters),
@@ -93,6 +134,14 @@ export default function ManagePage() {
       }
     },
     [queryClient],
+  );
+
+  const prepareSection = useCallback(
+    (id: ManageSectionId) => {
+      preloadSectionChunk(id);
+      prefetchSectionData(id);
+    },
+    [prefetchSectionData, preloadSectionChunk],
   );
 
   const [activeId, setActiveId] = useScrollSpy(
@@ -118,27 +167,38 @@ export default function ManagePage() {
       programmaticScrollFrame.current = window.requestAnimationFrame(() => {
         programmaticScrollFrame.current = null;
 
-        const node = sectionNodes.current.get(id);
+        const targetNode = sectionNodes.current.get(id);
 
-        if (!node) {
+        if (!targetNode) {
           programmaticTarget.current = null;
           setIsProgrammaticScrolling(false);
           return;
         }
 
+        const scrollTarget: HTMLElement = targetNode;
         let idleTimer: number | null = null;
+        let layoutFrame: number | null = null;
+        let resizeObserver: ResizeObserver | null = null;
+        let lastTargetTop =
+          scrollTarget.getBoundingClientRect().top + window.scrollY;
 
-        const cleanup = () => {
-          document.removeEventListener("scroll", scheduleCompletion);
-          document.removeEventListener("scrollend", completeScroll);
+        function cleanup() {
+          document.removeEventListener("scroll", handleScroll);
+          document.removeEventListener("scrollend", handleScrollEnd);
+          resizeObserver?.disconnect();
 
           if (idleTimer !== null) {
             window.clearTimeout(idleTimer);
             idleTimer = null;
           }
-        };
 
-        const completeScroll = () => {
+          if (layoutFrame !== null) {
+            window.cancelAnimationFrame(layoutFrame);
+            layoutFrame = null;
+          }
+        }
+
+        function completeScroll() {
           if (programmaticTarget.current !== id) {
             return;
           }
@@ -148,33 +208,88 @@ export default function ManagePage() {
           programmaticTarget.current = null;
           setActiveId(id);
           setIsProgrammaticScrolling(false);
-        };
+        }
 
-        const scheduleCompletion = () => {
+        function alignOrComplete() {
+          idleTimer = null;
+
+          if (programmaticTarget.current !== id) {
+            return;
+          }
+
+          if (isSectionAligned(scrollTarget)) {
+            completeScroll();
+            return;
+          }
+
+          // El scroll suave ya terminó o dejó de avanzar. La realineación es
+          // instantánea para no reiniciar la animación.
+          scrollTarget.scrollIntoView({
+            behavior: "auto",
+            block: "start",
+          });
+          scheduleAlignmentCheck(scrollEndSettleDelay);
+        }
+
+        function scheduleAlignmentCheck(delay = scrollIdleDelay) {
           if (idleTimer !== null) {
             window.clearTimeout(idleTimer);
           }
 
-          idleTimer = window.setTimeout(completeScroll, 150);
-        };
+          idleTimer = window.setTimeout(alignOrComplete, delay);
+        }
+
+        function handleScroll() {
+          scheduleAlignmentCheck();
+        }
+
+        function handleScrollEnd() {
+          scheduleAlignmentCheck(scrollEndSettleDelay);
+        }
+
+        resizeObserver = new ResizeObserver(() => {
+          if (programmaticTarget.current !== id) {
+            return;
+          }
+
+          if (layoutFrame !== null) {
+            window.cancelAnimationFrame(layoutFrame);
+          }
+
+          layoutFrame = window.requestAnimationFrame(() => {
+            layoutFrame = null;
+
+            const nextTargetTop =
+              scrollTarget.getBoundingClientRect().top + window.scrollY;
+
+            if (
+              Math.abs(nextTargetTop - lastTargetTop) <=
+              scrollAlignmentTolerance
+            ) {
+              return;
+            }
+
+            lastTargetTop = nextTargetTop;
+            scheduleAlignmentCheck();
+          });
+        });
 
         programmaticScrollCleanup.current = cleanup;
 
-        document.addEventListener("scroll", scheduleCompletion, {
+        document.addEventListener("scroll", handleScroll, {
           passive: true,
         });
-        document.addEventListener("scrollend", completeScroll, {
-          once: true,
-        });
+        document.addEventListener("scrollend", handleScrollEnd);
+        resizeObserver.observe(document.body);
 
-        node.scrollIntoView({
+        scrollTarget.scrollIntoView({
           behavior,
           block: "start",
         });
 
         // También termina correctamente si el elemento ya estaba visible
         // y scrollIntoView no produce ningún evento.
-        scheduleCompletion();
+        scheduleAlignmentCheck();
       });
     },
     [setActiveId],
@@ -184,7 +299,7 @@ export default function ManagePage() {
     (id: ManageSectionId, event: NavbarSelectEvent) => {
       event.preventDefault();
       activateSection(id);
-      preloadSection(id);
+      prepareSection(id);
       setActiveId(id);
 
       navigate(
@@ -206,11 +321,20 @@ export default function ManagePage() {
       location.pathname,
       location.search,
       navigate,
-      preloadSection,
+      prepareSection,
       scrollToSection,
       setActiveId,
     ],
   );
+
+  useLayoutEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
 
   useEffect(() => {
     if (
@@ -222,7 +346,7 @@ export default function ManagePage() {
 
     const id = getSectionIdFromHash(location.hash);
     activateSection(id);
-    preloadSection(id);
+    prepareSection(id);
     setActiveId(id);
     scrollToSection(id, "auto");
   }, [
@@ -230,7 +354,7 @@ export default function ManagePage() {
     location.hash,
     location.key,
     navigationType,
-    preloadSection,
+    prepareSection,
     registrationVersion,
     scrollToSection,
     setActiveId,
@@ -241,9 +365,10 @@ export default function ManagePage() {
 
     const activeIndex = manageSectionIds.indexOf(activeId);
     const nextId = manageSectionIds[activeIndex + 1];
-    if (nextId) preloadSection(nextId);
+    if (nextId) preloadSectionChunk(nextId);
 
     if (
+      !isProgrammaticScrolling &&
       programmaticTarget.current === null &&
       location.hash !== `#${activeId}`
     ) {
@@ -266,7 +391,8 @@ export default function ManagePage() {
     location.pathname,
     location.search,
     navigate,
-    preloadSection,
+    isProgrammaticScrolling,
+    preloadSectionChunk,
   ]);
 
   useEffect(
@@ -283,6 +409,14 @@ export default function ManagePage() {
   return (
     <ManageScrollProvider value={{ activeId, isProgrammaticScrolling }}>
       <div className="min-h-screen bg-slate-50">
+        <h1
+          ref={routeHeadingRef}
+          tabIndex={-1}
+          className="sr-only"
+        >
+          Manage
+        </h1>
+
         <Navbar
           items={manageNavbarItems}
           activeId={activeId}
@@ -290,7 +424,7 @@ export default function ManagePage() {
           ariaCurrent="location"
           className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-6 backdrop-blur"
           listClassName="mx-auto max-w-6xl"
-          onIntent={(item) => preloadSection(item.id)}
+          onIntent={(item) => prepareSection(item.id)}
           onSelect={(item, event) => handleSelect(item.id, event)}
         />
 
@@ -300,6 +434,7 @@ export default function ManagePage() {
               key={definition.id}
               definition={definition}
               activated={activatedIds.has(definition.id)}
+              activationDisabled={isProgrammaticScrolling}
               onActivate={activateSection}
               registerNode={registerNode}
             />

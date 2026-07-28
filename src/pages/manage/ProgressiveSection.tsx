@@ -13,6 +13,7 @@ import { SectionErrorBoundary } from "./SectionErrorBoundary";
 import { SectionSkeleton } from "./SectionSkeleton";
 
 type Props = {
+  activationDisabled?: boolean;
   activated: boolean;
   definition: ManageSectionDefinition;
   onActivate: (id: ManageSectionId) => void;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export function ProgressiveSection({
+  activationDisabled = false,
   activated,
   definition,
   onActivate,
@@ -38,7 +40,7 @@ export function ProgressiveSection({
 
   useEffect(() => {
     const node = nodeRef.current;
-    if (activated || !node) return;
+    if (activationDisabled || activated || !node) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -57,16 +59,15 @@ export function ProgressiveSection({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [activated, id, load, onActivate]);
+  }, [activated, activationDisabled, id, load, onActivate]);
 
   return (
     <section
       ref={setNode}
       id={id}
-      aria-label={activated ? undefined : label}
-      aria-labelledby={activated ? `${id}-heading` : undefined}
+      aria-label={label}
       className="scroll-mt-20 px-6 py-12"
-      style={activated ? undefined : { minHeight: placeholderMinHeight }}
+      style={{ minHeight: `calc(${placeholderMinHeight}px + 6rem)` }}
     >
       {activated ? (
         <SectionErrorBoundary label={label}>

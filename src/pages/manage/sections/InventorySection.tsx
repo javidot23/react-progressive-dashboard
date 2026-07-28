@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import { VirtualizedInfiniteCollection } from "../../../components/VirtualizedInfiniteCollection";
+import { inventoryEstimatedRowSize } from "../../../features/inventory/inventoryConfig";
 import {
   defaultInventoryFilters,
   inventoryRiskQueryOptions,
@@ -128,7 +129,7 @@ export default function InventorySection() {
         }
         items={items}
         getItemKey={(item) => item.id}
-        estimateSize={() => 132}
+        estimateSize={() => inventoryEstimatedRowSize}
         renderItem={(item) => <InventoryRiskCard item={item} />}
         hasNextPage={query.hasNextPage && !query.isFetchNextPageError}
         isFetchingNextPage={query.isFetchingNextPage}

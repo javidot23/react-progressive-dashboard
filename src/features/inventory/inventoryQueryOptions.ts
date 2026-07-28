@@ -2,6 +2,7 @@ import {
   infiniteQueryOptions,
   keepPreviousData,
 } from "@tanstack/react-query";
+import { inventoryPageSize } from "./inventoryConfig";
 import { InventoryFilters, inventoryRepository } from "./inventoryRepository";
 
 export const defaultInventoryFilters: InventoryFilters = {
@@ -20,7 +21,7 @@ export function inventoryRiskQueryOptions(filters: InventoryFilters) {
       inventoryRepository.list({
         filters: normalizedFilters,
         pageParam,
-        pageSize: 25,
+        pageSize: inventoryPageSize,
         signal,
       }),
     initialPageParam: "0",

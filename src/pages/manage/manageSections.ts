@@ -1,4 +1,5 @@
 import { ComponentType, lazy, LazyExoticComponent } from "react";
+import { inventoryInitialPlaceholderMinHeight } from "../../features/inventory/inventoryConfig";
 
 export type ManageSectionId =
   | "summary"
@@ -36,7 +37,7 @@ export const manageSections: ManageSectionDefinition[] = [
   {
     id: "inventory",
     label: "Inventory",
-    placeholderMinHeight: 900,
+    placeholderMinHeight: inventoryInitialPlaceholderMinHeight,
     load: loadInventory,
     Component: lazy(loadInventory),
   },
