@@ -17,7 +17,7 @@ type Props = {
   activated: boolean;
   definition: ManageSectionDefinition;
   onActivate: (id: ManageSectionId) => void;
-  registerNode: (id: ManageSectionId, node: HTMLElement | null) => void;
+  sectionRef: RefCallback<HTMLElement>;
 };
 
 export function ProgressiveSection({
@@ -25,7 +25,7 @@ export function ProgressiveSection({
   activated,
   definition,
   onActivate,
-  registerNode,
+  sectionRef,
 }: Props) {
   const nodeRef = useRef<HTMLElement | null>(null);
   const { Component, id, label, load, placeholderMinHeight } = definition;
@@ -33,9 +33,9 @@ export function ProgressiveSection({
   const setNode: RefCallback<HTMLElement> = useCallback(
     (node) => {
       nodeRef.current = node;
-      registerNode(id, node);
+      sectionRef(node);
     },
-    [id, registerNode],
+    [sectionRef],
   );
 
   useEffect(() => {

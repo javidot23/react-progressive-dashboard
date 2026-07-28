@@ -24,7 +24,7 @@ describe("ProgressiveSection", () => {
         activated
         definition={definition}
         onActivate={jest.fn()}
-        registerNode={jest.fn()}
+        sectionRef={jest.fn()}
       />,
     );
 
@@ -64,7 +64,7 @@ describe("ProgressiveSection", () => {
         activated={false}
         definition={definition}
         onActivate={onActivate}
-        registerNode={jest.fn()}
+        sectionRef={jest.fn()}
       />
     );
 
