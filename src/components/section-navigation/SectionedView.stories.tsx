@@ -1,26 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
-import {
-  useCallback,
-  useRef,
-  useState,
-  type RefCallback,
-} from "react";
+import { useCallback, useRef, useState, type RefCallback } from "react";
 import { MemoryRouter } from "react-router";
-import {
-  isUnmodifiedPrimaryClick,
-  Navbar,
-} from "../Navbar";
+import { isUnmodifiedPrimaryClick, Navbar } from "../Navbar";
 import { SectionedView } from "./SectionedView";
 import type { SectionedViewProps } from "./types";
 
-type ReportSectionId = "overview" | "activity" | "forecast";
+type ReportSectionId = "section1" | "section2" | "section3";
 
 type ReportSection = {
   slug: ReportSectionId;
   title: string;
-  description: string;
-  metric: string;
 };
 
 type StoryDocumentation = {
@@ -29,31 +19,22 @@ type StoryDocumentation = {
   expectedResult: string;
 };
 
-type StoryArgs = SectionedViewProps<
-  ReportSectionId,
-  ReportSection
-> & {
+type StoryArgs = SectionedViewProps<ReportSectionId, ReportSection> & {
   storyDocumentation: StoryDocumentation;
 };
 
 const reportSections = [
   {
-    slug: "overview",
-    title: "Overview",
-    description: "A concise summary of the current reporting period.",
-    metric: "$1.16M",
+    slug: "section1",
+    title: "Section 1",
   },
   {
-    slug: "activity",
-    title: "Activity",
-    description: "Recent events that contributed to the report.",
-    metric: "128 events",
+    slug: "section2",
+    title: "Section 2",
   },
   {
-    slug: "forecast",
-    title: "Forecast",
-    description: "Expected performance for the next reporting period.",
-    metric: "+12.4%",
+    slug: "section3",
+    title: "Section 3",
   },
 ] satisfies readonly ReportSection[];
 
@@ -67,32 +48,27 @@ function unusedSectionRef(): RefCallback<HTMLElement> {
 
 function SectionedViewHarness(args: StoryArgs) {
   const [activeId, setActiveId] = useState(args.activeId);
-  const sectionNodes = useRef(
-    new Map<ReportSectionId, HTMLElement>(),
-  );
+  const sectionNodes = useRef(new Map<ReportSectionId, HTMLElement>());
   const sectionRefCallbacks = useRef(
     new Map<ReportSectionId, RefCallback<HTMLElement>>(),
   );
 
-  const getSectionRef = useCallback(
-    (id: ReportSectionId) => {
-      let callback = sectionRefCallbacks.current.get(id);
+  const getSectionRef = useCallback((id: ReportSectionId) => {
+    let callback = sectionRefCallbacks.current.get(id);
 
-      if (!callback) {
-        callback = (node) => {
-          if (node) {
-            sectionNodes.current.set(id, node);
-          } else {
-            sectionNodes.current.delete(id);
-          }
-        };
-        sectionRefCallbacks.current.set(id, callback);
-      }
+    if (!callback) {
+      callback = (node) => {
+        if (node) {
+          sectionNodes.current.set(id, node);
+        } else {
+          sectionNodes.current.delete(id);
+        }
+      };
+      sectionRefCallbacks.current.set(id, callback);
+    }
 
-      return callback;
-    },
-    [],
-  );
+    return callback;
+  }, []);
 
   return (
     <>
@@ -134,8 +110,7 @@ function SectionedViewHarness(args: StoryArgs) {
           sections,
         }) => {
           const activeSection = sections.find(
-            (section) =>
-              args.getSectionId(section) === navigationActiveId,
+            (section) => args.getSectionId(section) === navigationActiveId,
           );
           const navigationItems = sections.map((section) => {
             const id = args.getSectionId(section);
@@ -174,8 +149,8 @@ function SectionedViewHarness(args: StoryArgs) {
 
               <div className="mx-auto flex max-w-4xl flex-wrap items-start justify-between gap-4 border-t border-slate-100 pt-3">
                 <p className="max-w-md text-xs text-slate-600">
-                  Select a Navbar item to update the consumer-owned
-                  active state.
+                  Select a Navbar item to update the consumer-owned active
+                  state.
                 </p>
                 <div
                   role="status"
@@ -186,26 +161,16 @@ function SectionedViewHarness(args: StoryArgs) {
                     Live state
                   </p>
                   <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
-                    <dt className="text-slate-300">
-                      Active section
-                    </dt>
-                    <dd className="font-semibold">
-                      {activeSection?.title}
-                    </dd>
+                    <dt className="text-slate-300">Active section</dt>
+                    <dd className="font-semibold">{activeSection?.title}</dd>
                     <dt className="text-slate-300">Scroll mode</dt>
                     <dd className="font-semibold">
-                      {isProgrammaticScrolling
-                        ? "Programmatic"
-                        : "Manual"}
+                      {isProgrammaticScrolling ? "Programmatic" : "Manual"}
                     </dd>
-                    <dt className="text-slate-300">
-                      Content wrapper
-                    </dt>
+                    <dt className="text-slate-300">Content wrapper</dt>
                     <dd className="font-semibold">
-                      <code>
-                        {`<${args.contentAs ?? "div"}>`}
-                      </code>{" "}
-                      · {contentLabel}
+                      <code>{`<${args.contentAs ?? "div"}>`}</code> ·{" "}
+                      {contentLabel}
                     </dd>
                   </dl>
                 </div>
@@ -214,14 +179,8 @@ function SectionedViewHarness(args: StoryArgs) {
           );
         }}
         renderSection={(
-          section,
-          {
-            id,
-            index,
-            isActive,
-            isProgrammaticScrolling,
-            sectionRef,
-          },
+          _section,
+          { id, index, isActive, isProgrammaticScrolling, sectionRef },
         ) => (
           <article
             ref={sectionRef}
@@ -240,18 +199,16 @@ function SectionedViewHarness(args: StoryArgs) {
             <p className="text-sm font-semibold uppercase tracking-wide text-violet-700">
               Section {index + 1}
             </p>
-            <h2
-              id={`${id}-heading`}
-              className="mt-2 text-2xl font-bold text-slate-950"
-            >
-              {section.title}
-            </h2>
-            <p className="mt-2 text-slate-600">
-              {section.description}
-            </p>
-            <p className="mt-6 text-3xl font-bold text-slate-950">
-              {section.metric}
-            </p>
+            <div className="w-full rounded-2xl border border-gray-200 p-4 shadow-sm">
+              <div className="animate-pulse space-y-4">
+                <div className="h-24 w-full rounded-xl bg-gray-200" />
+                <div className="space-y-2">
+                  <div className="h-4 w-3/4 rounded bg-gray-200" />
+                  <div className="h-4 w-1/2 rounded bg-gray-200" />
+                </div>
+                <div className="h-10 w-24 rounded-lg bg-gray-200" />
+              </div>
+            </div>
           </article>
         )}
       />
@@ -264,14 +221,12 @@ const meta = {
   component: SectionedView,
   decorators: [
     (Story) => (
-      <MemoryRouter initialEntries={["/reports#overview"]}>
+      <MemoryRouter initialEntries={["/reports#section1"]}>
         <Story />
       </MemoryRouter>
     ),
   ],
-  render: (args) => (
-    <SectionedViewHarness key={args.activeId} {...args} />
-  ),
+  render: (args) => <SectionedViewHarness key={args.activeId} {...args} />,
   parameters: {
     layout: "fullscreen",
   },
@@ -415,10 +370,10 @@ const meta = {
       summary:
         "The consumer supplies the header, navigation, section markup, and styles while SectionedView keeps their order and shared render context consistent.",
       expectedResult:
-        "All three sections remain rendered and Overview is the single active section.",
+        "All three sections remain rendered and Section 1 is the single active section.",
     },
     sections: reportSections,
-    activeId: "overview",
+    activeId: "section1",
     isProgrammaticScrolling: false,
     getSectionId: getReportSectionId,
     getSectionRef: unusedSectionRef,
@@ -428,12 +383,10 @@ const meta = {
           <p className="text-sm font-semibold uppercase tracking-wide text-violet-300">
             Storybook composition
           </p>
-          <h1 className="mt-2 text-3xl font-bold">
-            Quarterly report
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold">Dashboard</h1>
           <p className="mt-2 max-w-2xl text-slate-300">
-            SectionedView supplies structure and render context while
-            the consumer owns presentation and behavior.
+            SectionedView supplies structure and render context while the
+            consumer owns presentation and behavior.
           </p>
         </div>
       </header>
@@ -442,11 +395,10 @@ const meta = {
     renderSection: () => null,
     contentAs: "main",
     contentProps: {
-      "aria-label": "Quarterly report sections",
+      "aria-label": "Dashboard sections",
     },
-    rootClassName: "min-h-screen bg-slate-50",
-    contentClassName:
-      "mx-auto grid max-w-4xl gap-6 px-6 py-8",
+    rootClassName: "bg-slate-50",
+    contentClassName: "mx-auto grid max-w-4xl gap-6 px-6 py-8",
   },
 } satisfies Meta<StoryArgs>;
 
@@ -458,14 +410,14 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          "The baseline controlled composition. It renders the complete ordered collection, passes `overview` to the shared `Navbar` as the active item, and uses a named `main` as the content wrapper. Compare the other stories against this unchanged starting point.",
+          "The baseline controlled composition. It renders the complete ordered collection, passes `section1` to the shared `Navbar` as the active item, and uses a named `main` as the content wrapper. Compare the other stories against this unchanged starting point.",
       },
     },
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
     const content = canvas.getByRole("main", {
-      name: "Quarterly report sections",
+      name: "Dashboard sections",
     });
     const renderedSections = within(content).getAllByRole("article");
     const activeSection = reportSections.find(
@@ -478,21 +430,16 @@ export const Default: Story = {
     await expect(
       canvas.getByRole("heading", {
         level: 1,
-        name: "Quarterly report",
+        name: "Dashboard",
       }),
     ).toBeInTheDocument();
     await expect(
-      canvas.getByRole("navigation", { name: "Report sections" }),
+      canvas.getByRole("navigation", { name: "Sectioned view navigation" }),
     ).toBeInTheDocument();
     await expect(
-      renderedSections.map(
-        (section) => section.dataset.sectionId,
-      ),
-    ).toEqual(["overview", "activity", "forecast"]);
-    await expect(activeLink).toHaveAttribute(
-      "aria-current",
-      "location",
-    );
+      renderedSections.map((section) => section.dataset.sectionId),
+    ).toEqual(["section1", "section2", "section3"]);
+    await expect(activeLink).toHaveAttribute("aria-current", "location");
     await expect(
       canvas.getByRole("article", { name: activeSection.title }),
     ).toHaveAttribute("data-active", "true");
@@ -512,41 +459,38 @@ export const InteractiveNavigation: Story = {
       summary:
         "The shared Navbar reports selections to the consumer, which updates its controlled activeId. SectionedView reflects that value in both render contexts.",
       expectedResult:
-        "The play function selects Forecast automatically. Its Navbar link, article, and the Live state panel all become active; you can then select another section manually.",
+        "The play function selects Section 3 automatically. Its Navbar link, article, and the Live state panel all become active; you can then select another section manually.",
     },
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Demonstrates consumer-owned interaction with `Navbar`. The story starts on `overview`; its play function clicks **Forecast**, after which the external state is passed back as `activeId`. The visible Live state panel makes the automated interaction observable without opening the Interactions addon.",
+          "Demonstrates consumer-owned interaction with `Navbar`. The story starts on `section1`; its play function clicks **Section 3**, after which the external state is passed back as `activeId`. The visible Live state panel makes the automated interaction observable without opening the Interactions addon.",
       },
     },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const overviewLink = canvas.getByRole("link", {
-      name: "Overview",
+    const section1Link = canvas.getByRole("link", {
+      name: "Section 1",
     });
-    const forecastLink = canvas.getByRole("link", {
-      name: "Forecast",
+    const section3Link = canvas.getByRole("link", {
+      name: "Section 3",
     });
 
-    await userEvent.click(forecastLink);
+    await userEvent.click(section3Link);
 
-    await expect(forecastLink).toHaveAttribute(
-      "aria-current",
-      "location",
-    );
-    await expect(overviewLink).not.toHaveAttribute("aria-current");
+    await expect(section3Link).toHaveAttribute("aria-current", "location");
+    await expect(section1Link).not.toHaveAttribute("aria-current");
     await expect(
-      canvas.getByRole("article", { name: "Forecast" }),
+      canvas.getByRole("article", { name: "Section 3" }),
     ).toHaveAttribute("data-active", "true");
     await expect(
-      canvas.getByRole("article", { name: "Overview" }),
+      canvas.getByRole("article", { name: "Section 1" }),
     ).toHaveAttribute("data-active", "false");
     await expect(canvas.getByRole("status")).toHaveTextContent(
-      /Active section\s*Forecast/,
+      /Active section\s*Section 3/,
     );
   },
 };
@@ -556,11 +500,11 @@ export const ProgrammaticScrolling: Story = {
     storyDocumentation: {
       title: "Programmatic scroll propagation",
       summary:
-        "This scenario keeps Activity active while a controlled scroll transaction is in progress. Both render contexts receive isProgrammaticScrolling=true.",
+        "This scenario keeps Section 2 active while a controlled scroll transaction is in progress. Both render contexts receive isProgrammaticScrolling=true.",
       expectedResult:
-        "The Live state reports Activity and Programmatic, and every rendered article exposes the same programmatic state.",
+        "The Live state reports Section 2 and Programmatic, and every rendered article exposes the same programmatic state.",
     },
-    activeId: "activity",
+    activeId: "section2",
     isProgrammaticScrolling: true,
   },
   parameters: {
@@ -573,26 +517,21 @@ export const ProgrammaticScrolling: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const navigationContext = canvas.getByTestId(
-      "navigation-context",
-    );
+    const navigationContext = canvas.getByTestId("navigation-context");
 
     await expect(navigationContext).toHaveAttribute(
       "data-programmatic",
       "true",
     );
-    await expect(
-      canvas.getByRole("status"),
-    ).toHaveTextContent(/Active section\s*Activity/);
-    await expect(
-      canvas.getByRole("status"),
-    ).toHaveTextContent(/Scroll mode\s*Programmatic/);
+    await expect(canvas.getByRole("status")).toHaveTextContent(
+      /Active section\s*Section 2/,
+    );
+    await expect(canvas.getByRole("status")).toHaveTextContent(
+      /Scroll mode\s*Programmatic/,
+    );
 
     for (const section of canvas.getAllByRole("article")) {
-      await expect(section).toHaveAttribute(
-        "data-programmatic",
-        "true",
-      );
+      await expect(section).toHaveAttribute("data-programmatic", "true");
     }
   },
 };
@@ -604,7 +543,7 @@ export const SemanticSectionContainer: Story = {
       summary:
         "Only the content container semantics change: the collection is a named section instead of the page's main landmark.",
       expectedResult:
-        'The Live state reports <section> · Report collection, and the content is exposed as a named region.',
+        "The Live state reports <section> · Report collection, and the content is exposed as a named region.",
     },
     contentAs: "section",
     contentProps: {
@@ -616,7 +555,7 @@ export const SemanticSectionContainer: Story = {
     docs: {
       description: {
         story:
-          "Demonstrates semantic polymorphism without changing section rendering. Use `contentAs=\"section\"` when the collection is subordinate content, and give that region an accessible name through `contentProps`. Visual classes still belong in `contentClassName`.",
+          'Demonstrates semantic polymorphism without changing section rendering. Use `contentAs="section"` when the collection is subordinate content, and give that region an accessible name through `contentProps`. Visual classes still belong in `contentClassName`.',
       },
     },
   },
