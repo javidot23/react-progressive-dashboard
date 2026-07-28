@@ -10,7 +10,7 @@ import {
   useNavigate,
   useNavigationType,
 } from "react-router";
-import { useSectionNavigationController } from "../../components/section-navigation/useSectionNavigationController";
+import { useSectionNavigationController } from "../../components/section-navigation";
 import {
   isUnmodifiedPrimaryClick,
   type NavbarSelectEvent,
@@ -31,8 +31,10 @@ export function useManagePageController() {
   const initialIdRef = useRef<ManageSectionId>(
     getSectionIdFromHash(location.hash),
   );
+  const shouldAlignInitialSection =
+    navigationType === "POP" || initialIdRef.current !== "summary";
   const initialNavigationRef = useRef(
-    navigationType === "POP"
+    shouldAlignInitialSection
       ? {
           targetId: initialIdRef.current,
           origin: "history" as const,
@@ -110,17 +112,20 @@ export function useManagePageController() {
         behavior: reducedMotion ? "auto" : "smooth",
       });
 
-      navigate(
-        {
-          pathname: location.pathname,
-          search: location.search,
-          hash: `#${id}`,
-        },
-        { preventScrollReset: true },
-      );
+      if (location.hash !== `#${id}`) {
+        navigate(
+          {
+            pathname: location.pathname,
+            search: location.search,
+            hash: `#${id}`,
+          },
+          { preventScrollReset: true },
+        );
+      }
     },
     [
       activateSection,
+      location.hash,
       location.pathname,
       location.search,
       navigate,

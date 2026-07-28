@@ -7,7 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Navbar, type NavbarItem } from "../../components/Navbar";
-import { SectionedView } from "../../components/section-navigation/SectionedView";
+import { SectionedView } from "../../components/section-navigation";
 import { useRouteView } from "../../hooks/useRouteView";
 import { ManageScrollProvider } from "./ManageScrollContext";
 import {

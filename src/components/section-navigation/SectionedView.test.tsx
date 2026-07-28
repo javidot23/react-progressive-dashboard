@@ -276,4 +276,25 @@ describe("SectionedView", () => {
     );
     expect(getSectionRef).not.toHaveBeenCalled();
   });
+
+  it("rechaza un activeId que no pertenece a las secciones renderizadas", () => {
+    const getSectionRef = jest.fn(() => jest.fn());
+
+    expect(() =>
+      render(
+        <SectionedView
+          sections={sections}
+          activeId={"missing" as ReportSection["slug"]}
+          isProgrammaticScrolling={false}
+          getSectionId={(section) => section.slug}
+          getSectionRef={getSectionRef}
+          renderNavigation={() => <nav>Reports</nav>}
+          renderSection={(section) => <article>{section.title}</article>}
+        />,
+      ),
+    ).toThrow(
+      'SectionedView activeId does not match a rendered section: "missing".',
+    );
+    expect(getSectionRef).not.toHaveBeenCalled();
+  });
 });

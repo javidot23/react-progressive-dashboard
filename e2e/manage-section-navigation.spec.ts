@@ -1,4 +1,37 @@
-import { expect, type Page, test } from "@playwright/test";
+import {
+  expect,
+  type Page,
+  test as base,
+} from "@playwright/test";
+
+type QaFixtures = {
+  runtimeErrorGuard: void;
+};
+
+const test = base.extend<QaFixtures>({
+  runtimeErrorGuard: [
+    async ({ page }, use) => {
+      const runtimeErrors: string[] = [];
+
+      page.on("pageerror", (error) => {
+        runtimeErrors.push(`pageerror: ${error.message}`);
+      });
+      page.on("console", (message) => {
+        if (message.type() === "error") {
+          runtimeErrors.push(`console.error: ${message.text()}`);
+        }
+      });
+
+      await use();
+
+      expect(
+        runtimeErrors,
+        "expected no uncaught browser errors",
+      ).toEqual([]);
+    },
+    { auto: true },
+  ],
+});
 
 const sectionLabels = {
   summary: "Summary",
@@ -13,7 +46,11 @@ type SectionId = keyof typeof sectionLabels;
 function sectionLink(page: Page, id: SectionId) {
   return page
     .getByRole("navigation", { name: "Manage sections" })
-    .getByRole("link", { name: sectionLabels[id], exact: true });
+    .getByRole("link", {
+      name: sectionLabels[id],
+      exact: true,
+      includeHidden: true,
+    });
 }
 
 async function expectActiveSection(page: Page, id: SectionId) {
@@ -252,6 +289,37 @@ test.describe("Manage section navigation", () => {
     expect(Math.abs(geometry.top - geometry.scrollMarginTop)).toBeLessThanOrEqual(
       5,
     );
+  });
+
+  test("keeps the navigation usable without horizontal page scrolling at 320px", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await openSection(page, "summary");
+
+    const toggle = page.getByRole("button", {
+      name: /^Sections:/,
+    });
+    await expect(toggle).toHaveAccessibleName("Sections: Summary");
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    await sectionLink(page, "sales").click();
+
+    await expectActiveSection(page, "sales");
+    await expectSectionAligned(page, "sales");
+    await expect(toggle).toHaveAccessibleName("Sections: Sales");
+    await expect(toggle).toBeFocused();
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+        ),
+      )
+      .toBeLessThanOrEqual(0);
   });
 });
 

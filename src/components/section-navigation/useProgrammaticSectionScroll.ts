@@ -26,8 +26,22 @@ function isEditableTarget(target: EventTarget | null) {
 
   return Boolean(
     target.closest(
-      'input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"])',
+      'input, textarea, select, [contenteditable]:not([contenteditable="false"])',
     ),
+  );
+}
+
+function isButtonActivation(event: KeyboardEvent) {
+  if (
+    event.key !== " " &&
+    event.code !== "Space"
+  ) {
+    return false;
+  }
+
+  return (
+    event.target instanceof Element &&
+    event.target.closest('button, [role="button"]') !== null
   );
 }
 
@@ -37,8 +51,8 @@ function isKeyboardScrollIntent(event: KeyboardEvent) {
     event.altKey ||
     event.ctrlKey ||
     event.metaKey ||
-    event.shiftKey ||
-    isEditableTarget(event.target)
+    isEditableTarget(event.target) ||
+    isButtonActivation(event)
   ) {
     return false;
   }
@@ -242,7 +256,7 @@ export function useProgrammaticSectionScroll<TId extends string>({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (isKeyboardScrollIntent(event)) {
-        fail();
+        handleManualScrollIntent();
       }
     }
 

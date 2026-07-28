@@ -39,6 +39,12 @@ export function SectionedView<
     sectionIds.add(id);
   }
 
+  if (sectionEntries.length > 0 && !sectionIds.has(activeId)) {
+    throw new Error(
+      `SectionedView activeId does not match a rendered section: ${JSON.stringify(activeId)}.`,
+    );
+  }
+
   const navigationContext: NavigationRenderContext<TId, TSection> = {
     activeId,
     isProgrammaticScrolling,

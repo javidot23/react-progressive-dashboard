@@ -482,6 +482,98 @@ describe("useProgrammaticSectionScroll", () => {
 
     expect(onFailure).toHaveBeenCalledWith(12);
     expect(onComplete).not.toHaveBeenCalled();
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      behavior: "auto",
+      top: window.scrollY,
+    });
+  });
+
+  it("reconoce Shift+Space como intención de scroll", () => {
+    const target = createTarget();
+    const onFailure = jest.fn();
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 15,
+        },
+        completion,
+        onComplete: jest.fn(),
+        onFailure,
+      }),
+    );
+
+    act(flushAnimationFrames);
+    act(() => {
+      document.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "Space",
+          key: " ",
+          shiftKey: true,
+        }),
+      );
+    });
+
+    expect(onFailure).toHaveBeenCalledWith(15);
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      behavior: "auto",
+      top: window.scrollY,
+    });
+  });
+
+  it("distingue activación de botón de scroll desde un control", () => {
+    const target = createTarget();
+    const button = document.createElement("button");
+    document.body.append(button);
+    const onFailure = jest.fn();
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 16,
+        },
+        completion,
+        onComplete: jest.fn(),
+        onFailure,
+      }),
+    );
+
+    act(flushAnimationFrames);
+    act(() => {
+      button.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          bubbles: true,
+          code: "Space",
+          key: " ",
+        }),
+      );
+    });
+    expect(onFailure).not.toHaveBeenCalled();
+
+    act(() => {
+      button.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          bubbles: true,
+          key: "PageDown",
+        }),
+      );
+    });
+
+    expect(onFailure).toHaveBeenCalledWith(16);
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      behavior: "auto",
+      top: window.scrollY,
+    });
   });
 
   it("ignora teclas que no representan intención de scroll", () => {

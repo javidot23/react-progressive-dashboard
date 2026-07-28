@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import type { NavbarSelectEvent } from "../../components/navbarEvents";
-import { useSectionNavigationController } from "../../components/section-navigation/useSectionNavigationController";
+import { useSectionNavigationController } from "../../components/section-navigation";
 import { useManagePageController } from "./useManagePageController";
 import { useManageSectionPreparation } from "./useManageSectionPreparation";
 
@@ -24,7 +24,7 @@ jest.mock("react-router", () => ({
 }));
 
 jest.mock(
-  "../../components/section-navigation/useSectionNavigationController",
+  "../../components/section-navigation",
   () => ({
     useSectionNavigationController: jest.fn(),
   }),
@@ -115,6 +115,24 @@ describe("useManagePageController", () => {
     expect(result.current.activatedIds).toContain("inventory");
   });
 
+  it("no duplica el historial al volver a seleccionar el hash actual", () => {
+    const { result } = renderHook(() => useManagePageController());
+    const event = createSelectEvent();
+
+    mockNavigate.mockClear();
+
+    act(() => {
+      result.current.handleSectionSelect("summary", event);
+    });
+
+    expect(event.preventDefault).toHaveBeenCalledTimes(1);
+    expect(mockNavigateTo).toHaveBeenCalledWith("summary", {
+      origin: "selection",
+      behavior: "smooth",
+    });
+    expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
   it("conserva el comportamiento nativo de clicks modificados", () => {
     const { result } = renderHook(() => useManagePageController());
     const event = createSelectEvent({ metaKey: true });
@@ -148,6 +166,26 @@ describe("useManagePageController", () => {
       origin: "selection",
       behavior: "auto",
     });
+  });
+
+  it("alinea una ruta profunda inicial aunque Router la reporte como PUSH", () => {
+    mockLocation = {
+      ...mockLocation,
+      hash: "#sales",
+    };
+
+    renderHook(() => useManagePageController());
+
+    expect(mockedUseSectionNavigationController).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialId: "sales",
+        initialNavigation: {
+          targetId: "sales",
+          origin: "history",
+          behavior: "auto",
+        },
+      }),
+    );
   });
 
   it("inicia una navegación POP cuando cambia la entrada del historial", () => {
