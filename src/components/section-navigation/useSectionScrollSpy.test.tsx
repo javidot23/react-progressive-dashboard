@@ -194,4 +194,103 @@ describe("useSectionScrollSpy", () => {
 
     expect(onActiveChange).not.toHaveBeenCalled();
   });
+
+  it("activa la última sección al alcanzar el final del documento", () => {
+    const alpha = document.createElement("section");
+    const beta = document.createElement("section");
+    const nodes = new Map<SectionId, HTMLElement>([
+      ["alpha", alpha],
+      ["beta", beta],
+    ]);
+    const onActiveChange = jest.fn();
+    const originalScrollY = Object.getOwnPropertyDescriptor(
+      window,
+      "scrollY",
+    );
+    const originalInnerHeight = Object.getOwnPropertyDescriptor(
+      window,
+      "innerHeight",
+    );
+    const originalBodyScrollHeight = Object.getOwnPropertyDescriptor(
+      document.body,
+      "scrollHeight",
+    );
+    const originalDocumentScrollHeight = Object.getOwnPropertyDescriptor(
+      document.documentElement,
+      "scrollHeight",
+    );
+
+    globalThis.IntersectionObserver = jest.fn(
+      () =>
+        ({
+          observe: jest.fn(),
+          disconnect: jest.fn(),
+        }) as unknown as IntersectionObserver,
+    ) as unknown as typeof IntersectionObserver;
+
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 1_198,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(document.body, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+
+    try {
+      renderHook(() =>
+        useSectionScrollSpy({
+          ids: ["alpha", "beta"],
+          nodes,
+          registrationVersion: 2,
+          disabled: false,
+          topOffset: 72,
+          bottomMarginPercent: 60,
+          onActiveChange,
+        }),
+      );
+
+      act(() => {
+        document.dispatchEvent(new Event("scroll"));
+      });
+
+      expect(onActiveChange).toHaveBeenLastCalledWith("beta");
+    } finally {
+      if (originalScrollY) {
+        Object.defineProperty(window, "scrollY", originalScrollY);
+      }
+      if (originalInnerHeight) {
+        Object.defineProperty(window, "innerHeight", originalInnerHeight);
+      }
+      if (originalBodyScrollHeight) {
+        Object.defineProperty(
+          document.body,
+          "scrollHeight",
+          originalBodyScrollHeight,
+        );
+      } else {
+        Reflect.deleteProperty(document.body, "scrollHeight");
+      }
+      if (originalDocumentScrollHeight) {
+        Object.defineProperty(
+          document.documentElement,
+          "scrollHeight",
+          originalDocumentScrollHeight,
+        );
+      } else {
+        Reflect.deleteProperty(
+          document.documentElement,
+          "scrollHeight",
+        );
+      }
+    }
+  });
 });

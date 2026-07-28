@@ -8,6 +8,8 @@ import {
   useState,
 } from "react";
 
+const autoLoadVisibilityDelay = 200;
+
 export type VirtualizedInfiniteCollectionProps<T> = {
   autoLoadMore?: boolean;
   emptyState: ReactNode;
@@ -35,6 +37,9 @@ export function VirtualizedInfiniteCollection<T>({
 }: VirtualizedInfiniteCollectionProps<T>) {
   const listRef = useRef<HTMLDivElement>(null);
   const [scrollMargin, setScrollMargin] = useState(0);
+  const [loaderNode, setLoaderNode] = useState<HTMLDivElement | null>(
+    null,
+  );
 
   useLayoutEffect(() => {
     let animationFrame = 0;
@@ -70,23 +75,51 @@ export function VirtualizedInfiniteCollection<T>({
     scrollMargin,
   });
   const virtualItems = virtualizer.getVirtualItems();
-  const lastVirtualIndex = virtualItems.at(-1)?.index ?? -1;
 
   useEffect(() => {
     if (
-      autoLoadMore &&
-      lastVirtualIndex >= Math.max(0, items.length - 5) &&
-      hasNextPage &&
-      !isFetchingNextPage
+      !autoLoadMore ||
+      !loaderNode ||
+      !hasNextPage ||
+      isFetchingNextPage
     ) {
-      void onLoadMore();
+      return;
     }
+
+    let loadRequested = false;
+    let loadTimer: number | undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          window.clearTimeout(loadTimer);
+          loadTimer = undefined;
+          return;
+        }
+
+        if (loadRequested || loadTimer !== undefined) return;
+
+        loadTimer = window.setTimeout(() => {
+          loadRequested = true;
+          loadTimer = undefined;
+          void onLoadMore();
+        }, autoLoadVisibilityDelay);
+      },
+      {
+        root: null,
+        threshold: 0,
+      },
+    );
+
+    observer.observe(loaderNode);
+    return () => {
+      window.clearTimeout(loadTimer);
+      observer.disconnect();
+    };
   }, [
     autoLoadMore,
     hasNextPage,
     isFetchingNextPage,
-    items.length,
-    lastVirtualIndex,
+    loaderNode,
     onLoadMore,
   ]);
 
@@ -116,7 +149,10 @@ export function VirtualizedInfiniteCollection<T>({
               }}
             >
               {isLoader ? (
-                <div className="flex min-h-[4rem] items-center justify-center">
+                <div
+                  ref={setLoaderNode}
+                  className="flex min-h-[4rem] items-center justify-center"
+                >
                   <button
                     type="button"
                     disabled={isFetchingNextPage}
