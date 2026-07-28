@@ -95,7 +95,7 @@ describe("useSectionNavigationController", () => {
 
     act(flushAnimationFrames);
     act(() => {
-      jest.advanceTimersByTime(250);
+      jest.advanceTimersByTime(500);
     });
 
     expect(result.current.phase).toEqual({ kind: "idle" });
@@ -128,7 +128,7 @@ describe("useSectionNavigationController", () => {
     });
     act(flushAnimationFrames);
     act(() => {
-      jest.advanceTimersByTime(250);
+      jest.advanceTimersByTime(500);
     });
 
     expect(result.current.phase).toEqual({ kind: "idle" });

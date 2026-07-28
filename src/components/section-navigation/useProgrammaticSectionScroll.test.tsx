@@ -145,6 +145,11 @@ describe("useProgrammaticSectionScroll", () => {
     act(() => {
       jest.advanceTimersByTime(completion.idleDelay);
     });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
 
     expect(onComplete).toHaveBeenCalledWith(1);
     expect(onFailure).not.toHaveBeenCalled();
@@ -222,7 +227,96 @@ describe("useProgrammaticSectionScroll", () => {
     act(() => {
       jest.advanceTimersByTime(completion.settleDelay);
     });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
     expect(onComplete).toHaveBeenCalledWith(5);
+  });
+
+  it("reinicia la confirmación si la geometría cambia después de alinearse", () => {
+    let documentTop = 500;
+    let currentScrollY = 500;
+    const target = createTarget();
+    target.getBoundingClientRect = jest.fn(
+      () => ({ top: documentTop - currentScrollY }) as DOMRect,
+    );
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      get: () => currentScrollY,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(document.body, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+    window.scrollTo = jest.fn((options?: ScrollToOptions | number) => {
+      if (typeof options === "object" && options.top !== undefined) {
+        currentScrollY = options.top;
+      }
+    }) as typeof window.scrollTo;
+    let resizeCallback: ResizeObserverCallback | undefined;
+    globalThis.ResizeObserver = jest.fn(
+      (callback: ResizeObserverCallback) => {
+        resizeCallback = callback;
+        return {
+          observe: jest.fn(),
+          disconnect: jest.fn(),
+        } as unknown as ResizeObserver;
+      },
+    ) as unknown as typeof ResizeObserver;
+    const onComplete = jest.fn();
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 6,
+        },
+        completion,
+        onComplete,
+        onFailure: jest.fn(),
+      }),
+    );
+
+    act(flushAnimationFrames);
+    act(() => {
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    documentTop = 516;
+    act(() => {
+      resizeCallback?.([], {} as ResizeObserver);
+    });
+    act(flushAnimationFrames);
+    act(() => {
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
+
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      behavior: "auto",
+      top: 516,
+    });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.advanceTimersByTime(completion.settleDelay);
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
+    expect(onComplete).toHaveBeenCalledWith(6);
   });
 
   it("falla si un destino que ya había iniciado desaparece", () => {
@@ -336,6 +430,11 @@ describe("useProgrammaticSectionScroll", () => {
     act(() => {
       jest.advanceTimersByTime(1);
     });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.advanceTimersByTime(completion.idleDelay);
+    });
     expect(onComplete).toHaveBeenCalledWith(9);
     expect(disconnect).toHaveBeenCalledTimes(1);
 
@@ -389,7 +488,7 @@ describe("useProgrammaticSectionScroll", () => {
     });
     act(flushAnimationFrames);
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
     });
 
     expect(onComplete).not.toHaveBeenCalledWith(9);
