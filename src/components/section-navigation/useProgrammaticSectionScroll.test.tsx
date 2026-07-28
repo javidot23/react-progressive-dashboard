@@ -319,6 +319,136 @@ describe("useProgrammaticSectionScroll", () => {
     expect(onComplete).toHaveBeenCalledWith(6);
   });
 
+  it.each(["wheel", "touchstart"])(
+    "cede el control ante intención manual con %s",
+    (eventName) => {
+      const target = createTarget();
+      const onComplete = jest.fn();
+      const onFailure = jest.fn();
+
+      renderHook(() =>
+        useProgrammaticSectionScroll({
+          nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+          phase: {
+            kind: "programmatic",
+            targetId: "beta",
+            origin: "selection",
+            behavior: "smooth",
+            transactionId: 11,
+          },
+          completion,
+          onComplete,
+          onFailure,
+        }),
+      );
+
+      act(flushAnimationFrames);
+      act(() => {
+        jest.advanceTimersByTime(completion.idleDelay);
+      });
+      expect(onComplete).not.toHaveBeenCalled();
+
+      act(() => {
+        document.dispatchEvent(new Event(eventName));
+      });
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      expect(onFailure).toHaveBeenCalledWith(11);
+      expect(onComplete).not.toHaveBeenCalled();
+      expect(window.scrollTo).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([
+    ["ArrowUp", ""],
+    ["ArrowDown", ""],
+    ["PageUp", ""],
+    ["PageDown", ""],
+    ["Home", ""],
+    ["End", ""],
+    [" ", "Space"],
+  ])("cede el control ante la tecla de scroll %s", (key, code) => {
+    const target = createTarget();
+    const onComplete = jest.fn();
+    const onFailure = jest.fn();
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 12,
+        },
+        completion,
+        onComplete,
+        onFailure,
+      }),
+    );
+
+    act(flushAnimationFrames);
+    act(() => {
+      document.dispatchEvent(
+        new KeyboardEvent("keydown", { code, key }),
+      );
+      jest.runAllTimers();
+    });
+
+    expect(onFailure).toHaveBeenCalledWith(12);
+    expect(onComplete).not.toHaveBeenCalled();
+  });
+
+  it("ignora teclas que no representan intención de scroll", () => {
+    const target = createTarget();
+    const input = document.createElement("input");
+    document.body.append(input);
+    const onComplete = jest.fn();
+    const onFailure = jest.fn();
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 13,
+        },
+        completion,
+        onComplete,
+        onFailure,
+      }),
+    );
+
+    act(flushAnimationFrames);
+    act(() => {
+      input.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          bubbles: true,
+          key: "ArrowDown",
+        }),
+      );
+      document.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          ctrlKey: true,
+          key: "PageDown",
+        }),
+      );
+      document.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "a" }),
+      );
+      jest.advanceTimersByTime(completion.idleDelay * 2);
+    });
+
+    expect(onFailure).not.toHaveBeenCalled();
+    expect(onComplete).toHaveBeenCalledWith(13);
+  });
+
   it("falla si un destino que ya había iniciado desaparece", () => {
     const target = createTarget();
     const nodes = new Map<SectionId, HTMLElement>([["beta", target]]);
@@ -499,6 +629,18 @@ describe("useProgrammaticSectionScroll", () => {
     );
     expect(removeEventListener).toHaveBeenCalledWith(
       "scrollend",
+      expect.any(Function),
+    );
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "wheel",
+      expect.any(Function),
+    );
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "touchstart",
+      expect.any(Function),
+    );
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "keydown",
       expect.any(Function),
     );
   });
