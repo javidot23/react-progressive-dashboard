@@ -124,10 +124,29 @@ test.describe("Manage section navigation", () => {
       });
     });
 
-    await sectionLink(page, "sales").click();
+    const immediateSelection = await sectionLink(page, "sales").evaluate(
+      async (link) => {
+        (link as HTMLElement).click();
+        await new Promise<void>((resolve) => {
+          window.requestAnimationFrame(() => resolve());
+        });
+
+        return {
+          activeLabel: document
+            .querySelector('a[aria-current="location"]')
+            ?.textContent?.trim(),
+          salesTop:
+            document
+              .getElementById("sales")
+              ?.getBoundingClientRect().top ?? 0,
+        };
+      },
+    );
 
     // The selected destination becomes active immediately, while the local
     // Inventory request and its resulting geometry change complete.
+    expect(immediateSelection.activeLabel).toBe("Sales");
+    expect(immediateSelection.salesTop).toBeGreaterThan(1_000);
     await expectActiveSection(page, "sales");
     await expect(page.getByRole("heading", { name: "Inventory" })).toBeAttached();
     await expectSectionAligned(page, "sales");
@@ -169,6 +188,11 @@ test.describe("Manage section navigation", () => {
     await sectionLink(page, "demand").click();
     await expect(page).toHaveURL(/#demand$/);
     await expectActiveSection(page, "demand");
+    await expectSectionAligned(page, "demand");
+    await page.reload();
+    await expect(page).toHaveURL(/#demand$/);
+    await expectActiveSection(page, "demand");
+    await expectSectionAligned(page, "demand");
     await selectSection(page, "sales");
 
     await page.goBack();
@@ -185,8 +209,11 @@ test.describe("Manage section navigation", () => {
   test("returns active-section control to the scroll spy after navigation", async ({
     page,
   }) => {
-    await openSection(page, "sales");
+    await openSection(page, "summary");
+    await sectionLink(page, "sales").click();
+    await expectActiveSection(page, "sales");
 
+    // Interrupt the smooth transaction before its stability confirmation.
     await page.mouse.wheel(0, -100_000);
 
     await expectActiveSection(page, "summary");

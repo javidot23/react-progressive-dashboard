@@ -40,8 +40,13 @@ export function useManagePageController() {
         }
       : undefined,
   );
-  const handledHistoryLocationKey = useRef<string | null>(
-    navigationType === "POP" ? location.key : null,
+  const handledHistoryLocation = useRef<{
+    hash: string;
+    key: string;
+  } | null>(
+    navigationType === "POP"
+      ? { hash: location.hash, key: location.key }
+      : null,
   );
   const pendingHistoryTarget = useRef<ManageSectionId | null>(
     navigationType === "POP" ? initialIdRef.current : null,
@@ -138,14 +143,22 @@ export function useManagePageController() {
   }, [prepareSection]);
 
   useEffect(() => {
+    if (navigationType !== "POP") {
+      handledHistoryLocation.current = null;
+      return;
+    }
+
     if (
-      navigationType !== "POP" ||
-      handledHistoryLocationKey.current === location.key
+      handledHistoryLocation.current?.key === location.key &&
+      handledHistoryLocation.current.hash === location.hash
     ) {
       return;
     }
 
-    handledHistoryLocationKey.current = location.key;
+    handledHistoryLocation.current = {
+      hash: location.hash,
+      key: location.key,
+    };
     const id = getSectionIdFromHash(location.hash);
 
     pendingHistoryTarget.current = id;

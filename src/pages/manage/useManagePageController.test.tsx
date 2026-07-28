@@ -173,6 +173,40 @@ describe("useManagePageController", () => {
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
+  it("procesa un POP tras refresh aunque Router reutilice la key inicial", () => {
+    mockLocation = {
+      ...mockLocation,
+      hash: "#demand",
+      key: "default",
+    };
+    mockNavigationType = "POP";
+    const { rerender } = renderHook(() => useManagePageController());
+
+    mockLocation = {
+      ...mockLocation,
+      hash: "#sales",
+      key: "sales-entry",
+    };
+    mockNavigationType = "PUSH";
+    rerender();
+
+    mockNavigateTo.mockClear();
+    mockPrepareSection.mockClear();
+    mockLocation = {
+      ...mockLocation,
+      hash: "#demand",
+      key: "default",
+    };
+    mockNavigationType = "POP";
+    rerender();
+
+    expect(mockPrepareSection).toHaveBeenCalledWith("demand");
+    expect(mockNavigateTo).toHaveBeenCalledWith("demand", {
+      origin: "history",
+      behavior: "auto",
+    });
+  });
+
   it("reemplaza el hash cuando el scroll spy cambia la sección activa", () => {
     mockedUseSectionNavigationController.mockReturnValue({
       activeId: "inventory",
