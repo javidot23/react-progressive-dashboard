@@ -80,6 +80,47 @@ describe("useSectionScrollSpy", () => {
     expect(onActiveChange).toHaveBeenLastCalledWith("beta");
   });
 
+  it("admite el string vacío como ID según el contrato genérico", () => {
+    type EmptySectionId = "" | "beta";
+    const emptyIdNode = document.createElement("section");
+    const nodes = new Map<EmptySectionId, HTMLElement>([
+      ["", emptyIdNode],
+    ]);
+    const onActiveChange = jest.fn();
+    let observerCallback: IntersectionObserverCallback | undefined;
+
+    globalThis.IntersectionObserver = jest.fn(
+      (callback: IntersectionObserverCallback) => {
+        observerCallback = callback;
+        return {
+          observe: jest.fn(),
+          disconnect: jest.fn(),
+        } as unknown as IntersectionObserver;
+      },
+    ) as unknown as typeof IntersectionObserver;
+
+    renderHook(() =>
+      useSectionScrollSpy({
+        ids: ["", "beta"],
+        nodes,
+        registrationVersion: 1,
+        disabled: false,
+        topOffset: 72,
+        bottomMarginPercent: 60,
+        onActiveChange,
+      }),
+    );
+
+    act(() => {
+      observerCallback?.(
+        [createEntry(emptyIdNode, 72)],
+        {} as IntersectionObserver,
+      );
+    });
+
+    expect(onActiveChange).toHaveBeenCalledWith("");
+  });
+
   it("desconecta el observer al deshabilitarse", () => {
     const node = document.createElement("section");
     const nodes = new Map<SectionId, HTMLElement>([["alpha", node]]);

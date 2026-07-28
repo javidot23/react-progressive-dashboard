@@ -28,55 +28,37 @@ export function useManagePageController() {
   const location = useLocation();
   const navigate = useNavigate();
   const navigationType = useNavigationType();
-  const initialIdRef = useRef<ManageSectionId>(
-    getSectionIdFromHash(location.hash),
-  );
-  const shouldAlignInitialSection =
-    navigationType === "POP" || initialIdRef.current !== "summary";
-  const initialNavigationRef = useRef(
-    shouldAlignInitialSection
-      ? {
-          targetId: initialIdRef.current,
-          origin: "history" as const,
-          behavior: "auto" as const,
-        }
-      : undefined,
-  );
+  const [initialSetup] = useState(() => {
+    const initialId = getSectionIdFromHash(location.hash);
+    const isHistoryNavigation = navigationType === "POP";
+    const shouldAlignInitialSection =
+      isHistoryNavigation || initialId !== "summary";
+
+    return {
+      initialId,
+      initialNavigation: shouldAlignInitialSection
+        ? {
+            targetId: initialId,
+            origin: "history" as const,
+            behavior: "auto" as const,
+          }
+        : undefined,
+      handledHistoryLocation: isHistoryNavigation
+        ? { hash: location.hash, key: location.key }
+        : null,
+      pendingHistoryTarget: isHistoryNavigation ? initialId : null,
+    };
+  });
   const handledHistoryLocation = useRef<{
     hash: string;
     key: string;
-  } | null>(
-    navigationType === "POP"
-      ? { hash: location.hash, key: location.key }
-      : null,
-  );
+  } | null>(initialSetup.handledHistoryLocation);
   const pendingHistoryTarget = useRef<ManageSectionId | null>(
-    navigationType === "POP" ? initialIdRef.current : null,
+    initialSetup.pendingHistoryTarget,
   );
   const [activatedIds, setActivatedIds] = useState<Set<ManageSectionId>>(
-    () => new Set(["summary", initialIdRef.current]),
+    () => new Set(["summary", initialSetup.initialId]),
   );
-  const { prepareSection, preloadNextSection } =
-    useManageSectionPreparation();
-  const {
-    activeId,
-    isProgrammaticScrolling,
-    navigateTo,
-    getSectionRef,
-  } = useSectionNavigationController({
-    ids: manageSectionIds,
-    initialId: initialIdRef.current,
-    initialNavigation: initialNavigationRef.current,
-    scrollSpy: {
-      topOffset: 72,
-      bottomMarginPercent: 60,
-    },
-    scrollCompletion: {
-      alignmentTolerance: 4,
-      idleDelay: 250,
-      settleDelay: 80,
-    },
-  });
 
   const activateSection = useCallback((id: ManageSectionId) => {
     setActivatedIds((current) => {
@@ -87,6 +69,27 @@ export function useManagePageController() {
       return next;
     });
   }, []);
+  const { prepareSection, preloadNextSection } =
+    useManageSectionPreparation();
+  const {
+    activeId,
+    isProgrammaticScrolling,
+    navigateTo,
+    getSectionRef,
+  } = useSectionNavigationController({
+    ids: manageSectionIds,
+    initialId: initialSetup.initialId,
+    initialNavigation: initialSetup.initialNavigation,
+    scrollSpy: {
+      topOffset: 72,
+      bottomMarginPercent: 60,
+    },
+    scrollCompletion: {
+      alignmentTolerance: 4,
+      idleDelay: 250,
+      settleDelay: 80,
+    },
+  });
 
   const handleSectionIntent = useCallback(
     (id: ManageSectionId) => {
@@ -144,8 +147,8 @@ export function useManagePageController() {
   }, []);
 
   useEffect(() => {
-    prepareSection(initialIdRef.current);
-  }, [prepareSection]);
+    prepareSection(initialSetup.initialId);
+  }, [initialSetup.initialId, prepareSection]);
 
   useEffect(() => {
     if (navigationType !== "POP") {
@@ -183,7 +186,6 @@ export function useManagePageController() {
   ]);
 
   useEffect(() => {
-    activateSection(activeId);
     preloadNextSection(activeId);
 
     if (pendingHistoryTarget.current !== null) {
@@ -216,7 +218,6 @@ export function useManagePageController() {
       },
     );
   }, [
-    activateSection,
     activeId,
     isProgrammaticScrolling,
     location.hash,

@@ -270,6 +270,28 @@ test.describe("Manage section navigation", () => {
     await expectSectionAligned(page, "summary");
   });
 
+  test("activates a lazy section reached only through manual scrolling", async ({
+    page,
+  }) => {
+    await openSection(page, "summary");
+
+    const wheelDelta = await page.locator("#demand").evaluate((element) => {
+      const node = element as HTMLElement;
+      const scrollMarginTop =
+        Number.parseFloat(getComputedStyle(node).scrollMarginTop) || 0;
+
+      return node.getBoundingClientRect().top - scrollMarginTop;
+    });
+    await page.mouse.wheel(0, wheelDelta);
+
+    await expect(page).toHaveURL(/#demand$/);
+    await expectActiveSection(page, "demand");
+    await expectSectionAligned(page, "demand");
+    await expect(
+      page.getByRole("heading", { name: "Demand", exact: true }),
+    ).toBeAttached();
+  });
+
   test("aligns the destination using its computed scroll margin", async ({
     page,
   }) => {

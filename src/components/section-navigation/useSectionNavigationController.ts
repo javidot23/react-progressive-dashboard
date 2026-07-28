@@ -3,6 +3,7 @@ import {
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from "react";
 import {
   createSectionNavigationState,
@@ -103,24 +104,16 @@ export function useSectionNavigationController<TId extends string>({
   scrollSpy,
   scrollCompletion,
 }: UseSectionNavigationOptions<TId>): SectionNavigationController<TId> {
-  const initialIds = useRef<readonly TId[] | null>(null);
-  const validIds = useRef<ReadonlySet<TId> | null>(null);
-
-  if (initialIds.current === null) {
+  const [stableIds] = useState<readonly TId[]>(() => {
     validateIds(ids, initialId, initialNavigation?.targetId);
-    initialIds.current = Object.freeze([...ids]);
-    validIds.current = new Set(initialIds.current);
-  } else {
-    validateStableIds(initialIds.current, ids);
-    validateIds(
-      initialIds.current,
-      initialId,
-      initialNavigation?.targetId,
-    );
-  }
+    return Object.freeze([...ids]);
+  });
+  const [stableValidIds] = useState<ReadonlySet<TId>>(
+    () => new Set(stableIds),
+  );
 
-  const stableIds = initialIds.current;
-  const stableValidIds = validIds.current as ReadonlySet<TId>;
+  validateStableIds(stableIds, ids);
+  validateIds(stableIds, initialId, initialNavigation?.targetId);
   const topOffset =
     scrollSpy?.topOffset ?? defaultScrollSpyOptions.topOffset;
   const bottomMarginPercent =
@@ -180,9 +173,9 @@ export function useSectionNavigationController<TId extends string>({
     createSectionNavigationState<TId>,
   );
   const nextTransactionId = useRef(initialNavigation ? 1 : 0);
-  const nodes = useRef(new Map<TId, HTMLElement>());
-  const refCallbacks = useRef(
-    new Map<TId, (node: HTMLElement | null) => void>(),
+  const [nodes] = useState(() => new Map<TId, HTMLElement>());
+  const [refCallbacks] = useState(
+    () => new Map<TId, (node: HTMLElement | null) => void>(),
   );
   const [registrationVersion, recordRegistration] = useReducer(
     (version: number) => version + 1,
@@ -204,25 +197,25 @@ export function useSectionNavigationController<TId extends string>({
     (id: TId) => {
       assertKnownId(id);
 
-      let refCallback = refCallbacks.current.get(id);
+      let refCallback = refCallbacks.get(id);
       if (!refCallback) {
         refCallback = (node) => {
-          const previousNode = nodes.current.get(id);
+          const previousNode = nodes.get(id);
 
           if (node && previousNode !== node) {
-            nodes.current.set(id, node);
+            nodes.set(id, node);
             recordRegistration();
           } else if (!node && previousNode) {
-            nodes.current.delete(id);
+            nodes.delete(id);
             recordRegistration();
           }
         };
-        refCallbacks.current.set(id, refCallback);
+        refCallbacks.set(id, refCallback);
       }
 
       return refCallback;
     },
-    [assertKnownId],
+    [assertKnownId, nodes, refCallbacks],
   );
 
   const navigateTo = useCallback<
@@ -261,7 +254,7 @@ export function useSectionNavigationController<TId extends string>({
 
   useSectionScrollSpy({
     ids: stableIds,
-    nodes: nodes.current,
+    nodes,
     registrationVersion,
     disabled: state.phase.kind === "programmatic",
     ...resolvedScrollSpy,
@@ -269,7 +262,7 @@ export function useSectionNavigationController<TId extends string>({
   });
 
   useProgrammaticSectionScroll({
-    nodes: nodes.current,
+    nodes,
     phase: state.phase,
     completion: resolvedScrollCompletion,
     onComplete: handleNavigationComplete,

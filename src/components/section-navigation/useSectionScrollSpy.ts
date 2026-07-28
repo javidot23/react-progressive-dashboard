@@ -42,7 +42,7 @@ export function useSectionScrollSpy<TId extends string>({
       (entries) => {
         for (const entry of entries) {
           const id = idByNode.get(entry.target as HTMLElement);
-          if (id) entriesById.set(id, entry);
+          if (id !== undefined) entriesById.set(id, entry);
         }
 
         const nextId = ids
@@ -64,7 +64,7 @@ export function useSectionScrollSpy<TId extends string>({
               Math.abs(right.entry.boundingClientRect.top - topOffset),
           )[0]?.id;
 
-        if (nextId) onActiveChange(nextId);
+        if (nextId !== undefined) onActiveChange(nextId);
       },
       {
         root: null,
