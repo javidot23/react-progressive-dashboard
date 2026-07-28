@@ -432,7 +432,7 @@ export default function ManagePage() {
           ariaLabel="Manage sections"
           ariaCurrent="location"
           className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-6 backdrop-blur"
-          listClassName="mx-auto max-w-6xl"
+          innerClassName="mx-auto max-w-6xl"
           onIntent={(item) => prepareSection(item.id)}
           onSelect={(item, event) => handleSelect(item.id, event)}
         />
