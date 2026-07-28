@@ -227,6 +227,16 @@ export function useProgrammaticSectionScroll<TId extends string>({
     }
 
     function handleManualScrollIntent() {
+      try {
+        window.scrollTo({
+          behavior: "auto",
+          top: window.scrollY,
+        });
+      } catch {
+        fail();
+        return;
+      }
+
       fail();
     }
 
