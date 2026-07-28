@@ -1,0 +1,286 @@
+import {
+  Canvas,
+  Controls,
+  Description,
+  Meta,
+} from "@storybook/blocks";
+import * as SectionedViewStories from "./SectionedView.stories";
+
+<Meta of={SectionedViewStories} />
+
+# SectionedView
+
+A headless composition component for rendering an ordered collection of sections with shared navigation and active-state context.
+
+---
+
+## When to Use
+
+- Use when a page contains a stable set of peer sections that share one navigation surface.
+- Use when the consumer needs complete control over section data, markup, styling, and navigation behavior.
+- Pair it with `useSectionNavigationController` when active state must follow URL history, scrolling, or programmatic navigation.
+
+## When NOT to Use
+
+- Do not use for tab panels that must hide inactive content; use an accessible tabs component instead.
+- Do not use for expandable content where each heading controls visibility; use an accordion or disclosure.
+- Avoid it when the component itself is expected to own routing, scrolling, or data loading. `SectionedView` only composes the render slots it receives.
+
+---
+
+## Examples
+
+### Default
+
+<Description of={SectionedViewStories.Default} />
+
+**What changes:** Nothing is overridden from the shared baseline. This is the reference story for comparing the remaining examples.
+
+**What to look for:** All three articles stay in the document, but the shared `Navbar` marks only Overview with `aria-current="location"`. The active article and Live state panel report the same controlled value.
+
+```tsx
+<SectionedView
+  sections={reportSections}
+  activeId="overview"
+  isProgrammaticScrolling={false}
+  getSectionId={(section) => section.slug}
+  getSectionRef={getSectionRef}
+  renderHeader={() => <ReportHeader />}
+  renderNavigation={({ activeId, sections }) => (
+    <Navbar
+      items={sections.map((section) => ({
+        id: section.slug,
+        label: section.title,
+        to: `#${section.slug}`,
+      }))}
+      activeId={activeId}
+      ariaLabel="Report sections"
+      ariaCurrent="location"
+      onSelect={handleSectionSelect}
+    />
+  )}
+  renderSection={renderSection}
+  contentAs="main"
+  contentProps={{ "aria-label": "Quarterly report sections" }}
+/>
+```
+
+<Canvas
+  of={SectionedViewStories.Default}
+  story={{ autoplay: true }}
+/>
+
+### Interactive Navigation
+
+<Description of={SectionedViewStories.InteractiveNavigation} />
+
+**What changes:** The consumer stores `activeId` in state and updates it when the shared `Navbar` reports a selection.
+
+**Try it:** The play function selects Forecast automatically. The Forecast link, Forecast article, and Live state panel visibly reflect the update. You can also select Overview or Activity to repeat the interaction manually.
+
+```tsx
+const [activeId, setActiveId] =
+  useState<ReportSectionId>("overview");
+
+<SectionedView
+  sections={reportSections}
+  activeId={activeId}
+  isProgrammaticScrolling={false}
+  getSectionId={(section) => section.slug}
+  getSectionRef={getSectionRef}
+  renderNavigation={({ sections, activeId }) => (
+    <Navbar
+      items={sections.map((section) => ({
+        id: section.slug,
+        label: section.title,
+        to: `#${section.slug}`,
+      }))}
+      activeId={activeId}
+      ariaLabel="Report sections"
+      ariaCurrent="location"
+      onSelect={(item, event) => {
+        event.preventDefault();
+        setActiveId(item.id);
+      }}
+    />
+  )}
+  renderSection={renderSection}
+/>
+```
+
+<Canvas
+  of={SectionedViewStories.InteractiveNavigation}
+  story={{ autoplay: true }}
+/>
+
+### Programmatic Scrolling
+
+<Description of={SectionedViewStories.ProgrammaticScrolling} />
+
+**What changes:** `isProgrammaticScrolling` is `true` and Activity is active. The component does not initiate scrolling; it propagates the controller state to both render contracts.
+
+**What to look for:** The Live state panel reports `Programmatic`, and the example exposes the same value from navigation and every section. A consumer can use that context to suspend scroll-spy updates while a controlled scroll settles.
+
+```tsx
+const navigation = useSectionNavigationController({
+  ids: reportSections.map((section) => section.slug),
+  initialId: "overview",
+});
+
+<SectionedView
+  sections={reportSections}
+  activeId={navigation.activeId}
+  isProgrammaticScrolling={
+    navigation.isProgrammaticScrolling
+  }
+  getSectionId={(section) => section.slug}
+  getSectionRef={navigation.getSectionRef}
+  renderNavigation={(context) => (
+    <Navbar
+      items={reportNavigationItems}
+      activeId={context.activeId}
+      ariaLabel="Report sections"
+      ariaCurrent="location"
+      onSelect={handleSectionSelect}
+    />
+  )}
+  renderSection={(section, context) => (
+    <ReportSection
+      ref={context.sectionRef}
+      section={section}
+      pauseViewportWork={context.isProgrammaticScrolling}
+    />
+  )}
+/>
+```
+
+<Canvas
+  of={SectionedViewStories.ProgrammaticScrolling}
+  story={{ autoplay: true }}
+/>
+
+### Semantic Section Container
+
+<Description of={SectionedViewStories.SemanticSectionContainer} />
+
+**What changes:** The content wrapper changes from the baseline `main` landmark to a named `section`. The rendered articles and navigation behavior remain the same.
+
+**What to look for:** The Live state panel reports `<section> · Report collection`. Accessibility tools expose that wrapper as the named region “Report collection”; `contentClassName` remains responsible for its visual classes.
+
+```tsx
+<SectionedView
+  sections={reportSections}
+  activeId="overview"
+  isProgrammaticScrolling={false}
+  getSectionId={(section) => section.slug}
+  getSectionRef={getSectionRef}
+  renderNavigation={({ activeId }) => (
+    <Navbar
+      items={reportNavigationItems}
+      activeId={activeId}
+      ariaLabel="Report sections"
+      ariaCurrent="location"
+      onSelect={handleSectionSelect}
+    />
+  )}
+  renderSection={renderSection}
+  contentAs="section"
+  contentProps={{
+    id: "report-sections",
+    "aria-label": "Report collection",
+  }}
+  contentClassName="report-grid"
+/>
+```
+
+<Canvas
+  of={SectionedViewStories.SemanticSectionContainer}
+  story={{ autoplay: true }}
+/>
+
+---
+
+## Props
+
+<Controls of={SectionedViewStories.Default} />
+
+---
+
+## Component Contracts
+
+- Every value returned by `getSectionId` must be unique. Duplicate IDs throw an error before refs are registered.
+- When `sections` is not empty, `activeId` must match one rendered section. An unknown active ID throws an error.
+- The collection is rendered in the order supplied through `sections`, and each logical ID is used as its React key.
+- `renderNavigation` receives `activeId`, `isProgrammaticScrolling`, and the complete ordered collection.
+- `renderSection` receives the logical ID, index, active state, scroll state, and the ref callback that must be attached to the section root.
+- `contentProps` supplies semantic HTML attributes. Use `contentClassName` for classes because `className` is intentionally excluded from `contentProps`.
+
+---
+
+## Styling and Design Tokens
+
+`SectionedView` does not apply layout classes, visual styles, or design tokens. The Tailwind classes shown in these stories belong to the demonstration harness, not the component.
+
+Use `rootClassName` for the complete composition and `contentClassName` for the section container. Navigation and individual section styles belong to their render functions.
+
+---
+
+## Accessibility
+
+### Keyboard Interaction
+
+`SectionedView` does not add interactive elements or keyboard behavior. The consumer must provide native links, buttons, tabs, or other appropriate controls through `renderNavigation`.
+
+| Key | Consumer responsibility |
+|---|---|
+| `Tab` | Provide a logical focus order through the rendered navigation |
+| `Enter` | Preserve native link or button activation |
+| `Space` | Preserve native button activation when buttons are used |
+| Arrow keys | Implement only when the selected navigation pattern requires them, such as tabs |
+
+### Semantics and ARIA
+
+| Attribute or element | Usage |
+|---|---|
+| `nav` with `aria-label` | Gives the rendered section navigation a distinct accessible name |
+| `aria-current` | Identifies the active link or current location when navigation remains in the document |
+| `main` | Use through `contentAs` only when this collection is the page's primary content |
+| Named `section` | Pair `contentAs="section"` with `aria-label` or `aria-labelledby` |
+| Headings | Give every rendered section a descriptive heading with a consistent hierarchy |
+| Section ref | Attach `sectionRef` to the semantic root observed or scrolled by the navigation controller |
+
+### Guidelines
+
+- Do not rely on visual styling alone to communicate the active section.
+- Keep navigation labels consistent with the corresponding section headings.
+- Ensure focus remains visible when supplying custom classes.
+- Use only one `main` landmark per page.
+- Treat scroll behavior and focus movement as separate concerns; scrolling to a section does not automatically move keyboard focus.
+
+---
+
+## Do's and Don'ts
+
+| Do | Don't |
+|---|---|
+| Return stable, unique IDs for every section | Derive IDs from mutable presentation text |
+| Attach the provided `sectionRef` to each section root | Replace or discard the ref inside `renderSection` |
+| Use semantic elements appropriate to the page hierarchy | Render every wrapper as an unnamed generic region |
+| Keep active state controlled by one navigation source | Maintain competing active states inside individual sections |
+| Use render props to supply product-specific presentation | Add product styling to the headless component |
+
+---
+
+## Related Components
+
+- [Navbar](?path=/docs/components-navbar--docs) — Renders a responsive navigation surface that can consume the active section state.
+- `useSectionNavigationController` — Coordinates active state, section refs, scroll observation, and programmatic navigation before passing values to `SectionedView`.
+
+---
+
+## Changelog
+
+| Version | Date | Notes |
+|---|---|---|
+| 1.1.0 | 2026-07-28 | Added per-story guidance, focused usage snippets, and visible interaction state |
+| 1.0.0 | 2026-07-28 | Added SectionedView stories, interaction coverage, and usage documentation |
