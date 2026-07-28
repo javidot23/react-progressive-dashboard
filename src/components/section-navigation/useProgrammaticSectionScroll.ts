@@ -71,6 +71,7 @@ export function useProgrammaticSectionScroll<TId extends string>({
     let layoutFrame: number | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let listening = false;
+    let alignmentConfirmationPending = false;
 
     const clearResources = () => {
       if (listening) {
@@ -135,19 +136,35 @@ export function useProgrammaticSectionScroll<TId extends string>({
       }
 
       if (isSectionAligned(target, completion.alignmentTolerance)) {
-        complete();
+        if (alignmentConfirmationPending) {
+          complete();
+          return;
+        }
+
+        alignmentConfirmationPending = true;
+        scheduleAlignmentCheck(completion.idleDelay, true);
         return;
       }
 
-      window.scrollTo({
-        behavior: "auto",
-        top: getExpectedSectionScrollY(target),
-      });
-      scheduleAlignmentCheck(completion.settleDelay);
+      try {
+        window.scrollTo({
+          behavior: "auto",
+          top: getExpectedSectionScrollY(target),
+        });
+        scheduleAlignmentCheck(completion.settleDelay);
+      } catch {
+        fail();
+      }
     };
 
-    const scheduleAlignmentCheck = (delay = completion.idleDelay) => {
+    const scheduleAlignmentCheck = (
+      delay = completion.idleDelay,
+      preserveAlignmentConfirmation = false,
+    ) => {
       if (cancelled) return;
+      if (!preserveAlignmentConfirmation) {
+        alignmentConfirmationPending = false;
+      }
       if (idleTimer !== null) window.clearTimeout(idleTimer);
       idleTimer = window.setTimeout(alignOrComplete, delay);
     };
