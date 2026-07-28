@@ -357,9 +357,91 @@ describe("useProgrammaticSectionScroll", () => {
 
       expect(onFailure).toHaveBeenCalledWith(11);
       expect(onComplete).not.toHaveBeenCalled();
-      expect(window.scrollTo).not.toHaveBeenCalled();
+      expect(window.scrollTo).toHaveBeenCalledWith({
+        behavior: "auto",
+        top: window.scrollY,
+      });
     },
   );
+
+  it("congela una animación smooth pendiente antes de cancelar", () => {
+    let currentScrollY = 120;
+    const target = createTarget(500);
+    const onComplete = jest.fn();
+    const onFailure = jest.fn();
+    const removeEventListener = jest.spyOn(
+      document,
+      "removeEventListener",
+    );
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      get: () => currentScrollY,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(document.body, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 2_000,
+    });
+    window.scrollTo = jest.fn((options?: ScrollToOptions | number) => {
+      if (typeof options === "object" && options.top !== undefined) {
+        currentScrollY = options.top;
+      }
+    }) as typeof window.scrollTo;
+
+    renderHook(() =>
+      useProgrammaticSectionScroll({
+        nodes: new Map<SectionId, HTMLElement>([["beta", target]]),
+        phase: {
+          kind: "programmatic",
+          targetId: "beta",
+          origin: "selection",
+          behavior: "smooth",
+          transactionId: 14,
+        },
+        completion,
+        onComplete,
+        onFailure,
+      }),
+    );
+
+    act(flushAnimationFrames);
+    expect(target.scrollIntoView).toHaveBeenCalledWith({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    act(() => {
+      document.dispatchEvent(new WheelEvent("wheel"));
+      jest.runAllTimers();
+    });
+
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      behavior: "auto",
+      top: 120,
+    });
+    expect(window.scrollTo).not.toHaveBeenCalledWith({
+      behavior: "auto",
+      top: 500,
+    });
+    expect(onFailure).toHaveBeenCalledWith(14);
+    expect(onComplete).not.toHaveBeenCalled();
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "wheel",
+      expect.any(Function),
+    );
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "scroll",
+      expect.any(Function),
+    );
+  });
 
   it.each([
     ["ArrowUp", ""],
