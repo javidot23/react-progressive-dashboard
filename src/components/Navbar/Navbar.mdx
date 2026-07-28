@@ -5,69 +5,11 @@ import * as NavbarStories from "./Navbar.stories";
 
 # Navbar
 
-A responsive navigation list for switching between related dashboard sections.
-
----
-
-## When to Use
-
-- Use for a small, stable set of peer sections within the same product area.
-- Use link items when navigation should remain addressable through a URL.
-- Use button items when selection changes local UI state without navigation.
-
-## When NOT to Use
-
-- Do not use as the application's primary site navigation; use a dedicated global header or sidebar.
-- Avoid it for large or deeply nested information architectures; use hierarchical navigation instead.
-
----
-
-## Examples
-
-### Without Icons
+A responsive navigation list for switching between related sections.
 
 <Canvas of={NavbarStories.WithoutIcons} />
 
-### Desktop Links
-
-<Canvas of={NavbarStories.DesktopLinks} />
-
-### Alternate Icon Positions
-
-<Canvas of={NavbarStories.AlternateIconPositions} />
-
-### Button Items
-
-<Canvas of={NavbarStories.ButtonItems} />
-
-### Mobile Collapsed
-
-<Canvas of={NavbarStories.MobileCollapsed} />
-
-### Mobile Interaction
-
-<Canvas of={NavbarStories.MobileInteraction} />
-
----
-
-## Props
-
 <Controls of={NavbarStories.DesktopLinks} />
-
----
-
-## Design Tokens Used
-
-| Token | Value | Usage |
-|---|---|---|
-| Active accent | `violet-600` / `violet-700` | Active border and text |
-| Active surface | `violet-50` | Active mobile item background |
-| Neutral text | `slate-500` / `slate-950` | Inactive and hover text |
-| Touch target | `min-h-11` | Minimum 44px item height |
-| Desktop height | `h-16` | Navigation row and disclosure height |
-| Item radius | `rounded-md` | Mobile item corners |
-
----
 
 ## Accessibility
 
@@ -98,29 +40,8 @@ A responsive navigation list for switching between related dashboard sections.
 - Maintain the 44px minimum touch target when overriding classes.
 - Do not rely on the active color alone; the border and ARIA state also communicate selection.
 
----
-
-## Do's and Don'ts
-
-| Do | Don't |
-|---|---|
-| Keep the number and order of items stable | Use the Navbar for an unbounded list |
-| Match each active ID to exactly one item | Mark multiple items as active |
-| Use links for addressable destinations | Replace native link behavior with buttons |
-| Keep decorative icons hidden from assistive technology | Use icons without visible text labels |
-
----
-
-## Related Components
-
-- `ManagePage` — Provides the active section and navigation behavior used by the dashboard.
-
----
-
 ## Changelog
 
 | Version | Date | Notes |
 |---|---|---|
-| 1.2.0 | 2026-07-28 | Expanded prop descriptions and usage guidance |
-| 1.1.0 | 2026-07-28 | Added the icon-free Navbar example |
-| 1.0.0 | 2026-07-27 | Added component stories and usage documentation |
+| 1.0.0 | 2026-07-28 | Added component stories and usage documentation |

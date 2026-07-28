@@ -1,0 +1,12 @@
+/*
+ * Cencora Design System — single entry for all CDS/Tailwind token wiring.
+ *
+ * Vendor tokens: cds-tokens.css (copied from CDS 2.7.0 — do not edit by hand)
+ * App tokens:    app.css, theme.overrides.css (edit these)
+ * Generated:     theme.generated.css (node scripts/generate-cds-theme.mjs)
+ */
+@import "./cds-tokens.css" layer(base);
+@import "./app.css" layer(base);
+
+@import "./theme.generated.css";
+@import "./theme.overrides.css";

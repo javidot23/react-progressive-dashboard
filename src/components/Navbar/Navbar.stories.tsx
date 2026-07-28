@@ -1,13 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, within } from "@storybook/test";
-import {
-  CircleDollarSign,
-  LayoutDashboard,
-  Package,
-  TrendingUp,
-  Truck,
-} from "lucide-react";
-import { MemoryRouter } from "react-router";
+import { CircleDollarSign, LayoutDashboard, Package, TrendingUp, Truck } from "lucide-react";
 import { Navbar, type NavbarItem } from "./Navbar";
 
 const linkItems = [
@@ -83,15 +76,13 @@ const iconPositionItems = [
 ] satisfies readonly NavbarItem[];
 
 const meta = {
-  title: "Components/Navbar",
+  title: "Molecules/Navbar",
   component: Navbar,
   decorators: [
-    (Story) => (
-      <MemoryRouter initialEntries={["/manage#summary"]}>
-        <div className="min-h-24 bg-slate-50 p-6">
-          <Story />
-        </div>
-      </MemoryRouter>
+    Story => (
+      <div className="min-h-24 bg-slate-50 p-6">
+        <Story />
+      </div>
     ),
   ],
   parameters: {
@@ -110,7 +101,7 @@ const meta = {
       description:
         "ID of the currently selected item, or `null` when no item is active. It controls the active styles, ARIA state, and the label shown by the mobile disclosure.",
       control: "select",
-      options: [null, ...linkItems.map((item) => item.id)],
+      options: [null, ...linkItems.map(item => item.id)],
       table: {
         type: { summary: "string | null" },
       },
@@ -181,8 +172,7 @@ const meta = {
       control: false,
       table: {
         type: {
-          summary:
-            "(item: NavbarItem, event: NavbarSelectEvent) => void",
+          summary: "(item: NavbarItem, event: NavbarSelectEvent) => void",
         },
       },
     },
@@ -192,8 +182,7 @@ const meta = {
     activeId: "summary",
     ariaLabel: "Dashboard sections",
     ariaCurrent: "location",
-    className:
-      "border-b border-slate-200 bg-white/95 px-6 backdrop-blur",
+    className: "border-b border-slate-200 bg-white/95 px-6 backdrop-blur",
     innerClassName: "mx-auto max-w-6xl",
     mobileLabel: "Sections",
     iconPosition: "left",
@@ -211,7 +200,7 @@ export const WithoutIcons: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const list = canvas.getByRole("list");
+    const list = canvas.getByRole("list", { hidden: true });
 
     await expect(list.querySelector("svg")).not.toBeInTheDocument();
   },
@@ -220,22 +209,17 @@ export const WithoutIcons: Story = {
 export const DesktopLinks: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const summaryLink = canvas.getByRole("link", { name: "Summary" });
-    const inventoryLink = canvas.getByRole("link", { name: "Inventory" });
+    const summaryLink = canvas.getByRole("link", { name: "Summary", hidden: true });
+    const inventoryLink = canvas.getByRole("link", { name: "Inventory", hidden: true });
 
     await expect(summaryLink).toHaveAttribute("aria-current", "location");
     await expect(inventoryLink).not.toHaveAttribute("aria-current");
 
     await userEvent.hover(inventoryLink);
-    await expect(args.onIntent).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "inventory" }),
-    );
+    await expect(args.onIntent).toHaveBeenCalledWith(expect.objectContaining({ id: "inventory" }));
 
     await userEvent.click(inventoryLink);
-    await expect(args.onSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "inventory" }),
-      expect.anything(),
-    );
+    await expect(args.onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "inventory" }), expect.anything());
   },
 };
 
@@ -263,10 +247,7 @@ export const ButtonItems: Story = {
     await expect(inventoryButton).toHaveAttribute("aria-pressed", "true");
 
     await userEvent.click(supplyButton);
-    await expect(args.onSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "supply" }),
-      expect.anything(),
-    );
+    await expect(args.onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "supply" }), expect.anything());
   },
 };
 
@@ -303,9 +284,7 @@ export const MobileInteraction: Story = {
 
     await userEvent.click(toggle);
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(
-      canvas.getByRole("link", { name: "Inventory" }),
-    ).toBeVisible();
+    await expect(canvas.getByRole("link", { name: "Inventory" })).toBeVisible();
 
     await userEvent.keyboard("{Escape}");
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -314,10 +293,7 @@ export const MobileInteraction: Story = {
     await userEvent.click(toggle);
     await userEvent.click(canvas.getByRole("link", { name: "Inventory" }));
 
-    await expect(args.onSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "inventory" }),
-      expect.anything(),
-    );
+    await expect(args.onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "inventory" }), expect.anything());
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await expect(toggle).toHaveFocus();
   },

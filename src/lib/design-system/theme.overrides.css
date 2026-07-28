@@ -1,0 +1,126 @@
+/* Stratium Tailwind theme overrides — edit here for app-specific aliases */
+@theme {
+  --color-brand-primary-50: var(--cds-color-brand-50);
+  --color-brand-primary-100: var(--cds-color-brand-100);
+  --color-brand-primary-200: var(--cds-color-brand-200);
+  --color-brand-primary-300: var(--cds-color-brand-300);
+  --color-brand-primary-400: var(--cds-color-brand-400);
+  --color-brand-primary-500: var(--cds-color-brand-500);
+  --color-brand-primary-600: var(--cds-color-brand-600);
+  --color-brand-primary-700: var(--cds-color-brand-700);
+  --color-brand-primary-800: var(--cds-color-brand-800);
+  --color-brand-primary-900: var(--cds-color-brand-900);
+  --color-brand-primary-main: var(--cds-color-brand-700);
+  --color-brand-primary-light: var(--cds-color-brand-400);
+  --color-brand-primary-dark: var(--cds-color-brand-900);
+  --color-brand-primary-surface: var(--cds-color-brand-600);
+  --color-brand-secondary-main: var(--cds-color-highlight-400);
+  --color-brand-secondary-light: var(--cds-color-brand-200);
+  --color-brand-secondary-dark: var(--cds-color-highlight-600);
+  --color-red-600: #dc2626;
+  --color-status-success-main: var(--cds-color-success-500);
+  --color-status-success-light: var(--cds-color-success-50);
+  --color-status-success-dark: var(--cds-color-success-600);
+  --color-status-success-bright: var(--cds-color-success-200);
+  --color-status-warning-500: var(--cds-color-warning-500);
+  --color-status-warning-main: var(--cds-color-warning-300);
+  --color-status-warning-light: var(--cds-color-warning-100);
+  --color-status-warning-dark: var(--cds-color-warning-800);
+  --color-status-warning-accent: var(--cds-color-warning-600);
+  --color-status-error-main: var(--cds-color-danger-500);
+  --color-status-error-light: var(--cds-color-danger-100);
+  --color-status-error-dark: var(--cds-color-danger-600);
+  --color-status-error-text: var(--cds-color-danger-500);
+  --color-status-info-500: var(--cds-color-info-500);
+  --color-status-info-main: var(--cds-color-highlight-300);
+  --color-status-info-light: var(--cds-color-highlight-50);
+  --color-status-info-dark: var(--cds-color-highlight-600);
+  --color-status-info-accent: var(--cds-color-highlight-400);
+  --color-status-info-border: var(--cds-color-highlight-100);
+  --color-status-info-surface: var(--cds-color-highlight-50);
+  --color-status-alert-main: var(--cds-color-danger-100);
+  --color-status-alert-border: var(--cds-color-danger-100);
+  --color-status-alert-icon: var(--cds-color-danger-600);
+  --color-border-red-600: #dc2626;
+  --color-text-muted: var(--cds-color-neutral-500);
+  --color-text-red-600: #dc2626;
+  --color-ui-text-primary: var(--cds-color-text-primary);
+  --color-ui-text-secondary: var(--cds-color-text-secondary);
+  --color-ui-text-muted: var(--cds-color-neutral-500);
+  --color-ui-text-link: var(--cds-color-text-link);
+  --color-ui-text-accent: var(--cds-color-brand-700);
+  --color-ui-text-heading: var(--cds-color-text-heading);
+  --color-ui-text-danger: var(--cds-color-text-danger-secondary);
+  --color-ui-background-primary: var(--cds-color-background-primary);
+  --color-ui-background-secondary: var(--cds-color-background-secondary);
+  --color-ui-background-surface: var(--cds-color-background-secondary);
+  --color-ui-background-muted: var(--cds-color-neutral-200);
+  --color-ui-background-neutral: var(--cds-color-background-secondary);
+  --color-ui-border-primary: var(--cds-color-border-primary);
+  --color-ui-border-secondary: var(--cds-color-border-secondary);
+  --color-ui-border-accent: var(--cds-color-highlight-400);
+  --color-ui-border-focus: var(--cds-color-brand-700);
+  --color-ui-interactive-hover: var(--cds-color-interactive-primary-hover);
+  --color-ui-interactive-focus: var(--cds-color-interactive-primary);
+  --color-ui-interactive-active: var(--cds-color-interactive-primary-active);
+  --color-ui-interactive-primary: var(--cds-color-interactive-primary);
+  --color-ui-interactive-primary-lightest: var(--cds-color-interactive-primary-lightest);
+  --color-chart-risk-high: var(--cds-color-data-categorical-01);
+  --color-chart-risk-medium: var(--cds-color-data-categorical-02);
+  --color-chart-risk-low: var(--cds-color-core-magenta-500);
+  --color-chart-risk-critical: var(--cds-color-danger-500);
+  --color-chart-data-primary: var(--cds-color-data-categorical-01);
+  --color-chart-data-secondary: var(--cds-color-brand-200);
+  --color-chart-data-tertiary: var(--cds-color-data-categorical-02);
+  --color-chart-data-quaternary: var(--cds-color-core-gray-600);
+  --color-data-categorical-1: var(--cds-color-data-categorical-01);
+  --color-data-categorical-2: var(--cds-color-data-categorical-02);
+  --color-data-categorical-3: var(--cds-color-data-categorical-03);
+  --color-data-categorical-4: var(--cds-color-data-categorical-04);
+  --color-data-categorical-5: var(--cds-color-data-categorical-05);
+  --color-data-categorical-6: var(--cds-color-data-categorical-06);
+  --color-data-categorical-7: var(--cds-color-data-categorical-07);
+  --color-data-categorical-8: var(--cds-color-data-categorical-08);
+  --color-data-categorical-9: var(--cds-color-data-categorical-09);
+  --color-primary-50: var(--cds-color-brand-50);
+  --color-primary-100: var(--cds-color-brand-100);
+  --color-primary-500: var(--cds-color-brand-500);
+  --color-primary-600: var(--cds-color-brand-600);
+  --color-primary-700: var(--cds-color-brand-700);
+  --color-primary-800: var(--cds-color-brand-800);
+  --font-sans: var(--cds-text-font-family-brand), Inter, system-ui, sans-serif;
+  --text-2xs--line-height: var(--cds-size-line-height-4);
+  --text-xs--line-height: var(--cds-size-line-height-5);
+  --text-sm--line-height: var(--cds-size-line-height-5);
+  --text-base: var(--cds-size-font-md);
+  --text-base--line-height: var(--cds-size-line-height-6);
+  --text-lg--line-height: var(--cds-size-line-height-6);
+  --text-xl--line-height: var(--cds-size-line-height-6);
+  --text-2xl--line-height: var(--cds-size-line-height-7);
+  --text-3xl--line-height: var(--cds-size-line-height-9);
+  --text-4xl--line-height: var(--cds-size-line-height-12);
+  --text-5xl--line-height: var(--cds-size-line-height-14);
+  --text-6xl--line-height: var(--cds-size-line-height-16);
+  --text-7xl--line-height: var(--cds-size-line-height-20);
+  --background-image-gradient-primary: linear-gradient(135deg, var(--cds-color-brand-700) 0%, var(--cds-color-brand-400) 100%);
+  --background-image-gradient-info: linear-gradient(
+    135deg,
+    var(--cds-color-highlight-300) 0%,
+    var(--cds-color-highlight-600) 100%
+  );
+  --background-image-gradient-success: linear-gradient(
+    135deg,
+    var(--cds-color-success-500) 0%,
+    var(--cds-color-success-600) 100%
+  );
+  --background-image-gradient-warning: linear-gradient(
+    135deg,
+    var(--cds-color-warning-300) 0%,
+    var(--cds-color-warning-800) 100%
+  );
+  --shadow-brand-primary: var(--cds-elevation-shadow-raised);
+  --shadow-status-info: var(--cds-elevation-shadow-raised);
+  --shadow-status-success: var(--cds-elevation-shadow-raised);
+  --shadow-status-warning: var(--cds-elevation-shadow-raised);
+  --shadow-status-error: var(--cds-elevation-shadow-raised);
+}

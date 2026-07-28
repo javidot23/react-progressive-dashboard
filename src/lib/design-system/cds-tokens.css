@@ -1,0 +1,1603 @@
+/**
+ * Vendored from @cencora-design-system/tokens 2.7.0 (do not edit by hand).
+ * Source: lib/cencora-design-system/tokens-2.7.0/package/dist/web/css/index.css
+ * On upgrade: copy that file over this one, then run node scripts/generate-cds-theme.mjs
+ *
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --cds-color-true-blue-50: #eeedfe;
+  --cds-color-true-blue-100: #dddbf7;
+  --cds-color-true-blue-200: #c1bbee;
+  --cds-color-true-blue-300: #a89de6;
+  --cds-color-true-blue-400: #8c7ed7;
+  --cds-color-true-blue-500: #735ccc;
+  --cds-color-true-blue-600: #593ab1;
+  --cds-color-true-blue-700: #461e96;
+  --cds-color-true-blue-800: #351b7a;
+  --cds-color-true-blue-900: #211359;
+  --cds-color-core-blue-50: #e7f7ff;
+  --cds-color-core-blue-100: #b7e8fe;
+  --cds-color-core-blue-200: #80deff;
+  --cds-color-core-blue-300: #00b4e6;
+  --cds-color-core-blue-400: #0391d7;
+  --cds-color-core-blue-500: #0073be;
+  --cds-color-core-blue-600: #005c98;
+  --cds-color-core-blue-700: #043e67;
+  --cds-color-core-blue-800: #0a3150;
+  --cds-color-core-blue-900: #062239;
+  --cds-color-core-gray-0: #ffffff;
+  --cds-color-core-gray-50: #f5f5f5;
+  --cds-color-core-gray-100: #e8e8e8;
+  --cds-color-core-gray-200: #cacaca;
+  --cds-color-core-gray-300: #a3a3a3;
+  --cds-color-core-gray-400: #8a8a8a;
+  --cds-color-core-gray-500: #6e6e6e;
+  --cds-color-core-gray-600: #525252;
+  --cds-color-core-gray-700: #3b3b3b;
+  --cds-color-core-gray-800: #292929;
+  --cds-color-core-gray-900: #1e1e1e;
+  --cds-color-core-gray-900-50: rgba(30, 30, 30, 0.5);
+  --cds-color-core-gray-900-75: rgba(30, 30, 30, 0.75);
+  --cds-color-core-gray-0-50: rgba(255, 255, 255, 0.5);
+  --cds-color-core-gray-0-75: rgba(255, 255, 255, 0.75);
+  --cds-color-core-gray-0-00: rgba(255, 255, 255, 0);
+  --cds-color-core-magenta-50: #fff0f6;
+  --cds-color-core-magenta-100: #fed0e2;
+  --cds-color-core-magenta-200: #fca2c9;
+  --cds-color-core-magenta-300: #fd6cb0;
+  --cds-color-core-magenta-400: #f93fa1;
+  --cds-color-core-magenta-500: #e6008c;
+  --cds-color-core-magenta-600: #a30463;
+  --cds-color-core-magenta-700: #750748;
+  --cds-color-core-magenta-800: #5d0d3a;
+  --cds-color-core-magenta-900: #430428;
+  --cds-color-core-green-50: #d8fee7;
+  --cds-color-core-green-100: #8af6bb;
+  --cds-color-core-green-200: #00dc8c;
+  --cds-color-core-green-300: #06c07a;
+  --cds-color-core-green-400: #119d63;
+  --cds-color-core-green-500: #007f50;
+  --cds-color-core-green-600: #095f3b;
+  --cds-color-core-green-700: #09442a;
+  --cds-color-core-green-800: #0c3722;
+  --cds-color-core-green-900: #0b2517;
+  --cds-color-core-red-50: #feefeb;
+  --cds-color-core-red-100: #fcd9d1;
+  --cds-color-core-red-200: #fdac9a;
+  --cds-color-core-red-300: #f8866d;
+  --cds-color-core-red-400: #f35439;
+  --cds-color-core-red-500: #e22f00;
+  --cds-color-core-red-600: #9e2305;
+  --cds-color-core-red-700: #761701;
+  --cds-color-core-red-800: #5d1602;
+  --cds-color-core-red-900: #420f03;
+  --cds-color-core-yellow-50: #fffcdb;
+  --cds-color-core-yellow-100: #fff8ba;
+  --cds-color-core-yellow-200: #fbf175;
+  --cds-color-core-yellow-300: #faeb1e;
+  --cds-color-core-yellow-400: #fbe12a;
+  --cds-color-core-yellow-500: #fbc618;
+  --cds-color-core-yellow-600: #ffa400;
+  --cds-color-core-yellow-700: #dd7005;
+  --cds-color-core-yellow-800: #c2551f;
+  --cds-color-core-yellow-900: #a04223;
+  --cds-size-space-0: 0;
+  --cds-size-space-1: 0.25rem; /** Spacing within a component (between icon and text, inner padding) */
+  --cds-size-space-2: 0.5rem; /** Spacing between related components (e.g. two adjacent buttons or a heading and subheading); or inner padding within a component */
+  --cds-size-space-3: 0.75rem; /** Large inner padding within a component */
+  --cds-size-space-4: 1rem; /** Spacing between unrelated components; container inner padding; column gutters */
+  --cds-size-space-5: 1.25rem; /** Spacing between unrelated components; container inner padding; column gutters */
+  --cds-size-space-6: 1.5rem; /** Spacing between sub-sections of content; column gutters */
+  --cds-size-space-7: 1.75rem;
+  --cds-size-space-8: 2rem; /** Spacing between sections of content */
+  --cds-size-space-9: 2.25rem;
+  --cds-size-space-10: 2.5rem;
+  --cds-size-space-11: 2.75rem; /** Minimum width and height of interactive elements on touch screens */
+  --cds-size-space-12: 3rem;
+  --cds-size-space-14: 3.5rem;
+  --cds-size-space-16: 4rem;
+  --cds-size-space-20: 5rem;
+  --cds-size-space-24: 6rem;
+  --cds-size-space-28: 7rem;
+  --cds-size-space-32: 8rem;
+  --cds-size-space-36: 9rem;
+  --cds-size-space-40: 10rem;
+  --cds-size-space-px: 0.0625rem; /** Small spacing adjustments within a component to align it to the 4px grid */
+  --cds-size-space-0-5: 0.125rem; /** Small spacing adjustments within a component to align it to the 4px grid */
+  --cds-size-space-1-5: 0.375rem; /** Spacing adjustments within a component to align it to the 4px grid */
+  --cds-size-space-2-5: 0.625rem; /** Spacing adjustments within a component to align it to the 4px grid */
+  --cds-size-border-radius-none: 0;
+  --cds-size-border-radius-sm: 0.125rem;
+  --cds-size-border-radius-md: 0.25rem;
+  --cds-size-border-radius-lg: 0.5rem;
+  --cds-size-border-radius-full: 624.9375rem;
+  --cds-size-border-width-none: 0;
+  --cds-size-border-width-sm: 0.0625rem;
+  --cds-size-border-width-md: 0.125rem;
+  --cds-size-border-width-lg: 0.1875rem;
+  --cds-size-border-width-xl: 0.25rem;
+  --cds-size-line-height-4: 1rem;
+  --cds-size-line-height-5: 1.25rem;
+  --cds-size-line-height-6: 1.5rem;
+  --cds-size-line-height-7: 1.75rem;
+  --cds-size-line-height-8: 2rem;
+  --cds-size-line-height-9: 2.25rem;
+  --cds-size-line-height-10: 2.5rem;
+  --cds-size-line-height-12: 3rem;
+  --cds-size-line-height-14: 3.5rem;
+  --cds-size-line-height-15: 3.75rem;
+  --cds-size-line-height-16: 4rem;
+  --cds-size-line-height-20: 5rem;
+  --cds-size-font-2xs: 0.75rem;
+  --cds-size-font-xs: 0.8125rem;
+  --cds-size-font-sm: 0.875rem;
+  --cds-size-font-md: 1rem;
+  --cds-size-font-lg: 1.125rem;
+  --cds-size-font-xl: 1.25rem;
+  --cds-size-font-2xl: 1.5rem;
+  --cds-size-font-3xl: 1.875rem;
+  --cds-size-font-4xl: 2.5rem;
+  --cds-size-font-5xl: 3rem;
+  --cds-size-font-6xl: 3.5rem;
+  --cds-size-font-7xl: 4.5rem;
+  --cds-size-letter-spacing-tight: 0;
+  --cds-size-letter-spacing-tighter: 0;
+  --cds-size-letter-spacing-tightest: 0;
+  --cds-size-paragraph-spacing-0: 0;
+  --cds-size-paragraph-spacing-3: 0.75rem;
+  --cds-size-paragraph-spacing-4: 1rem;
+  --cds-size-paragraph-spacing-5: 1.25rem;
+  --cds-size-grid-xs-min-width: 320px;
+  --cds-size-grid-xs-max-width: 479px;
+  --cds-size-grid-xs-balanced-gutter: 12px;
+  --cds-size-grid-xs-balanced-margin: 16px;
+  --cds-size-grid-xs-compact-gutter: 8px;
+  --cds-size-grid-xs-compact-margin: 12px;
+  --cds-size-grid-xs-spacious-gutter: 16px;
+  --cds-size-grid-xs-spacious-margin: 20px;
+  --cds-size-grid-sm-min-width: 480px;
+  --cds-size-grid-sm-max-width: 767px;
+  --cds-size-grid-sm-balanced-gutter: 16px;
+  --cds-size-grid-sm-balanced-margin: 24px;
+  --cds-size-grid-sm-compact-gutter: 12px;
+  --cds-size-grid-sm-compact-margin: 16px;
+  --cds-size-grid-sm-spacious-gutter: 20px;
+  --cds-size-grid-sm-spacious-margin: 32px;
+  --cds-size-grid-md-min-width: 768px;
+  --cds-size-grid-md-max-width: 1023px;
+  --cds-size-grid-md-balanced-gutter: 20px;
+  --cds-size-grid-md-balanced-margin: 32px;
+  --cds-size-grid-md-compact-gutter: 16px;
+  --cds-size-grid-md-compact-margin: 24px;
+  --cds-size-grid-md-spacious-gutter: 24px;
+  --cds-size-grid-md-spacious-margin: 40px;
+  --cds-size-grid-lg-min-width: 1024px;
+  --cds-size-grid-lg-max-width: 1279px;
+  --cds-size-grid-lg-balanced-gutter: 24px;
+  --cds-size-grid-lg-balanced-margin: 48px;
+  --cds-size-grid-lg-compact-gutter: 16px;
+  --cds-size-grid-lg-compact-margin: 32px;
+  --cds-size-grid-lg-spacious-gutter: 32px;
+  --cds-size-grid-lg-spacious-margin: 64px;
+  --cds-size-grid-xl-min-width: 1280px;
+  --cds-size-grid-xl-max-width: 1439px;
+  --cds-size-grid-xl-balanced-gutter: 32px;
+  --cds-size-grid-xl-balanced-margin: 64px;
+  --cds-size-grid-xl-compact-gutter: 24px;
+  --cds-size-grid-xl-compact-margin: 48px;
+  --cds-size-grid-xl-spacious-gutter: 40px;
+  --cds-size-grid-xl-spacious-margin: 80px;
+  --cds-size-grid-2xl-min-width: 1440px;
+  --cds-size-grid-2xl-max-width: 9999px;
+  --cds-size-grid-2xl-balanced-gutter: 40px;
+  --cds-size-grid-2xl-balanced-margin: 96px;
+  --cds-size-grid-2xl-compact-gutter: 32px;
+  --cds-size-grid-2xl-compact-margin: 64px;
+  --cds-size-grid-2xl-spacious-gutter: 48px;
+  --cds-size-grid-2xl-spacious-margin: 128px;
+  --cds-elevation-shadow-hairline: 0 0 1px 0 #00000073, 0 0 2px 0 #00000014; /** Use for flat UI components that need visible boundaries. */
+  --cds-elevation-shadow-raised: 0 0 1px 0 #00000073, 0 2px 2px 0 #00000017; /** Use for the resting state of interactive components (when necessary). */
+  --cds-elevation-shadow-overlay: 0 0 1px 0 #00000066, 0 2px 4px 0 #0000001a, 0 4px 8px 0 #0000001a; /** Use for components that float over other elements, or as a transition state (hover, drag) for interactive components. */
+  --cds-elevation-shadow-overflow: 0 0 1px 0 #00000066, 0 2px 4px 0 #00000029; /** Use on higher layer elements to indicate underlying content has scrolled out of view. */
+  --cds-text-font-family-brand: Cencora-Gilroy, 'AB Gilroy', Avenir, 'Avenir Next', 'Segoe UI', sans-serif;
+  /**
+   * font-weight: 500;
+   * font-style: normal;
+   */
+  --cds-text-font-weight-medium: 500;
+  /**
+   * font-weight: 600;
+   * font-style: normal;
+   */
+  --cds-text-font-weight-semibold: 600;
+  /**
+   * font-weight: 700;
+   * font-style: normal;
+   */
+  --cds-text-font-weight-bold: 700;
+  /**
+   * font-weight: 500;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-medium-italic-weight: 500;
+  /**
+   * font-weight: 500;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-medium-italic-style: italic;
+  /**
+   * font-weight: 600;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-semibold-italic-weight: 600;
+  /**
+   * font-weight: 600;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-semibold-italic-style: italic;
+  /**
+   * font-weight: 700;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-bold-italic-weight: 700;
+  /**
+   * font-weight: 700;
+   * font-style: italic;
+   */
+  --cds-text-font-weight-bold-italic-style: italic;
+  --cds-text-font-variant-tnum: tabular-nums; /** Monospaced font variant for numeric data in tables. */
+  --cds-text-decoration-underline: underline;
+  --cds-text-body-italic-font-weight: 500;
+  --cds-text-body-italic-font-style: italic;
+  --cds-text-body-bold-italic-font-weight: 700;
+  --cds-text-body-bold-italic-font-style: italic;
+  --cds-number-grid-xs-columns: 4;
+  --cds-number-grid-sm-columns: 6;
+  --cds-number-grid-md-columns: 6;
+  --cds-number-grid-lg-columns: 12;
+  --cds-number-grid-xl-columns: 12;
+  --cds-number-grid-2xl-columns: 12;
+  --cds-text-body-italic-xl-font-weight: 500; /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-xl-font-style: italic; /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-font-weight: 500; /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-font-style: italic; /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-md-font-weight: 500; /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-md-font-style: italic; /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-sm-font-weight: 500; /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-sm-font-style: italic; /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-2xs-font-weight: 500; /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-italic-2xs-font-style: italic; /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-bold-italic-xl-font-weight: 700; /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-xl-font-style: italic; /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-font-weight: 700; /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-font-style: italic; /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-font-weight: 700; /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-font-style: italic; /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-font-weight: 700; /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-font-style: italic; /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-font-weight: 700; /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-font-style: italic; /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-link-italic-xl-font-weight: 500; /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-xl-font-style: italic; /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-font-weight: 500; /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-font-style: italic; /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-md-font-weight: 500; /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-md-font-style: italic; /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-font-weight: 500; /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-font-style: italic; /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-font-weight: 500; /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-font-style: italic; /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-bold-italic-xl-font-weight: 700; /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-xl-font-style: italic; /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-font-weight: 700; /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-font-style: italic; /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-font-weight: 700; /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-font-style: italic; /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-font-weight: 700; /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-font-style: italic; /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-font-weight: 700; /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-font-style: italic; /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-tabular-num-italic-xl-font-weight: 500; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-xl-font-style: italic; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-font-weight: 500; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-font-style: italic; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-font-weight: 500; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-font-style: italic; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-font-weight: 500; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-font-style: italic; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-font-weight: 500; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-font-style: italic; /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-font-weight: 700; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-font-style: italic; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-font-weight: 700; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-font-style: italic; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-font-weight: 700; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-font-style: italic; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-font-weight: 700; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-font-style: italic; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-font-weight: 700; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-font-style: italic; /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-input-placeholder-lg-font-weight: 500; /** Placeholder text style for xlarge size input. */
+  --cds-text-input-placeholder-lg-font-style: italic; /** Placeholder text style for xlarge size input. */
+  --cds-text-input-placeholder-md-font-weight: 500; /** Placeholder text style for large size input. */
+  --cds-text-input-placeholder-md-font-style: italic; /** Placeholder text style for large size input. */
+  --cds-text-input-placeholder-sm-font-weight: 500; /** Placeholder text style for medium size input. */
+  --cds-text-input-placeholder-sm-font-style: italic; /** Placeholder text style for medium size input. */
+  --cds-text-input-placeholder-2xs-font-weight: 500; /** Placeholder text style for small size input. */
+  --cds-text-input-placeholder-2xs-font-style: italic; /** Placeholder text style for small size input. */
+  /**
+   * True Blue 50
+   * #EEEDFE
+   * rgb(238, 237, 254)
+   */
+  --cds-color-brand-50: var(--cds-color-true-blue-50);
+  /**
+   * True Blue 100
+   * #DDDBF7
+   * rgb(221, 219, 247)
+   */
+  --cds-color-brand-100: var(--cds-color-true-blue-100);
+  /**
+   * True Blue 200
+   * #C1BBEE
+   * rgb(193, 187, 238)
+   */
+  --cds-color-brand-200: var(--cds-color-true-blue-200);
+  /**
+   * True Blue 300
+   * #A89DE6
+   * rgb(168, 157, 230)
+   */
+  --cds-color-brand-300: var(--cds-color-true-blue-300);
+  /**
+   * True Blue 400
+   * #8C7ED7
+   * rgb(140, 126, 215)
+   */
+  --cds-color-brand-400: var(--cds-color-true-blue-400);
+  /**
+   * True Blue 500
+   * #735CCC
+   * rgb(115, 92, 204)
+   */
+  --cds-color-brand-500: var(--cds-color-true-blue-500);
+  /**
+   * True Blue 600
+   * #593AB1
+   * rgb(89, 58, 177)
+   */
+  --cds-color-brand-600: var(--cds-color-true-blue-600);
+  /**
+   * True Blue | 700
+   * #461E96
+   * rgb(70, 30, 150)
+   */
+  --cds-color-brand-700: var(--cds-color-true-blue-700);
+  /**
+   * True Blue 800
+   * #351B7A
+   * rgb(53, 27, 122)
+   */
+  --cds-color-brand-800: var(--cds-color-true-blue-800);
+  /**
+   * True Blue Dark | 900
+   * #211359
+   * rgb(33, 19, 89)
+   */
+  --cds-color-brand-900: var(--cds-color-true-blue-900);
+  /**
+   * Core Blue Ultra Light | 50
+   * #E7F7FF
+   * rgb(231, 247, 255)
+   */
+  --cds-color-highlight-50: var(--cds-color-core-blue-50);
+  /**
+   * Core Blue Extra Light | 100
+   * #B7E8FE
+   * rgb(183, 232, 254)
+   */
+  --cds-color-highlight-100: var(--cds-color-core-blue-100);
+  /**
+   * Core Blue Light | 200
+   * #80DEFF
+   * rgb(128, 222, 255)
+   */
+  --cds-color-highlight-200: var(--cds-color-core-blue-200);
+  /**
+   * Core Blue | 300
+   * #00B4E6
+   * rgb(0, 180, 230)
+   */
+  --cds-color-highlight-300: var(--cds-color-core-blue-300);
+  /**
+   * Core Blue 400
+   * #0391D7
+   * rgb(3, 145, 215)
+   */
+  --cds-color-highlight-400: var(--cds-color-core-blue-400);
+  /**
+   * Core Blue Dark | 500
+   * #0073BE
+   * rgb(0, 115, 190)
+   */
+  --cds-color-highlight-500: var(--cds-color-core-blue-500);
+  /**
+   * Core Blue 600
+   * #005C98
+   * rgb(0, 92, 152)
+   */
+  --cds-color-highlight-600: var(--cds-color-core-blue-600);
+  /**
+   * Core Blue 700
+   * #043E67
+   * rgb(4, 62, 103)
+   */
+  --cds-color-highlight-700: var(--cds-color-core-blue-700);
+  /**
+   * Core Blue 800
+   * #0A3150
+   * rgb(10, 49, 80)
+   */
+  --cds-color-highlight-800: var(--cds-color-core-blue-800);
+  /**
+   * Core Blue 900
+   * #062239
+   * rgb(6, 34, 57)
+   */
+  --cds-color-highlight-900: var(--cds-color-core-blue-900);
+  /**
+   * Core Gray White | 0
+   * #FFFFFF
+   * rgb(255, 255, 255)
+   */
+  --cds-color-neutral-0: var(--cds-color-core-gray-0);
+  /**
+   * Core Gray Ultra Light | 50
+   * #F5F5F5
+   * rgb(245, 245, 245)
+   */
+  --cds-color-neutral-50: var(--cds-color-core-gray-50);
+  /**
+   * Core Gray Extra Light | 100
+   * #E8E8E8
+   * rgb(232, 232, 232)
+   */
+  --cds-color-neutral-100: var(--cds-color-core-gray-100);
+  /**
+   * Core Gray Light | 200
+   * #CACACA
+   * rgb(202, 202, 202)
+   */
+  --cds-color-neutral-200: var(--cds-color-core-gray-200);
+  /**
+   * Core Gray 300
+   * #A3A3A3
+   * rgb(163, 163, 163)
+   */
+  --cds-color-neutral-300: var(--cds-color-core-gray-300);
+  /**
+   * Core Gray 400
+   * #8A8A8A
+   * rgb(138, 138, 138)
+   */
+  --cds-color-neutral-400: var(--cds-color-core-gray-400);
+  /**
+   * Core Gray 500
+   * #6E6E6E
+   * rgb(110, 110, 110)
+   */
+  --cds-color-neutral-500: var(--cds-color-core-gray-500);
+  /**
+   * Core Gray 600
+   * #525252
+   * rgb(82, 82, 82)
+   */
+  --cds-color-neutral-600: var(--cds-color-core-gray-600);
+  /**
+   * Core Gray | 700
+   * #3B3B3B
+   * rgb(59, 59, 59)
+   */
+  --cds-color-neutral-700: var(--cds-color-core-gray-700);
+  /**
+   * Core Gray 800
+   * #292929
+   * rgb(41, 41, 41)
+   */
+  --cds-color-neutral-800: var(--cds-color-core-gray-800);
+  /**
+   * Core Gray Dark | 900
+   * #1E1E1E
+   * rgb(30, 30, 30)
+   */
+  --cds-color-neutral-900: var(--cds-color-core-gray-900);
+  /**
+   * Core Magenta 50
+   * #FFF0F6
+   * rgb(255, 240, 246)
+   */
+  --cds-color-accent-50: var(--cds-color-core-magenta-50);
+  /**
+   * Core Magenta Light | 100
+   * #FED0E2
+   * rgb(254, 208, 226)
+   */
+  --cds-color-accent-100: var(--cds-color-core-magenta-100);
+  /**
+   * Core Magenta 200
+   * #FCA2C9
+   * rgb(252, 162, 201)
+   */
+  --cds-color-accent-200: var(--cds-color-core-magenta-200);
+  /**
+   * Core Magenta 300
+   * #FD6CB0
+   * rgb(253, 108, 176)
+   */
+  --cds-color-accent-300: var(--cds-color-core-magenta-300);
+  /**
+   * Core Magenta 400
+   * #F93FA1
+   * rgb(249, 63, 161)
+   */
+  --cds-color-accent-400: var(--cds-color-core-magenta-400);
+  /**
+   * Core Magenta | 500
+   * #E6008C
+   * rgb(230, 0, 140)
+   */
+  --cds-color-accent-500: var(--cds-color-core-magenta-500);
+  /**
+   * Core Magenta 600
+   * #A30463
+   * rgb(163, 4, 99)
+   */
+  --cds-color-accent-600: var(--cds-color-core-magenta-600);
+  /**
+   * Core Magenta Dark | 700
+   * #750748
+   * rgb(117, 7, 72)
+   */
+  --cds-color-accent-700: var(--cds-color-core-magenta-700);
+  /**
+   * Core Magenta 800
+   * #5D0D3A
+   * rgb(93, 13, 58)
+   */
+  --cds-color-accent-800: var(--cds-color-core-magenta-800);
+  /**
+   * Core Magenta 900
+   * #430428
+   * rgb(67, 4, 40)
+   */
+  --cds-color-accent-900: var(--cds-color-core-magenta-900);
+  /**
+   * Core Green Light | 50
+   * #D8FEE7
+   * rgb(216, 254, 231)
+   */
+  --cds-color-success-50: var(--cds-color-core-green-50);
+  /**
+   * Core Green 100
+   * #8AF6BB
+   * rgb(138, 246, 187)
+   */
+  --cds-color-success-100: var(--cds-color-core-green-100);
+  /**
+   * Core Green | 200
+   * #00DC8C
+   * rgb(0, 220, 140)
+   */
+  --cds-color-success-200: var(--cds-color-core-green-200);
+  /**
+   * Core Green 300
+   * #06C07A
+   * rgb(6, 192, 122)
+   */
+  --cds-color-success-300: var(--cds-color-core-green-300);
+  /**
+   * Core Green 400
+   * #119D63
+   * rgb(17, 157, 99)
+   */
+  --cds-color-success-400: var(--cds-color-core-green-400);
+  /**
+   * Core Green Dark | 500
+   * #007F50
+   * rgb(0, 127, 80)
+   */
+  --cds-color-success-500: var(--cds-color-core-green-500);
+  /**
+   * Core Green 600
+   * #095F3B
+   * rgb(9, 95, 59)
+   */
+  --cds-color-success-600: var(--cds-color-core-green-600);
+  /**
+   * Core Green 700
+   * #09442A
+   * rgb(9, 68, 42)
+   */
+  --cds-color-success-700: var(--cds-color-core-green-700);
+  /**
+   * Core Green 800
+   * #0C3722
+   * rgb(12, 55, 34)
+   */
+  --cds-color-success-800: var(--cds-color-core-green-800);
+  /**
+   * Core Green 900
+   * #0B2517
+   * rgb(11, 37, 23)
+   */
+  --cds-color-success-900: var(--cds-color-core-green-900);
+  /**
+   * Core Red 50
+   * #FEEFEB
+   * rgb(254, 239, 235)
+   */
+  --cds-color-danger-50: var(--cds-color-core-red-50);
+  /**
+   * Core Red Light | 100
+   * #FCD9D1
+   * rgb(252, 217, 209)
+   */
+  --cds-color-danger-100: var(--cds-color-core-red-100);
+  /**
+   * Core Red 200
+   * #FDAC9A
+   * rgb(253, 172, 154)
+   */
+  --cds-color-danger-200: var(--cds-color-core-red-200);
+  /**
+   * Core Red 300
+   * #F8866D
+   * rgb(248, 134, 109)
+   */
+  --cds-color-danger-300: var(--cds-color-core-red-300);
+  /**
+   * Core Red 400
+   * #F35439
+   * rgb(243, 84, 57)
+   */
+  --cds-color-danger-400: var(--cds-color-core-red-400);
+  /**
+   * Core Red | 500
+   * #E22F00
+   * rgb(226, 47, 0)
+   */
+  --cds-color-danger-500: var(--cds-color-core-red-500);
+  /**
+   * Core Red Dark | 600
+   * #9E2305
+   * rgb(158, 35, 5)
+   */
+  --cds-color-danger-600: var(--cds-color-core-red-600);
+  /**
+   * Core Red 700
+   * #761701
+   * rgb(118, 23, 1)
+   */
+  --cds-color-danger-700: var(--cds-color-core-red-700);
+  /**
+   * Core Red 800
+   * #5D1602
+   * rgb(93, 22, 2)
+   */
+  --cds-color-danger-800: var(--cds-color-core-red-800);
+  /**
+   * Core Red 900
+   * #420F03
+   * rgb(66, 15, 3)
+   */
+  --cds-color-danger-900: var(--cds-color-core-red-900);
+  /**
+   * Core Yellow 50
+   * #FFFCDB
+   * rgb(255, 252, 219)
+   */
+  --cds-color-warning-50: var(--cds-color-core-yellow-50);
+  /**
+   * Core Yellow Light | 100
+   * #FFF8BA
+   * rgb(255, 248, 186)
+   */
+  --cds-color-warning-100: var(--cds-color-core-yellow-100);
+  /**
+   * Core Yellow 200
+   * #FBF175
+   * rgb(251, 241, 117)
+   */
+  --cds-color-warning-200: var(--cds-color-core-yellow-200);
+  /**
+   * Core Yellow | 300
+   * #FAEB1E
+   * rgb(250, 235, 30)
+   */
+  --cds-color-warning-300: var(--cds-color-core-yellow-300);
+  /**
+   * Core Yellow 400
+   * #FBE12A
+   * rgb(251, 225, 42)
+   */
+  --cds-color-warning-400: var(--cds-color-core-yellow-400);
+  /**
+   * Core Yellow 500
+   * #FBC618
+   * rgb(251, 198, 24)
+   */
+  --cds-color-warning-500: var(--cds-color-core-yellow-500);
+  /**
+   * Core Yellow Dark | 600
+   * #FFA400
+   * rgb(255, 164, 0)
+   */
+  --cds-color-warning-600: var(--cds-color-core-yellow-600);
+  /**
+   * Core Yellow 700
+   * #DD7005
+   * rgb(221, 112, 5)
+   */
+  --cds-color-warning-700: var(--cds-color-core-yellow-700);
+  /**
+   * Core Yellow 800
+   * #C2551F
+   * rgb(194, 85, 31)
+   */
+  --cds-color-warning-800: var(--cds-color-core-yellow-800);
+  /**
+   * Core Yellow 900
+   * #A04223
+   * rgb(160, 66, 35)
+   */
+  --cds-color-warning-900: var(--cds-color-core-yellow-900);
+  --cds-color-data-categorical-10: var(--cds-color-core-green-600);
+  --cds-color-data-categorical-01: var(--cds-color-true-blue-700);
+  --cds-color-data-categorical-02: var(--cds-color-core-blue-400);
+  --cds-color-data-categorical-03: var(--cds-color-core-magenta-500);
+  --cds-color-data-categorical-04: var(--cds-color-core-yellow-700);
+  --cds-color-data-categorical-05: var(--cds-color-core-green-400);
+  --cds-color-data-categorical-06: var(--cds-color-true-blue-900);
+  --cds-color-data-categorical-07: var(--cds-color-core-blue-600);
+  --cds-color-data-categorical-08: var(--cds-color-core-magenta-700);
+  --cds-color-data-categorical-09: var(--cds-color-core-yellow-900);
+  --cds-color-data-sequential-a-400: var(--cds-color-true-blue-400);
+  --cds-color-data-sequential-a-500: var(--cds-color-true-blue-500);
+  --cds-color-data-sequential-a-600: var(--cds-color-true-blue-600);
+  --cds-color-data-sequential-a-700: var(--cds-color-true-blue-700);
+  --cds-color-data-sequential-a-800: var(--cds-color-true-blue-800);
+  --cds-color-data-sequential-a-900: var(--cds-color-true-blue-900);
+  --cds-color-data-sequential-b-400: var(--cds-color-core-blue-400);
+  --cds-color-data-sequential-b-500: var(--cds-color-core-blue-500);
+  --cds-color-data-sequential-b-600: var(--cds-color-core-blue-600);
+  --cds-color-data-sequential-b-700: var(--cds-color-core-blue-700);
+  --cds-color-data-sequential-b-800: var(--cds-color-core-blue-800);
+  --cds-color-data-sequential-b-900: var(--cds-color-core-blue-900);
+  --cds-color-data-sequential-c-400: var(--cds-color-core-magenta-400);
+  --cds-color-data-sequential-c-500: var(--cds-color-core-magenta-500);
+  --cds-color-data-sequential-c-600: var(--cds-color-core-magenta-600);
+  --cds-color-data-sequential-c-700: var(--cds-color-core-magenta-700);
+  --cds-color-data-sequential-c-800: var(--cds-color-core-magenta-800);
+  --cds-color-data-sequential-c-900: var(--cds-color-core-magenta-900);
+  --cds-color-data-sequential-d-400: var(--cds-color-core-green-400);
+  --cds-color-data-sequential-d-500: var(--cds-color-core-green-500);
+  --cds-color-data-sequential-d-600: var(--cds-color-core-green-600);
+  --cds-color-data-sequential-d-700: var(--cds-color-core-green-700);
+  --cds-color-data-sequential-d-800: var(--cds-color-core-green-800);
+  --cds-color-data-sequential-d-900: var(--cds-color-core-green-900);
+  --cds-color-data-divergent-primary-minus-03: var(--cds-color-core-magenta-800);
+  --cds-color-data-divergent-primary-minus-02: var(--cds-color-core-magenta-600);
+  --cds-color-data-divergent-primary-minus-01: var(--cds-color-core-magenta-400);
+  --cds-color-data-divergent-primary-neutral: var(--cds-color-core-gray-400);
+  --cds-color-data-divergent-primary-plus-01: var(--cds-color-core-green-400);
+  --cds-color-data-divergent-primary-plus-02: var(--cds-color-core-green-600);
+  --cds-color-data-divergent-primary-plus-03: var(--cds-color-core-green-800);
+  --cds-color-data-divergent-secondary-minus-03: var(--cds-color-core-yellow-900);
+  --cds-color-data-divergent-secondary-minus-02: var(--cds-color-core-yellow-800);
+  --cds-color-data-divergent-secondary-minus-01: var(--cds-color-core-yellow-700);
+  --cds-color-data-divergent-secondary-neutral: var(--cds-color-core-gray-400);
+  --cds-color-data-divergent-secondary-plus-01: var(--cds-color-true-blue-400);
+  --cds-color-data-divergent-secondary-plus-02: var(--cds-color-true-blue-600);
+  --cds-color-data-divergent-secondary-plus-03: var(--cds-color-true-blue-800);
+  --cds-color-data-divergent-tertiary-minus-03: var(--cds-color-core-yellow-900);
+  --cds-color-data-divergent-tertiary-minus-02: var(--cds-color-core-yellow-800);
+  --cds-color-data-divergent-tertiary-minus-01: var(--cds-color-core-yellow-700);
+  --cds-color-data-divergent-tertiary-neutral: var(--cds-color-core-gray-400);
+  --cds-color-data-divergent-tertiary-plus-01: var(--cds-color-core-blue-400);
+  --cds-color-data-divergent-tertiary-plus-02: var(--cds-color-core-blue-600);
+  --cds-color-data-divergent-tertiary-plus-03: var(--cds-color-core-blue-800);
+  --cds-color-scrim-dark: var(--cds-color-core-gray-900-50);
+  --cds-color-scrim-darker: var(--cds-color-core-gray-900-75);
+  --cds-color-scrim-light: var(--cds-color-core-gray-0-50);
+  --cds-color-scrim-lighter: var(--cds-color-core-gray-0-75);
+  --cds-size-focus-ring-default: var(--cds-size-border-width-xl);
+  --cds-size-focus-ring-subtle: var(--cds-size-border-width-md);
+  --cds-size-focus-ring-inner: var(--cds-size-border-width-sm);
+  --cds-size-grid-xs-gutter: var(--cds-size-grid-xs-balanced-gutter);
+  --cds-size-grid-xs-margin: var(--cds-size-grid-xs-balanced-margin);
+  --cds-size-grid-sm-gutter: var(--cds-size-grid-sm-balanced-gutter);
+  --cds-size-grid-sm-margin: var(--cds-size-grid-sm-balanced-margin);
+  --cds-size-grid-md-gutter: var(--cds-size-grid-md-balanced-gutter);
+  --cds-size-grid-md-margin: var(--cds-size-grid-md-balanced-margin);
+  --cds-size-grid-lg-gutter: var(--cds-size-grid-lg-balanced-gutter);
+  --cds-size-grid-lg-margin: var(--cds-size-grid-lg-balanced-margin);
+  --cds-size-grid-xl-gutter: var(--cds-size-grid-xl-balanced-gutter);
+  --cds-size-grid-xl-margin: var(--cds-size-grid-xl-balanced-margin);
+  --cds-size-grid-2xl-gutter: var(--cds-size-grid-2xl-balanced-gutter);
+  --cds-size-grid-2xl-margin: var(--cds-size-grid-2xl-balanced-margin);
+  --cds-text-body-bold-font-weight: var(--cds-text-font-weight-bold);
+  --cds-grid-breakpoint-xs-min-width: var(--cds-size-grid-xs-min-width);
+  --cds-grid-breakpoint-xs-max-width: var(--cds-size-grid-xs-max-width);
+  --cds-grid-breakpoint-xs-columns: var(--cds-number-grid-xs-columns);
+  --cds-grid-breakpoint-xs-balanced-gutter: var(--cds-size-grid-xs-balanced-gutter);
+  --cds-grid-breakpoint-xs-balanced-margin: var(--cds-size-grid-xs-balanced-margin);
+  --cds-grid-breakpoint-xs-compact-gutter: var(--cds-size-grid-xs-compact-gutter);
+  --cds-grid-breakpoint-xs-compact-margin: var(--cds-size-grid-xs-compact-margin);
+  --cds-grid-breakpoint-xs-spacious-margin: var(--cds-size-grid-xs-spacious-margin);
+  --cds-grid-breakpoint-xs-spacious-gutter: var(--cds-size-grid-xs-spacious-gutter);
+  --cds-grid-breakpoint-sm-min-width: var(--cds-size-grid-sm-min-width);
+  --cds-grid-breakpoint-sm-max-width: var(--cds-size-grid-sm-max-width);
+  --cds-grid-breakpoint-sm-columns: var(--cds-number-grid-sm-columns);
+  --cds-grid-breakpoint-sm-balanced-gutter: var(--cds-size-grid-sm-balanced-gutter);
+  --cds-grid-breakpoint-sm-balanced-margin: var(--cds-size-grid-sm-balanced-margin);
+  --cds-grid-breakpoint-sm-compact-gutter: var(--cds-size-grid-sm-compact-gutter);
+  --cds-grid-breakpoint-sm-compact-margin: var(--cds-size-grid-sm-compact-margin);
+  --cds-grid-breakpoint-sm-spacious-margin: var(--cds-size-grid-sm-spacious-margin);
+  --cds-grid-breakpoint-sm-spacious-gutter: var(--cds-size-grid-sm-spacious-gutter);
+  --cds-grid-breakpoint-md-min-width: var(--cds-size-grid-md-min-width);
+  --cds-grid-breakpoint-md-max-width: var(--cds-size-grid-md-max-width);
+  --cds-grid-breakpoint-md-columns: var(--cds-number-grid-md-columns);
+  --cds-grid-breakpoint-md-balanced-gutter: var(--cds-size-grid-md-balanced-gutter);
+  --cds-grid-breakpoint-md-balanced-margin: var(--cds-size-grid-md-balanced-margin);
+  --cds-grid-breakpoint-md-compact-gutter: var(--cds-size-grid-md-compact-gutter);
+  --cds-grid-breakpoint-md-compact-margin: var(--cds-size-grid-md-compact-margin);
+  --cds-grid-breakpoint-md-spacious-gutter: var(--cds-size-grid-md-spacious-gutter);
+  --cds-grid-breakpoint-md-spacious-margin: var(--cds-size-grid-md-spacious-margin);
+  --cds-grid-breakpoint-lg-min-width: var(--cds-size-grid-lg-min-width);
+  --cds-grid-breakpoint-lg-max-width: var(--cds-size-grid-lg-max-width);
+  --cds-grid-breakpoint-lg-columns: var(--cds-number-grid-lg-columns);
+  --cds-grid-breakpoint-lg-balanced-gutter: var(--cds-size-grid-lg-balanced-gutter);
+  --cds-grid-breakpoint-lg-balanced-margin: var(--cds-size-grid-lg-balanced-margin);
+  --cds-grid-breakpoint-lg-compact-gutter: var(--cds-size-grid-lg-compact-gutter);
+  --cds-grid-breakpoint-lg-compact-margin: var(--cds-size-grid-lg-compact-margin);
+  --cds-grid-breakpoint-lg-spacious-margin: var(--cds-size-grid-lg-spacious-margin);
+  --cds-grid-breakpoint-lg-spacious-gutter: var(--cds-size-grid-lg-spacious-gutter);
+  --cds-grid-breakpoint-xl-min-width: var(--cds-size-grid-xl-min-width);
+  --cds-grid-breakpoint-xl-max-width: var(--cds-size-grid-xl-max-width);
+  --cds-grid-breakpoint-xl-columns: var(--cds-number-grid-xl-columns);
+  --cds-grid-breakpoint-xl-balanced-gutter: var(--cds-size-grid-xl-balanced-gutter);
+  --cds-grid-breakpoint-xl-balanced-margin: var(--cds-size-grid-xl-balanced-margin);
+  --cds-grid-breakpoint-xl-compact-gutter: var(--cds-size-grid-xl-compact-gutter);
+  --cds-grid-breakpoint-xl-compact-margin: var(--cds-size-grid-xl-compact-margin);
+  --cds-grid-breakpoint-xl-spacious-margin: var(--cds-size-grid-xl-spacious-margin);
+  --cds-grid-breakpoint-xl-spacious-gutter: var(--cds-size-grid-xl-spacious-gutter);
+  --cds-grid-breakpoint-2xl-min-width: var(--cds-size-grid-2xl-min-width);
+  --cds-grid-breakpoint-2xl-columns: var(--cds-number-grid-2xl-columns);
+  --cds-grid-breakpoint-2xl-balanced-gutter: var(--cds-size-grid-2xl-balanced-gutter);
+  --cds-grid-breakpoint-2xl-balanced-margin: var(--cds-size-grid-2xl-balanced-margin);
+  --cds-grid-breakpoint-2xl-compact-gutter: var(--cds-size-grid-2xl-compact-gutter);
+  --cds-grid-breakpoint-2xl-compact-margin: var(--cds-size-grid-2xl-compact-margin);
+  --cds-grid-breakpoint-2xl-spacious-gutter: var(--cds-size-grid-2xl-spacious-gutter);
+  --cds-grid-breakpoint-2xl-spacious-margin: var(--cds-size-grid-2xl-spacious-margin);
+  --cds-grid-responsive-desktop-phone-desktop-min-width: var(--cds-size-grid-2xl-min-width);
+  --cds-grid-responsive-desktop-phone-desktop-max-width: var(--cds-size-grid-2xl-max-width);
+  --cds-grid-responsive-desktop-phone-desktop-columns: var(--cds-number-grid-2xl-columns);
+  --cds-grid-responsive-desktop-phone-desktop-balanced-margin: var(--cds-size-grid-2xl-balanced-margin);
+  --cds-grid-responsive-desktop-phone-desktop-balanced-gutter: var(--cds-size-grid-2xl-balanced-gutter);
+  --cds-grid-responsive-desktop-phone-desktop-compact-margin: var(--cds-size-grid-2xl-compact-margin);
+  --cds-grid-responsive-desktop-phone-desktop-compact-gutter: var(--cds-size-grid-2xl-compact-gutter);
+  --cds-grid-responsive-desktop-phone-desktop-spacious-gutter: var(--cds-size-grid-2xl-spacious-gutter);
+  --cds-grid-responsive-desktop-phone-desktop-spacious-margin: var(--cds-size-grid-2xl-spacious-margin);
+  --cds-grid-responsive-desktop-phone-laptop-min-width: var(--cds-size-grid-xl-min-width);
+  --cds-grid-responsive-desktop-phone-laptop-max-width: var(--cds-size-grid-xl-max-width);
+  --cds-grid-responsive-desktop-phone-laptop-columns: var(--cds-number-grid-xl-columns);
+  --cds-grid-responsive-desktop-phone-laptop-balanced-gutter: var(--cds-size-grid-xl-balanced-gutter);
+  --cds-grid-responsive-desktop-phone-laptop-balanced-margin: var(--cds-size-grid-xl-balanced-margin);
+  --cds-grid-responsive-desktop-phone-laptop-compact-gutter: var(--cds-size-grid-xl-compact-gutter);
+  --cds-grid-responsive-desktop-phone-laptop-compact-margin: var(--cds-size-grid-xl-compact-margin);
+  --cds-grid-responsive-desktop-phone-laptop-spacious-margin: var(--cds-size-grid-xl-spacious-margin);
+  --cds-grid-responsive-desktop-phone-laptop-spacious-gutter: var(--cds-size-grid-xl-spacious-gutter);
+  --cds-grid-responsive-desktop-phone-tablet-min-width: var(--cds-size-grid-md-min-width);
+  --cds-grid-responsive-desktop-phone-tablet-max-width: var(--cds-size-grid-lg-max-width);
+  --cds-grid-responsive-desktop-phone-tablet-columns: var(--cds-number-grid-md-columns);
+  --cds-grid-responsive-desktop-phone-tablet-balanced-gutter: var(--cds-size-grid-md-balanced-gutter);
+  --cds-grid-responsive-desktop-phone-tablet-balanced-margin: var(--cds-size-grid-md-balanced-margin);
+  --cds-grid-responsive-desktop-phone-tablet-compact-gutter: var(--cds-size-grid-md-compact-gutter);
+  --cds-grid-responsive-desktop-phone-tablet-compact-margin: var(--cds-size-grid-md-compact-margin);
+  --cds-grid-responsive-desktop-phone-tablet-spacious-margin: var(--cds-size-grid-md-spacious-margin);
+  --cds-grid-responsive-desktop-phone-tablet-spacious-gutter: var(--cds-size-grid-md-spacious-gutter);
+  --cds-grid-responsive-desktop-phone-phone-min-width: var(--cds-size-grid-xs-min-width);
+  --cds-grid-responsive-desktop-phone-phone-max-width: var(--cds-size-grid-sm-max-width);
+  --cds-grid-responsive-desktop-phone-phone-columns: var(--cds-number-grid-xs-columns);
+  --cds-grid-responsive-desktop-phone-phone-balanced-gutter: var(--cds-size-grid-xs-balanced-gutter);
+  --cds-grid-responsive-desktop-phone-phone-balanced-margin: var(--cds-size-grid-xs-balanced-margin);
+  --cds-grid-responsive-desktop-phone-phone-compact-gutter: var(--cds-size-grid-xs-compact-gutter);
+  --cds-grid-responsive-desktop-phone-phone-compact-margin: var(--cds-size-grid-xs-compact-margin);
+  --cds-grid-responsive-desktop-phone-phone-spacious-margin: var(--cds-size-grid-xs-spacious-margin);
+  --cds-grid-responsive-desktop-phone-phone-spacious-gutter: var(--cds-size-grid-xs-spacious-gutter);
+  --cds-grid-responsive-desktop-tablet-desktop-min-width: var(--cds-size-grid-2xl-min-width);
+  --cds-grid-responsive-desktop-tablet-desktop-max-width: var(--cds-size-grid-2xl-max-width);
+  --cds-grid-responsive-desktop-tablet-desktop-columns: var(--cds-number-grid-2xl-columns);
+  --cds-grid-responsive-desktop-tablet-desktop-compact-margin: var(--cds-size-grid-2xl-compact-margin);
+  --cds-grid-responsive-desktop-tablet-desktop-compact-gutter: var(--cds-size-grid-2xl-compact-gutter);
+  --cds-grid-responsive-desktop-tablet-desktop-balanced-gutter: var(--cds-size-grid-2xl-balanced-gutter);
+  --cds-grid-responsive-desktop-tablet-desktop-balanced-margin: var(--cds-size-grid-2xl-balanced-margin);
+  --cds-grid-responsive-desktop-tablet-desktop-spacious-margin: var(--cds-size-grid-2xl-spacious-margin);
+  --cds-grid-responsive-desktop-tablet-desktop-spacious-gutter: var(--cds-size-grid-2xl-spacious-gutter);
+  --cds-grid-responsive-desktop-tablet-laptop-min-width: var(--cds-size-grid-xl-min-width);
+  --cds-grid-responsive-desktop-tablet-laptop-max-width: var(--cds-size-grid-xl-max-width);
+  --cds-grid-responsive-desktop-tablet-laptop-columns: var(--cds-number-grid-xl-columns);
+  --cds-grid-responsive-desktop-tablet-laptop-compact-gutter: var(--cds-size-grid-xl-compact-gutter);
+  --cds-grid-responsive-desktop-tablet-laptop-compact-margin: var(--cds-size-grid-xl-compact-margin);
+  --cds-grid-responsive-desktop-tablet-laptop-balanced-gutter: var(--cds-size-grid-xl-balanced-gutter);
+  --cds-grid-responsive-desktop-tablet-laptop-balanced-margin: var(--cds-size-grid-xl-balanced-margin);
+  --cds-grid-responsive-desktop-tablet-laptop-spacious-margin: var(--cds-size-grid-xl-spacious-margin);
+  --cds-grid-responsive-desktop-tablet-laptop-spacious-gutter: var(--cds-size-grid-xl-spacious-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-min-width: var(--cds-size-grid-lg-min-width);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-max-width: var(--cds-size-grid-lg-max-width);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-columns: var(--cds-number-grid-lg-columns);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-balanced-gutter: var(--cds-size-grid-lg-balanced-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-balanced-margin: var(--cds-size-grid-lg-balanced-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-compact-gutter: var(--cds-size-grid-lg-compact-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-compact-margin: var(--cds-size-grid-lg-compact-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-spacious-margin: var(--cds-size-grid-lg-spacious-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-spacious-gutter: var(--cds-size-grid-lg-spacious-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-min-width: var(--cds-size-grid-md-min-width);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-max-width: var(--cds-size-grid-md-max-width);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-columns: var(--cds-number-grid-md-columns);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-compact-gutter: var(--cds-size-grid-md-compact-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-compact-margin: var(--cds-size-grid-md-compact-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-balanced-margin: var(--cds-size-grid-md-balanced-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-balanced-gutter: var(--cds-size-grid-md-balanced-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-spacious-margin: var(--cds-size-grid-md-spacious-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-spacious-gutter: var(--cds-size-grid-md-spacious-gutter);
+  --cds-text-display-7xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-7xl-font-weight: var(--cds-text-font-weight-medium); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-7xl-line-height: var(--cds-size-line-height-20); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-7xl-font-size: var(--cds-size-font-7xl); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-7xl-letter-spacing: var(--cds-size-letter-spacing-tightest); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-6xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-6xl-font-weight: var(--cds-text-font-weight-medium); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-6xl-line-height: var(--cds-size-line-height-16); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-6xl-font-size: var(--cds-size-font-6xl); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-display-6xl-letter-spacing: var(--cds-size-letter-spacing-tightest); /** An extra large size for headlines in featured or highlighted content blocks. */
+  --cds-text-heading-5xl-font-family: var(--cds-text-font-family-brand); /** This style maps to an h1. */
+  --cds-text-heading-5xl-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h1. */
+  --cds-text-heading-5xl-line-height: var(--cds-size-line-height-14); /** This style maps to an h1. */
+  --cds-text-heading-5xl-font-size: var(--cds-size-font-5xl); /** This style maps to an h1. */
+  --cds-text-heading-5xl-letter-spacing: var(--cds-size-letter-spacing-tightest); /** This style maps to an h1. */
+  --cds-text-heading-4xl-font-family: var(--cds-text-font-family-brand); /** This style maps to an h2. */
+  --cds-text-heading-4xl-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h2. */
+  --cds-text-heading-4xl-line-height: var(--cds-size-line-height-12); /** This style maps to an h2. */
+  --cds-text-heading-4xl-font-size: var(--cds-size-font-4xl); /** This style maps to an h2. */
+  --cds-text-heading-4xl-letter-spacing: var(--cds-size-letter-spacing-tighter); /** This style maps to an h2. */
+  --cds-text-heading-3xl-font-family: var(--cds-text-font-family-brand); /** This style maps to an h3. */
+  --cds-text-heading-3xl-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h3. */
+  --cds-text-heading-3xl-line-height: var(--cds-size-line-height-9); /** This style maps to an h3. */
+  --cds-text-heading-3xl-font-size: var(--cds-size-font-3xl); /** This style maps to an h3. */
+  --cds-text-heading-3xl-letter-spacing: var(--cds-size-letter-spacing-tight); /** This style maps to an h3. */
+  --cds-text-heading-2xl-font-family: var(--cds-text-font-family-brand); /** This style maps to an h4. */
+  --cds-text-heading-2xl-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h4. */
+  --cds-text-heading-2xl-line-height: var(--cds-size-line-height-7); /** This style maps to an h4. */
+  --cds-text-heading-2xl-font-size: var(--cds-size-font-2xl); /** This style maps to an h4. */
+  --cds-text-heading-2xl-letter-spacing: var(--cds-size-letter-spacing-tight); /** This style maps to an h4. */
+  --cds-text-heading-xl-font-family: var(--cds-text-font-family-brand); /** This style maps to an h5. */
+  --cds-text-heading-xl-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h5. */
+  --cds-text-heading-xl-line-height: var(--cds-size-line-height-6); /** This style maps to an h5. */
+  --cds-text-heading-xl-font-size: var(--cds-size-font-xl); /** This style maps to an h5. */
+  --cds-text-heading-xl-letter-spacing: var(--cds-size-letter-spacing-tight); /** This style maps to an h5. */
+  --cds-text-heading-lg-font-family: var(--cds-text-font-family-brand); /** This style maps to an h6. */
+  --cds-text-heading-lg-font-weight: var(--cds-text-font-weight-semibold); /** This style maps to an h6. */
+  --cds-text-heading-lg-line-height: var(--cds-size-line-height-6); /** This style maps to an h6. */
+  --cds-text-heading-lg-font-size: var(--cds-size-font-lg); /** This style maps to an h6. */
+  --cds-text-body-xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-xl-font-weight: var(--cds-text-font-weight-medium); /** An extra large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-xl-line-height: var(--cds-size-line-height-8); /** An extra large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-xl-font-size: var(--cds-size-font-xl); /** An extra large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-xl-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** An extra large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-lg-font-family: var(--cds-text-font-family-brand); /** A large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-lg-font-weight: var(--cds-text-font-weight-medium); /** A large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-lg-line-height: var(--cds-size-line-height-7); /** A large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-lg-font-size: var(--cds-size-font-lg); /** A large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-lg-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** A large size for body copy in featured or highlighted content blocks. */
+  --cds-text-body-md-font-family: var(--cds-text-font-family-brand); /** A medium size for comfortable reading text blocks. */
+  --cds-text-body-md-font-weight: var(--cds-text-font-weight-medium); /** A medium size for comfortable reading text blocks. */
+  --cds-text-body-md-line-height: var(--cds-size-line-height-6); /** A medium size for comfortable reading text blocks. */
+  --cds-text-body-md-font-size: var(--cds-size-font-md); /** A medium size for comfortable reading text blocks. */
+  --cds-text-body-md-paragraph-spacing: var(--cds-size-paragraph-spacing-4); /** A medium size for comfortable reading text blocks. */
+  --cds-text-body-sm-font-family: var(--cds-text-font-family-brand); /** The default size for interface text. */
+  --cds-text-body-sm-font-weight: var(--cds-text-font-weight-medium); /** The default size for interface text. */
+  --cds-text-body-sm-line-height: var(--cds-size-line-height-5); /** The default size for interface text. */
+  --cds-text-body-sm-font-size: var(--cds-size-font-sm); /** The default size for interface text. */
+  --cds-text-body-sm-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The default size for interface text. */
+  --cds-text-body-2xs-font-family: var(--cds-text-font-family-brand); /** The smallest size for helper text and legalese. */
+  --cds-text-body-2xs-font-weight: var(--cds-text-font-weight-medium); /** The smallest size for helper text and legalese. */
+  --cds-text-body-2xs-line-height: var(--cds-size-line-height-4); /** The smallest size for helper text and legalese. */
+  --cds-text-body-2xs-font-size: var(--cds-size-font-2xs); /** The smallest size for helper text and legalese. */
+  --cds-text-body-2xs-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The smallest size for helper text and legalese. */
+  --cds-text-body-bold-xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-xl-font-weight: var(--cds-text-font-weight-bold); /** An extra large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-xl-line-height: var(--cds-size-line-height-8); /** An extra large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-xl-font-size: var(--cds-size-font-xl); /** An extra large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-xl-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** An extra large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-lg-font-family: var(--cds-text-font-family-brand); /** A large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-lg-font-weight: var(--cds-text-font-weight-bold); /** A large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-lg-line-height: var(--cds-size-line-height-7); /** A large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-lg-font-size: var(--cds-size-font-lg); /** A large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-lg-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** A large size for body copy in featured or highlighted content blocks, with heavy emphasis. */
+  --cds-text-body-bold-md-font-family: var(--cds-text-font-family-brand); /** A medium size for comfortable reading text blocks, with heavy emphasis. */
+  --cds-text-body-bold-md-font-weight: var(--cds-text-font-weight-bold); /** A medium size for comfortable reading text blocks, with heavy emphasis. */
+  --cds-text-body-bold-md-line-height: var(--cds-size-line-height-6); /** A medium size for comfortable reading text blocks, with heavy emphasis. */
+  --cds-text-body-bold-md-font-size: var(--cds-size-font-md); /** A medium size for comfortable reading text blocks, with heavy emphasis. */
+  --cds-text-body-bold-md-paragraph-spacing: var(--cds-size-paragraph-spacing-4); /** A medium size for comfortable reading text blocks, with heavy emphasis. */
+  --cds-text-body-bold-sm-font-family: var(--cds-text-font-family-brand); /** The default size for interface text, with heavy emphasis. */
+  --cds-text-body-bold-sm-font-weight: var(--cds-text-font-weight-bold); /** The default size for interface text, with heavy emphasis. */
+  --cds-text-body-bold-sm-line-height: var(--cds-size-line-height-5); /** The default size for interface text, with heavy emphasis. */
+  --cds-text-body-bold-sm-font-size: var(--cds-size-font-sm); /** The default size for interface text, with heavy emphasis. */
+  --cds-text-body-bold-sm-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The default size for interface text, with heavy emphasis. */
+  --cds-text-body-bold-2xs-font-family: var(--cds-text-font-family-brand); /** The smallest size for helper text and legalese, with heavy emphasis. */
+  --cds-text-body-bold-2xs-font-weight: var(--cds-text-font-weight-bold); /** The smallest size for helper text and legalese, with heavy emphasis. */
+  --cds-text-body-bold-2xs-line-height: var(--cds-size-line-height-4); /** The smallest size for helper text and legalese, with heavy emphasis. */
+  --cds-text-body-bold-2xs-font-size: var(--cds-size-font-2xs); /** The smallest size for helper text and legalese, with heavy emphasis. */
+  --cds-text-body-bold-2xs-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The smallest size for helper text and legalese, with heavy emphasis. */
+  --cds-text-body-italic-xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-xl-line-height: var(--cds-size-line-height-8); /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-xl-font-size: var(--cds-size-font-xl); /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-xl-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** An extra large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-font-family: var(--cds-text-font-family-brand); /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-line-height: var(--cds-size-line-height-7); /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-font-size: var(--cds-size-font-lg); /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-lg-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** A large size for body copy in featured or highlighted content blocks, with light emphasis. */
+  --cds-text-body-italic-md-font-family: var(--cds-text-font-family-brand); /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-md-line-height: var(--cds-size-line-height-6); /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-md-font-size: var(--cds-size-font-md); /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-md-paragraph-spacing: var(--cds-size-paragraph-spacing-4); /** A medium size for comfortable reading text blocks, with light emphasis. */
+  --cds-text-body-italic-sm-font-family: var(--cds-text-font-family-brand); /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-sm-line-height: var(--cds-size-line-height-5); /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-sm-font-size: var(--cds-size-font-sm); /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-sm-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The default size for interface text, with light emphasis. */
+  --cds-text-body-italic-2xs-font-family: var(--cds-text-font-family-brand); /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-italic-2xs-line-height: var(--cds-size-line-height-4); /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-italic-2xs-font-size: var(--cds-size-font-2xs); /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-italic-2xs-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The smallest size for helper text and legalese, with light emphasis. */
+  --cds-text-body-bold-italic-xl-font-family: var(--cds-text-font-family-brand); /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-xl-line-height: var(--cds-size-line-height-8); /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-xl-font-size: var(--cds-size-font-xl); /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-xl-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** An extra large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-font-family: var(--cds-text-font-family-brand); /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-line-height: var(--cds-size-line-height-7); /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-font-size: var(--cds-size-font-lg); /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-lg-paragraph-spacing: var(--cds-size-paragraph-spacing-5); /** A large size for body copy in featured or highlighted content blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-font-family: var(--cds-text-font-family-brand); /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-line-height: var(--cds-size-line-height-6); /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-font-size: var(--cds-size-font-md); /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-md-paragraph-spacing: var(--cds-size-paragraph-spacing-4); /** A medium size for comfortable reading text blocks, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-font-family: var(--cds-text-font-family-brand); /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-line-height: var(--cds-size-line-height-5); /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-font-size: var(--cds-size-font-sm); /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-sm-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The default size for interface text, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-font-family: var(--cds-text-font-family-brand); /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-line-height: var(--cds-size-line-height-4); /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-font-size: var(--cds-size-font-2xs); /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-body-bold-italic-2xs-paragraph-spacing: var(--cds-size-paragraph-spacing-3); /** The smallest size for helper text and legalese, with maximum emphasis. */
+  --cds-text-link-xl-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for extra large size body copy. */
+  --cds-text-link-xl-font-weight: var(--cds-text-font-weight-medium); /** Hyperlink text style for extra large size body copy. */
+  --cds-text-link-xl-line-height: var(--cds-size-line-height-8); /** Hyperlink text style for extra large size body copy. */
+  --cds-text-link-xl-font-size: var(--cds-size-font-xl); /** Hyperlink text style for extra large size body copy. */
+  --cds-text-link-xl-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for extra large size body copy. */
+  --cds-text-link-lg-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for large size body copy. */
+  --cds-text-link-lg-font-weight: var(--cds-text-font-weight-medium); /** Hyperlink text style for large size body copy. */
+  --cds-text-link-lg-line-height: var(--cds-size-line-height-7); /** Hyperlink text style for large size body copy. */
+  --cds-text-link-lg-font-size: var(--cds-size-font-lg); /** Hyperlink text style for large size body copy. */
+  --cds-text-link-lg-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for large size body copy. */
+  --cds-text-link-md-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for medium size body copy. */
+  --cds-text-link-md-font-weight: var(--cds-text-font-weight-medium); /** Hyperlink text style for medium size body copy. */
+  --cds-text-link-md-line-height: var(--cds-size-line-height-6); /** Hyperlink text style for medium size body copy. */
+  --cds-text-link-md-font-size: var(--cds-size-font-md); /** Hyperlink text style for medium size body copy. */
+  --cds-text-link-md-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for medium size body copy. */
+  --cds-text-link-sm-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for small (default) size body copy. */
+  --cds-text-link-sm-font-weight: var(--cds-text-font-weight-medium); /** Hyperlink text style for small (default) size body copy. */
+  --cds-text-link-sm-line-height: var(--cds-size-line-height-5); /** Hyperlink text style for small (default) size body copy. */
+  --cds-text-link-sm-font-size: var(--cds-size-font-sm); /** Hyperlink text style for small (default) size body copy. */
+  --cds-text-link-sm-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for small (default) size body copy. */
+  --cds-text-link-2xs-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for the smallest size body copy. */
+  --cds-text-link-2xs-font-weight: var(--cds-text-font-weight-medium); /** Hyperlink text style for the smallest size body copy. */
+  --cds-text-link-2xs-line-height: var(--cds-size-line-height-4); /** Hyperlink text style for the smallest size body copy. */
+  --cds-text-link-2xs-font-size: var(--cds-size-font-2xs); /** Hyperlink text style for the smallest size body copy. */
+  --cds-text-link-2xs-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for the smallest size body copy. */
+  --cds-text-link-bold-xl-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for extra large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-xl-font-weight: var(--cds-text-font-weight-bold); /** Hyperlink text style for extra large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-xl-line-height: var(--cds-size-line-height-8); /** Hyperlink text style for extra large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-xl-font-size: var(--cds-size-font-xl); /** Hyperlink text style for extra large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-xl-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for extra large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-lg-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-lg-font-weight: var(--cds-text-font-weight-bold); /** Hyperlink text style for large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-lg-line-height: var(--cds-size-line-height-7); /** Hyperlink text style for large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-lg-font-size: var(--cds-size-font-lg); /** Hyperlink text style for large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-lg-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for large size body copy, with heavy emphasis. */
+  --cds-text-link-bold-md-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for medium size body copy, with heavy emphasis. */
+  --cds-text-link-bold-md-font-weight: var(--cds-text-font-weight-bold); /** Hyperlink text style for medium size body copy, with heavy emphasis. */
+  --cds-text-link-bold-md-line-height: var(--cds-size-line-height-6); /** Hyperlink text style for medium size body copy, with heavy emphasis. */
+  --cds-text-link-bold-md-font-size: var(--cds-size-font-md); /** Hyperlink text style for medium size body copy, with heavy emphasis. */
+  --cds-text-link-bold-md-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for medium size body copy, with heavy emphasis. */
+  --cds-text-link-bold-sm-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for small (default) size body copy, with heavy emphasis. */
+  --cds-text-link-bold-sm-font-weight: var(--cds-text-font-weight-bold); /** Hyperlink text style for small (default) size body copy, with heavy emphasis. */
+  --cds-text-link-bold-sm-line-height: var(--cds-size-line-height-5); /** Hyperlink text style for small (default) size body copy, with heavy emphasis. */
+  --cds-text-link-bold-sm-font-size: var(--cds-size-font-sm); /** Hyperlink text style for small (default) size body copy, with heavy emphasis. */
+  --cds-text-link-bold-sm-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for small (default) size body copy, with heavy emphasis. */
+  --cds-text-link-bold-2xs-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for the smallest size body copy, with heavy emphasis. */
+  --cds-text-link-bold-2xs-font-weight: var(--cds-text-font-weight-bold); /** Hyperlink text style for the smallest size body copy, with heavy emphasis. */
+  --cds-text-link-bold-2xs-line-height: var(--cds-size-line-height-4); /** Hyperlink text style for the smallest size body copy, with heavy emphasis. */
+  --cds-text-link-bold-2xs-font-size: var(--cds-size-font-2xs); /** Hyperlink text style for the smallest size body copy, with heavy emphasis. */
+  --cds-text-link-bold-2xs-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for the smallest size body copy, with heavy emphasis. */
+  --cds-text-link-italic-xl-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-xl-line-height: var(--cds-size-line-height-8); /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-xl-font-size: var(--cds-size-font-xl); /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-xl-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for extra large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-line-height: var(--cds-size-line-height-7); /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-font-size: var(--cds-size-font-lg); /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-lg-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for large size body copy, with light emphasis. */
+  --cds-text-link-italic-md-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-md-line-height: var(--cds-size-line-height-6); /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-md-font-size: var(--cds-size-font-md); /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-md-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for medium size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-line-height: var(--cds-size-line-height-5); /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-font-size: var(--cds-size-font-sm); /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-sm-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for small (default) size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-line-height: var(--cds-size-line-height-4); /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-font-size: var(--cds-size-font-2xs); /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-italic-2xs-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for the smallest size body copy, with light emphasis. */
+  --cds-text-link-bold-italic-xl-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-xl-line-height: var(--cds-size-line-height-8); /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-xl-font-size: var(--cds-size-font-xl); /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-xl-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for extra large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-line-height: var(--cds-size-line-height-7); /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-font-size: var(--cds-size-font-lg); /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-lg-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for large size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-line-height: var(--cds-size-line-height-6); /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-font-size: var(--cds-size-font-md); /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-md-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for medium size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-line-height: var(--cds-size-line-height-5); /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-font-size: var(--cds-size-font-sm); /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-sm-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for small (default) size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-font-family: var(--cds-text-font-family-brand); /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-line-height: var(--cds-size-line-height-4); /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-font-size: var(--cds-size-font-2xs); /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-link-bold-italic-2xs-text-decoration: var(--cds-text-decoration-underline); /** Hyperlink text style for the smallest size body copy, with maximum emphasis. */
+  --cds-text-tabular-num-xl-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-xl-font-weight: var(--cds-text-font-weight-medium); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-xl-line-height: var(--cds-size-line-height-8); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-xl-font-size: var(--cds-size-font-xl); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-xl-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-lg-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-lg-font-weight: var(--cds-text-font-weight-medium); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-lg-line-height: var(--cds-size-line-height-7); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-lg-font-size: var(--cds-size-font-lg); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-lg-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-md-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-md-font-weight: var(--cds-text-font-weight-medium); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-md-line-height: var(--cds-size-line-height-6); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-md-font-size: var(--cds-size-font-md); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-md-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-sm-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-sm-font-weight: var(--cds-text-font-weight-medium); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-sm-line-height: var(--cds-size-line-height-5); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-sm-font-size: var(--cds-size-font-sm); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-sm-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-2xs-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-2xs-font-weight: var(--cds-text-font-weight-medium); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-2xs-line-height: var(--cds-size-line-height-4); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-2xs-font-size: var(--cds-size-font-2xs); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-2xs-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables. */
+  --cds-text-tabular-num-bold-xl-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-xl-font-weight: var(--cds-text-font-weight-bold); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-xl-line-height: var(--cds-size-line-height-8); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-xl-font-size: var(--cds-size-font-xl); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-xl-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-lg-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-lg-font-weight: var(--cds-text-font-weight-bold); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-lg-line-height: var(--cds-size-line-height-7); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-lg-font-size: var(--cds-size-font-lg); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-lg-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-md-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-md-font-weight: var(--cds-text-font-weight-bold); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-md-line-height: var(--cds-size-line-height-6); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-md-font-size: var(--cds-size-font-md); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-md-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-sm-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-sm-font-weight: var(--cds-text-font-weight-bold); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-sm-line-height: var(--cds-size-line-height-5); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-sm-font-size: var(--cds-size-font-sm); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-sm-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-2xs-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-2xs-font-weight: var(--cds-text-font-weight-bold); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-2xs-line-height: var(--cds-size-line-height-4); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-2xs-font-size: var(--cds-size-font-2xs); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-bold-2xs-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with heavy emphasis. */
+  --cds-text-tabular-num-italic-xl-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-xl-line-height: var(--cds-size-line-height-8); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-xl-font-size: var(--cds-size-font-xl); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-xl-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-line-height: var(--cds-size-line-height-7); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-font-size: var(--cds-size-font-lg); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-lg-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-line-height: var(--cds-size-line-height-6); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-font-size: var(--cds-size-font-md); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-md-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-line-height: var(--cds-size-line-height-5); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-font-size: var(--cds-size-font-sm); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-sm-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-line-height: var(--cds-size-line-height-4); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-font-size: var(--cds-size-font-2xs); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-italic-2xs-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with light emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-line-height: var(--cds-size-line-height-8); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-font-size: var(--cds-size-font-xl); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-xl-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-line-height: var(--cds-size-line-height-7); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-font-size: var(--cds-size-font-lg); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-lg-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-line-height: var(--cds-size-line-height-6); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-font-size: var(--cds-size-font-md); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-md-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-line-height: var(--cds-size-line-height-5); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-font-size: var(--cds-size-font-sm); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-sm-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-font-family: var(--cds-text-font-family-brand); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-line-height: var(--cds-size-line-height-4); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-font-size: var(--cds-size-font-2xs); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-tabular-num-bold-italic-2xs-font-variant: var(--cds-text-font-variant-tnum); /** Monospaced text style for numeric data in tables, with maximum emphasis. */
+  --cds-text-label-md-font-family: var(--cds-text-font-family-brand); /** Label style for xlarge size input. */
+  --cds-text-label-md-font-weight: var(--cds-text-font-weight-semibold); /** Label style for xlarge size input. */
+  --cds-text-label-md-line-height: var(--cds-size-line-height-5); /** Label style for xlarge size input. */
+  --cds-text-label-md-font-size: var(--cds-size-font-md); /** Label style for xlarge size input. */
+  --cds-text-label-sm-font-family: var(--cds-text-font-family-brand); /** Label style for large size input. */
+  --cds-text-label-sm-font-weight: var(--cds-text-font-weight-semibold); /** Label style for large size input. */
+  --cds-text-label-sm-line-height: var(--cds-size-line-height-4); /** Label style for large size input. */
+  --cds-text-label-sm-font-size: var(--cds-size-font-sm); /** Label style for large size input. */
+  --cds-text-label-xs-font-family: var(--cds-text-font-family-brand); /** Label style for medium size input. */
+  --cds-text-label-xs-font-weight: var(--cds-text-font-weight-semibold); /** Label style for medium size input. */
+  --cds-text-label-xs-line-height: var(--cds-size-line-height-4); /** Label style for medium size input. */
+  --cds-text-label-xs-font-size: var(--cds-size-font-xs); /** Label style for medium size input. */
+  --cds-text-label-2xs-font-family: var(--cds-text-font-family-brand); /** Label style for small size input, badge, and tag. */
+  --cds-text-label-2xs-font-weight: var(--cds-text-font-weight-semibold); /** Label style for small size input, badge, and tag. */
+  --cds-text-label-2xs-line-height: var(--cds-size-line-height-4); /** Label style for small size input, badge, and tag. */
+  --cds-text-label-2xs-font-size: var(--cds-size-font-2xs); /** Label style for small size input, badge, and tag. */
+  --cds-text-input-placeholder-lg-font-family: var(--cds-text-font-family-brand); /** Placeholder text style for xlarge size input. */
+  --cds-text-input-placeholder-lg-line-height: var(--cds-size-line-height-7); /** Placeholder text style for xlarge size input. */
+  --cds-text-input-placeholder-lg-font-size: var(--cds-size-font-lg); /** Placeholder text style for xlarge size input. */
+  --cds-text-input-placeholder-md-font-family: var(--cds-text-font-family-brand); /** Placeholder text style for large size input. */
+  --cds-text-input-placeholder-md-line-height: var(--cds-size-line-height-6); /** Placeholder text style for large size input. */
+  --cds-text-input-placeholder-md-font-size: var(--cds-size-font-md); /** Placeholder text style for large size input. */
+  --cds-text-input-placeholder-sm-font-family: var(--cds-text-font-family-brand); /** Placeholder text style for medium size input. */
+  --cds-text-input-placeholder-sm-line-height: var(--cds-size-line-height-5); /** Placeholder text style for medium size input. */
+  --cds-text-input-placeholder-sm-font-size: var(--cds-size-font-sm); /** Placeholder text style for medium size input. */
+  --cds-text-input-placeholder-2xs-font-family: var(--cds-text-font-family-brand); /** Placeholder text style for small size input. */
+  --cds-text-input-placeholder-2xs-line-height: var(--cds-size-line-height-4); /** Placeholder text style for small size input. */
+  --cds-text-input-placeholder-2xs-font-size: var(--cds-size-font-2xs); /** Placeholder text style for small size input. */
+  --cds-text-input-value-text-lg-font-family: var(--cds-text-font-family-brand); /** Value text style for xlarge size input. */
+  --cds-text-input-value-text-lg-font-weight: var(--cds-text-font-weight-medium); /** Value text style for xlarge size input. */
+  --cds-text-input-value-text-lg-line-height: var(--cds-size-line-height-7); /** Value text style for xlarge size input. */
+  --cds-text-input-value-text-lg-font-size: var(--cds-size-font-lg); /** Value text style for xlarge size input. */
+  --cds-text-input-value-text-md-font-family: var(--cds-text-font-family-brand); /** Value text style for large size input. */
+  --cds-text-input-value-text-md-font-weight: var(--cds-text-font-weight-medium); /** Value text style for large size input. */
+  --cds-text-input-value-text-md-line-height: var(--cds-size-line-height-6); /** Value text style for large size input. */
+  --cds-text-input-value-text-md-font-size: var(--cds-size-font-md); /** Value text style for large size input. */
+  --cds-text-input-value-text-sm-font-family: var(--cds-text-font-family-brand); /** Value text style for medium size input. */
+  --cds-text-input-value-text-sm-font-weight: var(--cds-text-font-weight-medium); /** Value text style for medium size input. */
+  --cds-text-input-value-text-sm-line-height: var(--cds-size-line-height-5); /** Value text style for medium size input. */
+  --cds-text-input-value-text-sm-font-size: var(--cds-size-font-sm); /** Value text style for medium size input. */
+  --cds-text-input-value-text-2xs-font-family: var(--cds-text-font-family-brand); /** Value text style for small size input. */
+  --cds-text-input-value-text-2xs-font-weight: var(--cds-text-font-weight-medium); /** Value text style for small size input. */
+  --cds-text-input-value-text-2xs-line-height: var(--cds-size-line-height-4); /** Value text style for small size input. */
+  --cds-text-input-value-text-2xs-font-size: var(--cds-size-font-2xs); /** Value text style for small size input. */
+  --cds-text-button-lg-font-family: var(--cds-text-font-family-brand); /** Text style for xlarge size button. */
+  --cds-text-button-lg-font-weight: var(--cds-text-font-weight-bold); /** Text style for xlarge size button. */
+  --cds-text-button-lg-line-height: var(--cds-size-line-height-6); /** Text style for xlarge size button. */
+  --cds-text-button-lg-font-size: var(--cds-size-font-lg); /** Text style for xlarge size button. */
+  --cds-text-button-md-font-family: var(--cds-text-font-family-brand); /** Text style for large size button. */
+  --cds-text-button-md-font-weight: var(--cds-text-font-weight-bold); /** Text style for large size button. */
+  --cds-text-button-md-line-height: var(--cds-size-line-height-5); /** Text style for large size button. */
+  --cds-text-button-md-font-size: var(--cds-size-font-md); /** Text style for large size button. */
+  --cds-text-button-sm-font-family: var(--cds-text-font-family-brand); /** Text style for medium size button. */
+  --cds-text-button-sm-font-weight: var(--cds-text-font-weight-bold); /** Text style for medium size button. */
+  --cds-text-button-sm-line-height: var(--cds-size-line-height-4); /** Text style for medium size button. */
+  --cds-text-button-sm-font-size: var(--cds-size-font-sm); /** Text style for medium size button. */
+  --cds-text-button-2xs-font-family: var(--cds-text-font-family-brand); /** Text style for small size button. */
+  --cds-text-button-2xs-font-weight: var(--cds-text-font-weight-bold); /** Text style for small size button. */
+  --cds-text-button-2xs-line-height: var(--cds-size-line-height-4); /** Text style for small size button. */
+  --cds-text-button-2xs-font-size: var(--cds-size-font-2xs); /** Text style for small size button. */
+  /**
+   * True Blue | 700
+   * #461E96
+   * rgb(70, 30, 150)
+   */
+  --cds-color-brand-core: var(--cds-color-brand-700);
+  /**
+   * True Blue Dark | 900
+   * #211359
+   * rgb(33, 19, 89)
+   */
+  --cds-color-brand-dark: var(--cds-color-brand-900);
+  /**
+   * Core Blue Ultra Light | 50
+   * #E7F7FF
+   * rgb(231, 247, 255)
+   */
+  --cds-color-highlight-ultra-light: var(--cds-color-highlight-50);
+  /**
+   * Core Blue Extra Light | 100
+   * #B7E8FE
+   * rgb(183, 232, 254)
+   */
+  --cds-color-highlight-extra-light: var(--cds-color-highlight-100);
+  /**
+   * Core Blue Light | 200
+   * #80DEFF
+   * rgb(128, 222, 255)
+   */
+  --cds-color-highlight-light: var(--cds-color-highlight-200);
+  /**
+   * Core Blue | 300
+   * #00B4E6
+   * rgb(0, 180, 230)
+   */
+  --cds-color-highlight-core: var(--cds-color-highlight-300);
+  /**
+   * Core Blue Dark | 500
+   * #0073BE
+   * rgb(0, 115, 190)
+   */
+  --cds-color-highlight-dark: var(--cds-color-highlight-500);
+  /**
+   * Core Gray White | 0
+   * #FFFFFF
+   * rgb(255, 255, 255)
+   */
+  --cds-color-neutral-white: var(--cds-color-neutral-0);
+  /**
+   * Core Gray Ultra Light | 50
+   * #F5F5F5
+   * rgb(245, 245, 245)
+   */
+  --cds-color-neutral-ultra-light: var(--cds-color-neutral-50);
+  /**
+   * Core Gray Extra Light | 100
+   * #E8E8E8
+   * rgb(232, 232, 232)
+   */
+  --cds-color-neutral-extra-light: var(--cds-color-neutral-100);
+  /**
+   * Core Gray Light | 200
+   * #CACACA
+   * rgb(202, 202, 202)
+   */
+  --cds-color-neutral-light: var(--cds-color-neutral-200);
+  /**
+   * Core Gray | 700
+   * #3B3B3B
+   * rgb(59, 59, 59)
+   */
+  --cds-color-neutral-core: var(--cds-color-neutral-700);
+  /**
+   * Core Gray Dark | 900
+   * #1E1E1E
+   * rgb(30, 30, 30)
+   */
+  --cds-color-neutral-dark: var(--cds-color-neutral-900);
+  /**
+   * Core Magenta Light | 100
+   * #FED0E2
+   * rgb(254, 208, 226)
+   */
+  --cds-color-accent-light: var(--cds-color-accent-100);
+  /**
+   * Core Magenta | 500
+   * #E6008C
+   * rgb(230, 0, 140)
+   */
+  --cds-color-accent-core: var(--cds-color-accent-500);
+  /**
+   * Core Magenta Dark | 700
+   * #750748
+   * rgb(117, 7, 72)
+   */
+  --cds-color-accent-dark: var(--cds-color-accent-700);
+  /**
+   * Core Green Light | 50
+   * #D8FEE7
+   * rgb(216, 254, 231)
+   */
+  --cds-color-success-light: var(--cds-color-success-50);
+  /**
+   * Core Green | 200
+   * #00DC8C
+   * rgb(0, 220, 140)
+   */
+  --cds-color-success-core: var(--cds-color-success-200);
+  /**
+   * Core Green Dark | 500
+   * #007F50
+   * rgb(0, 127, 80)
+   */
+  --cds-color-success-dark: var(--cds-color-success-500);
+  /**
+   * Core Red Light | 100
+   * #FCD9D1
+   * rgb(252, 217, 209)
+   */
+  --cds-color-danger-light: var(--cds-color-danger-100);
+  /**
+   * Core Red | 500
+   * #E22F00
+   * rgb(226, 47, 0)
+   */
+  --cds-color-danger-core: var(--cds-color-danger-500);
+  /**
+   * Core Red Dark | 600
+   * #9E2305
+   * rgb(158, 35, 5)
+   */
+  --cds-color-danger-dark: var(--cds-color-danger-600);
+  /**
+   * Core Yellow Light | 100
+   * #FFF8BA
+   * rgb(255, 248, 186)
+   */
+  --cds-color-warning-light: var(--cds-color-warning-100);
+  /**
+   * Core Yellow | 300
+   * #FAEB1E
+   * rgb(250, 235, 30)
+   */
+  --cds-color-warning-core: var(--cds-color-warning-300);
+  /**
+   * Core Yellow Dark | 600
+   * #FFA400
+   * rgb(255, 164, 0)
+   */
+  --cds-color-warning-dark: var(--cds-color-warning-600);
+  --cds-color-text-primary: var(--cds-color-neutral-700); /** Neutral 700 (Core) | Use for most body text and input values. */
+  --cds-color-text-secondary: var(--cds-color-neutral-500); /** Neutral 500 | Use for text that is deemphasized or muted, such as input placeholders or legalese. */
+  --cds-color-text-heading-primary: var(--cds-color-brand-900); /** Brand 900 (Dark) | Use sparingly for the primary heading text of a page. */
+  --cds-color-text-heading: var(--cds-color-neutral-900); /** Neutral 900 (Dark) | Use for most heading text and input labels. */
+  --cds-color-text-link: var(--cds-color-brand-700); /** Brand 700 (Core) | Use for links (body or heading) and icons that appear in line with link text. */
+  --cds-color-text-highlight: var(--cds-color-highlight-500); /** Highlight 500 (Dark) | Use sparingly to highlight text, such as block quotes, subheadings, info blocks, callout boxes, or statistics. */
+  --cds-color-text-accent: var(--cds-color-accent-500); /** Accent 500 (Core) | Use sparingly for large accent text, such as block quotes or statistics. Avoid on body size text. */
+  --cds-color-text-accent-secondary: var(--cds-color-accent-700); /** Accent 700 (Dark) | Use sparingly for accent text in info boxes with background accent secondary color. */
+  --cds-color-text-success: var(--cds-color-success-500); /** Success 500 (Dark) | Use to indicate positive sentiment, such as confirm, success, increase, available, or complete. */
+  --cds-color-text-warning: var(--cds-color-warning-800); /** Warning 800 | Use to indicate cautious sentiment, such as warning, changed, or delayed. Use only on background primary. */
+  --cds-color-text-warning-secondary: var(--cds-color-warning-900); /** Warning 900 | Use to indicate cautious sentiment, such as warning, changed, or delayed. Use only on background secondary or background warning secondary. */
+  --cds-color-text-danger: var(--cds-color-danger-500); /** Danger 500 (Core) | Use to indicate negative sentiment, such as delete, error, failed, decrease, blocked, or incomplete. Use only on background primary. */
+  --cds-color-text-danger-secondary: var(--cds-color-danger-600); /** Danger 600 (Dark) | Use to indicate negative sentiment, such as delete, error, failed, decrease, blocked, or incomplete. Use only on background secondary or background danger secondary. */
+  --cds-color-text-primary-inverse: var(--cds-color-neutral-0); /** Neutral 0 (White) | Use for body or heading text on dark backgrounds. */
+  --cds-color-text-secondary-inverse: var(--cds-color-neutral-100); /** Neutral 100 (Extra Light) | Use for deemphasized body text on dark backgrounds. */
+  --cds-color-text-highlight-inverse: var(--cds-color-highlight-300); /** Highlight 300 (Core) | Use for body links, and sparingly to highlight text, such as block quotes or statistics on dark backgrounds. */
+  --cds-color-text-link-inverse: var(--cds-color-highlight-300); /** Highlight 300 (Core) | Use for body links, and sparingly to highlight text, such as block quotes or statistics on dark backgrounds. */
+  --cds-color-text-success-inverse: var(--cds-color-success-200); /** Success 200 (Core) | Use to indicate positive sentiment, such as confirm, success, increase, available, or complete on dark backgrounds. */
+  --cds-color-text-warning-inverse: var(--cds-color-warning-300); /** Warning 300 (Core) | Use to indicate cautious sentiment, such as warning, changed, or delayed on dark backgrounds. */
+  --cds-color-text-danger-inverse: var(--cds-color-danger-300); /** Danger 300 | Use to indicate negative sentiment, such as delete, error, failed, decrease, blocked, or incomplete on dark backgrounds. */
+  --cds-color-interactive-primary: var(--cds-color-brand-700); /** Brand 700 (Core) | Use to convey interactivity of text, icon, or component. Also use to emphasize active items within an interactive list. */
+  --cds-color-interactive-primary-hover: var(--cds-color-brand-800); /** Brand 800 | Use for the hover state of interactive primary color. */
+  --cds-color-interactive-primary-focus: var(--cds-color-brand-800); /** Brand 800 | Use for the focus state of interactive primary color. */
+  --cds-color-interactive-primary-active: var(--cds-color-brand-900); /** Brand 900 (Dark) | Use for the active (pressed) state of interactive primary color. */
+  --cds-color-interactive-highlight: var(--cds-color-highlight-500); /** Highlight 500 (Dark) | Use sparingly to highlight an interactive element. It can also be used as the hover state of text links. */
+  --cds-color-interactive-highlight-hover: var(--cds-color-highlight-600); /** Highlight 600 | Use for the hover state of interactive highlight color. */
+  --cds-color-interactive-highlight-focus: var(--cds-color-highlight-600); /** Highlight 600 | Use for the focus state of interactive highlight color. */
+  --cds-color-interactive-highlight-active: var(--cds-color-highlight-700); /** Highlight 700 | Use for the active (pressed) state of interactive highlight color. */
+  --cds-color-interactive-secondary: var(--cds-color-neutral-400); /** Neutral 400 | Use for deemphasized interactivity, such as the borders on inputs and checkboxes, or clear and close buttons. Do not use on text. */
+  --cds-color-interactive-secondary-hover: var(--cds-color-brand-800); /** Brand 800 | Use for the hover state of interactive secondary color. */
+  --cds-color-interactive-secondary-focus: var(--cds-color-brand-800); /** Brand 800 | Use for the focus state of interactive secondary color. */
+  --cds-color-interactive-secondary-active: var(--cds-color-brand-900); /** Brand 900 (Dark) | Use for the active (pressed) state of interactive secondary color. */
+  --cds-color-interactive-disabled: var(--cds-color-neutral-200); /** Neutral 200 (Light) | Use to convey disabled interactivity of text, icon, or component. */
+  --cds-color-interactive-success: var(--cds-color-success-500); /** Success 500 (Dark) | Use to convey positive interactivity of text, icon, or component. */
+  --cds-color-interactive-success-hover: var(--cds-color-success-600); /** Success 600 | Use for the hover state of interactive success color. */
+  --cds-color-interactive-success-focus: var(--cds-color-success-600); /** Success 600 | Use for the focus state of interactive success color. */
+  --cds-color-interactive-success-active: var(--cds-color-success-700); /** Success 700 | Use for the active (pressed) state of interactive success color. */
+  --cds-color-interactive-danger: var(--cds-color-danger-500); /** Danger 500 (Core) | Use to convey negative interactivity of text, icon, or component. For text, use only on background primary (white). */
+  --cds-color-interactive-danger-hover: var(--cds-color-danger-600); /** Danger 600 (Dark) | Use for the hover state of interactive danger color. */
+  --cds-color-interactive-danger-focus: var(--cds-color-danger-600); /** Danger 600 (Dark) | Use for the focus state of interactive danger color. */
+  --cds-color-interactive-danger-active: var(--cds-color-danger-700); /** Danger 700 | Use for the active (pressed) state of interactive danger color. */
+  --cds-color-interactive-warning: var(--cds-color-warning-300); /** Warning 300 (Core) | Use to convey cautious interactivity of a component. Do not use for text or icon. */
+  --cds-color-interactive-warning-hover: var(--cds-color-warning-500); /** Warning 500 | Use for the hover state of interactive warning color. */
+  --cds-color-interactive-warning-focus: var(--cds-color-warning-500); /** Warning 500 | Use for the focus state of interactive warning color. */
+  --cds-color-interactive-warning-active: var(--cds-color-warning-600); /** Warning 600 (Dark) | Use for the active (pressed) state of interactive warning color. */
+  --cds-color-interactive-primary-inverse: var(--cds-color-highlight-300); /** Highlight 300 (Core) | Use to convey interactivity of text, icon, or component on dark backgrounds. */
+  --cds-color-interactive-primary-inverse-hover: var(--cds-color-highlight-200); /** Highlight 200 (Light) | Use for the hover state of interactive primary inverse color on dark backgrounds. */
+  --cds-color-interactive-primary-inverse-focus: var(--cds-color-highlight-200); /** Highlight 200 (Light) | Use for the focus state of interactive primary inverse color on dark backgrounds. */
+  --cds-color-interactive-primary-inverse-active: var(--cds-color-highlight-100); /** Highlight 100 (Extra Light) | Use for the active (pressed) state of interactive primary inverse color on dark backgrounds. */
+  --cds-color-interactive-focus-ring: var(--cds-color-highlight-400); /** Highlight 400 | Use for the focus ring around interactive elements that have focus state. */
+  --cds-color-interactive-focus-ring-inner: var(--cds-color-neutral-0); /** Neutral 0 (White) | Use in conjunction with "focus ring" for the 1px inner focus ring around interactive elements that have focus state. */
+  --cds-color-background-primary: var(--cds-color-neutral-0); /** Neutral 0 (White) | Use for areas containing primary content, such as the page background or large content areas on top of background secondary. */
+  --cds-color-background-secondary: var(--cds-color-neutral-50); /** Neutral 50 (Ultra Light) | Use to delineate areas without using borders, like content sections, panels, neutral info boxes and alerts. Or use as a page background to elevate content areas with background primary. */
+  --cds-color-background-tertiary: var(--cds-color-neutral-100); /** Neutral 100 (Extra Light) | Use to delineate areas without using borders from other areas with background primary or secondary. Or use as a page background to elevate content areas with background primary or secondary. */
+  --cds-color-background-brand: var(--cds-color-brand-700); /** Brand 700 (Core) | Use sparingly for content areas that serve to reinforce the brand, such as a billboard or hero section. Avoid on navigation headers unless simple. */
+  --cds-color-background-brand-secondary: var(--cds-color-brand-900); /** Brand 900 (Dark) | Use sparingly to delineate areas adjacent to brand but deemphasized. */
+  --cds-color-background-highlight: var(--cds-color-highlight-300); /** Highlight 300 (Core) | Use sparingly to boldly highlight content areas, such as info boxes and alerts. Only use with dark foreground colors for accessibility, such as text primary, text heading, or text link. */
+  --cds-color-background-highlight-secondary: var(--cds-color-highlight-50); /** Highlight 50 (Ultra Light) | Use sparingly to subtly highlight content areas, such as info boxes and alerts. Only use with text highlight or text link foreground colors. */
+  --cds-color-background-accent: var(--cds-color-accent-500); /** Accent 500 (Core) | Use sparingly to boldly accent content areas, such as info boxes. Only use heading text sizes with text primary inverse color for accessibility. */
+  --cds-color-background-accent-secondary: var(--cds-color-accent-100); /** Accent 100 (Light) | Use sparingly to subtly accent content areas, such as info boxes. */
+  --cds-color-background-success: var(--cds-color-success-200); /** Success 200 (Core) | Use sparingly for content areas to indicate positive sentiment, such as confirm, success, increase, available, or complete. Use with text primary, text heading, or text link foreground colors. */
+  --cds-color-background-success-secondary: var(--cds-color-success-50); /** Success 50 (Light) | Use sparingly for content areas to indicate positive sentiment, such as confirm, success, increase, available, or complete. Use with text success, text primary, text heading, or text link foreground colors. */
+  --cds-color-background-warning: var(--cds-color-warning-300); /** Warning 300 (Core) | Use sparingly for content areas to indicate cautious sentiment, such as warning, changed, or delayed. Use with text primary, text heading, or text link foreground colors. */
+  --cds-color-background-warning-secondary: var(--cds-color-warning-100); /** Warning 100 (Light) | Use sparingly for content areas to indicate cautious sentiment, such as warning, changed, or delayed. Use with text warning secondary, text primary, text heading, or text link foreground colors. */
+  --cds-color-background-danger: var(--cds-color-danger-500); /** Danger 500 (Core) | Use sparingly for content areas to indicate negative sentiment, such as delete, error, failed, decrease, blocked, or incomplete. Only use with text primary inverse foreground color. */
+  --cds-color-background-danger-secondary: var(--cds-color-danger-100); /** Danger 100 (Light) | Use sparingly for content areas to indicate negative sentiment, such as delete, error, failed, decrease, blocked, or incomplete. Use with text danger secondary, text primary, text heading, or text link foreground colors. */
+  --cds-color-border-primary: var(--cds-color-neutral-100); /** Neutral 100 (Extra Light) | Use to separate different blocks of content or elements on light backgrounds. */
+  --cds-color-border-secondary: var(--cds-color-neutral-200); /** Neutral 200 (Light) | Use for separators that need higher contrast on light backgrounds than border primary. */
+  --cds-color-border-tertiary: var(--cds-color-neutral-300); /** Neutral 300 | Use for separators that need higher contrast on light backgrounds than border primary or secondary. */
+  --cds-color-border-input: var(--cds-color-neutral-400); /** Neutral 400 | Use to differentiate interactive form elements from other content, such as input fields and checkboxes. */
+  --cds-color-border-bold: var(--cds-color-neutral-700); /** Neutral 700 (Core) | Use sparingly to boldly differentiate interactive elements from other content on light backgrounds. */
+  --cds-color-border-brand: var(--cds-color-brand-700); /** Brand 700 (Core) | Use sparingly to boldly differentiate primary interactive elements from other content on light backgrounds. */
+  --cds-color-border-brand-secondary: var(--cds-color-brand-900); /** Brand 900 (Dark) | Use sparingly to boldly differentiate primary interactive elements from other content on light backgrounds. */
+  --cds-color-border-success: var(--cds-color-success-200); /** Success 200 (Core) | Use sparingly to differentiate elements with positive sentiment. */
+  --cds-color-border-success-secondary: var(--cds-color-success-500); /** Success 500 (Dark) | Use sparingly to differentiate elements with positive sentiment at higher contrast on light backgrounds. */
+  --cds-color-border-danger: var(--cds-color-danger-500); /** Danger 500 (Core) | Use sparingly to differentiate elements with negative sentiment on light backgrounds. */
+  --cds-color-border-danger-secondary: var(--cds-color-danger-600); /** Danger 600 (Dark) | Use sparingly to differentiate elements with negative sentiment at higher contrast on light backgrounds. */
+  --cds-color-border-warning: var(--cds-color-warning-600); /** Warning 600 (Dark) | Use sparingly to differentiate elements with cautious sentiment. */
+  --cds-color-border-warning-secondary: var(--cds-color-warning-700); /** Warning 700 | Use sparingly to differentiate elements with cautious sentiment at higher contrast on light backgrounds. */
+  --cds-color-data-alert-danger-light: var(--cds-color-danger-100);
+  --cds-color-data-alert-danger-median: var(--cds-color-danger-500);
+  --cds-color-data-alert-danger-dark: var(--cds-color-danger-600);
+  --cds-color-data-alert-warning-light: var(--cds-color-warning-100);
+  --cds-color-data-alert-warning-median: var(--cds-color-warning-300);
+  --cds-color-data-alert-warning-dark: var(--cds-color-warning-600);
+  --cds-color-data-alert-success-light: var(--cds-color-success-50);
+  --cds-color-data-alert-success-median: var(--cds-color-success-200);
+  --cds-color-data-alert-success-dark: var(--cds-color-success-500);
+  --cds-grid-breakpoint-xs-gutter: var(--cds-size-grid-xs-gutter);
+  --cds-grid-breakpoint-xs-margin: var(--cds-size-grid-xs-margin);
+  --cds-grid-breakpoint-sm-gutter: var(--cds-size-grid-sm-gutter);
+  --cds-grid-breakpoint-sm-margin: var(--cds-size-grid-sm-margin);
+  --cds-grid-breakpoint-md-gutter: var(--cds-size-grid-md-gutter);
+  --cds-grid-breakpoint-md-margin: var(--cds-size-grid-md-margin);
+  --cds-grid-breakpoint-lg-gutter: var(--cds-size-grid-lg-gutter);
+  --cds-grid-breakpoint-lg-margin: var(--cds-size-grid-lg-margin);
+  --cds-grid-breakpoint-xl-gutter: var(--cds-size-grid-xl-gutter);
+  --cds-grid-breakpoint-xl-margin: var(--cds-size-grid-xl-margin);
+  --cds-grid-breakpoint-2xl-gutter: var(--cds-size-grid-2xl-gutter);
+  --cds-grid-breakpoint-2xl-margin: var(--cds-size-grid-2xl-margin);
+  --cds-grid-responsive-desktop-phone-desktop-margin: var(--cds-size-grid-2xl-margin);
+  --cds-grid-responsive-desktop-phone-desktop-gutter: var(--cds-size-grid-2xl-gutter);
+  --cds-grid-responsive-desktop-phone-laptop-margin: var(--cds-size-grid-xl-margin);
+  --cds-grid-responsive-desktop-phone-laptop-gutter: var(--cds-size-grid-xl-gutter);
+  --cds-grid-responsive-desktop-phone-tablet-margin: var(--cds-size-grid-md-margin);
+  --cds-grid-responsive-desktop-phone-tablet-gutter: var(--cds-size-grid-md-gutter);
+  --cds-grid-responsive-desktop-phone-phone-margin: var(--cds-size-grid-xs-margin);
+  --cds-grid-responsive-desktop-phone-phone-gutter: var(--cds-size-grid-xs-gutter);
+  --cds-grid-responsive-desktop-phone-min-width: var(--cds-grid-responsive-desktop-phone-desktop-min-width);
+  --cds-grid-responsive-desktop-phone-max-width: var(--cds-grid-responsive-desktop-phone-desktop-max-width);
+  --cds-grid-responsive-desktop-phone-columns: var(--cds-grid-responsive-desktop-phone-desktop-columns);
+  --cds-grid-responsive-desktop-tablet-desktop-margin: var(--cds-size-grid-2xl-margin);
+  --cds-grid-responsive-desktop-tablet-desktop-gutter: var(--cds-size-grid-2xl-gutter);
+  --cds-grid-responsive-desktop-tablet-laptop-margin: var(--cds-size-grid-xl-margin);
+  --cds-grid-responsive-desktop-tablet-laptop-gutter: var(--cds-size-grid-xl-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-margin: var(--cds-size-grid-lg-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-landscape-gutter: var(--cds-size-grid-lg-gutter);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-margin: var(--cds-size-grid-md-margin);
+  --cds-grid-responsive-desktop-tablet-tablet-portrait-gutter: var(--cds-size-grid-md-gutter);
+  --cds-grid-responsive-desktop-tablet-min-width: var(--cds-grid-responsive-desktop-tablet-desktop-min-width);
+  --cds-grid-responsive-desktop-tablet-max-width: var(--cds-grid-responsive-desktop-tablet-desktop-max-width);
+  --cds-grid-responsive-desktop-tablet-columns: var(--cds-grid-responsive-desktop-tablet-desktop-columns);
+  --cds-focus-ring-default: 0 0 0 1px var(--cds-color-interactive-focus-ring-inner), 0 0 0 4px var(--cds-color-interactive-focus-ring); /** Keyboard navigation focus ring. (Requires "Clip content" enabled and fill color.) */
+  --cds-focus-ring-subtle: 0 0 0 1px var(--cds-color-interactive-focus-ring-inner), 0 0 0 2px var(--cds-color-interactive-focus-ring); /** Keyboard navigation focus ring on small elements. (Requires "Clip content" enabled and fill color.) */
+  --cds-grid-responsive-desktop-phone-gutter: var(--cds-grid-responsive-desktop-phone-desktop-gutter);
+  --cds-grid-responsive-desktop-phone-margin: var(--cds-grid-responsive-desktop-phone-desktop-margin);
+  --cds-grid-responsive-desktop-tablet-gutter: var(--cds-grid-responsive-desktop-tablet-desktop-gutter);
+  --cds-grid-responsive-desktop-tablet-margin: var(--cds-grid-responsive-desktop-tablet-desktop-margin);
+}

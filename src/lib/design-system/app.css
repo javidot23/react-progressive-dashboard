@@ -1,0 +1,277 @@
+/*
+ * Cencora-Gilroy brand faces (woff2/woff).
+ * font-display: block — wait briefly for the font on first paint (preloaded in
+ * index.html via vite font-preload-plugin) instead of showing a fallback then swapping.
+ */
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../../assets/fonts/cencora-gilroy-medium.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-medium.woff") format("woff");
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: italic;
+  font-weight: 500;
+  src: url("../../assets/fonts/cencora-gilroy-mediumitalic.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-mediumitalic.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../../assets/fonts/cencora-gilroy-semibold.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-semibold.woff") format("woff");
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: italic;
+  font-weight: 600;
+  src: url("../../assets/fonts/cencora-gilroy-semibolditalic.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-semibolditalic.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../../assets/fonts/cencora-gilroy-bold.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-bold.woff") format("woff");
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Cencora-Gilroy";
+  font-style: italic;
+  font-weight: 700;
+  src: url("../../assets/fonts/cencora-gilroy-bolditalic.woff2") format("woff2"),
+       url("../../assets/fonts/cencora-gilroy-bolditalic.woff") format("woff");
+  font-display: swap;
+}
+
+/*
+ * Metric-adjusted fallback for the swap period: a local Arial-family face whose
+ * box is scaled to match Cencora-Gilroy so the swap causes ~no layout shift.
+ */
+@font-face {
+  font-family: "Cencora-Gilroy Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 128.91%;
+  ascent-override: 72.07%;
+  descent-override: 19.24%;
+  line-gap-override: 0%;
+}
+
+/*
+ * Override the brand font token (from CDS tokens, imported earlier in the same
+ * `base` layer) to insert the adjusted fallback right after Cencora-Gilroy.
+ */
+:root {
+  --cds-text-font-family-brand: Cencora-Gilroy, "Cencora-Gilroy Fallback", "AB Gilroy", Avenir, "Avenir Next", "Segoe UI", sans-serif;
+}
+
+
+:root {
+
+  --color-brand-primary-main: var(--cds-color-brand-700);
+  --color-brand-primary-light: var(--cds-color-brand-400);
+  --color-brand-primary-dark: var(--cds-color-brand-900);
+  --color-brand-primary-surface: var(--cds-color-brand-600);
+
+  --color-brand-secondary-main: var(--cds-color-highlight-400);
+  --color-brand-secondary-light: var(--cds-color-brand-200);
+  --color-brand-secondary-dark: var(--cds-color-highlight-600);
+
+
+  --color-status-success-main: var(--cds-color-success-500);
+  --color-status-success-light: var(--cds-color-success-50);
+  --color-status-success-dark: var(--cds-color-success-300);
+  --color-status-success-bright: var(--cds-color-success-200);
+
+  --color-status-warning-main: var(--cds-color-warning-300);
+  --color-status-warning-light: var(--cds-color-warning-100);
+  --color-status-warning-dark: var(--cds-color-warning-800);
+  --color-status-warning-accent: var(--cds-color-warning-600);
+
+  --color-status-error-main: var(--cds-color-danger-500);
+  --color-status-error-light: var(--cds-color-danger-100);
+  --color-status-error-dark: var(--cds-color-danger-600);
+  --color-status-error-text: var(--cds-color-danger-500);
+
+  --color-status-info-main: var(--cds-color-highlight-300);
+  --color-status-info-light: var(--cds-color-highlight-50);
+  --color-status-info-dark: var(--cds-color-highlight-600);
+  --color-status-info-darker: var(--cds-color-highlight-600);
+  --color-status-info-accent: var(--cds-color-highlight-400);
+  --color-status-info-border: var(--cds-color-highlight-100);
+  --color-status-info-surface: var(--cds-color-highlight-50);
+
+  --color-status-alert-main: var(--cds-color-danger-100);
+  --color-status-alert-border: var(--cds-color-danger-100);
+  --color-status-alert-icon: var(--cds-color-danger-600);
+
+
+  --color-chart-risk-high: var(--cds-color-data-categorical-01);
+  --color-chart-risk-medium: var(--cds-color-data-categorical-02);
+  --color-chart-risk-low: var(--cds-color-core-magenta-500);
+  --color-chart-risk-critical: var(--cds-color-danger-500);
+
+  --color-chart-data-primary: var(--cds-color-data-categorical-01);
+  --color-chart-data-secondary: var(--cds-color-brand-200);
+  --color-chart-data-tertiary: var(--cds-color-data-categorical-02);
+  --color-chart-data-quaternary: var(--cds-color-core-gray-600);
+
+  --color-chart-geography-high-impact: var(--cds-color-data-categorical-01);
+  --color-chart-geography-medium-impact: var(--cds-color-data-categorical-02);
+  --color-chart-geography-low-impact: var(--cds-color-core-magenta-500);
+  --color-chart-geography-risk-medium: var(--cds-color-core-yellow-700);
+
+
+  --color-ui-text-primary: var(--cds-color-text-primary);
+  --color-ui-text-secondary: var(--cds-color-text-secondary);
+  --color-ui-text-muted: var(--cds-color-neutral-500);
+  --color-ui-text-link: var(--cds-color-text-link);
+  --color-ui-text-accent: var(--cds-color-brand-700);
+
+  --color-ui-background-primary: var(--cds-color-background-primary);
+  --color-ui-background-secondary: var(--cds-color-background-secondary);
+  --color-ui-background-surface: var(--cds-color-background-secondary);
+  --color-ui-background-muted: var(--cds-color-neutral-200);
+  --color-ui-background-neutral: var(--cds-color-background-secondary);
+
+  --color-ui-border-primary: var(--cds-color-border-primary);
+  --color-ui-border-secondary: var(--cds-color-border-secondary);
+  --color-ui-border-accent: var(--cds-color-highlight-400);
+  --color-ui-border-focus: var(--cds-color-brand-700);
+
+  --color-ui-interactive-hover: var(--cds-color-interactive-primary-hover);
+  --color-ui-interactive-focus: var(--cds-color-interactive-primary);
+  --color-ui-interactive-active: var(--cds-color-interactive-primary-active);
+
+  --color-component-status-action-required-bg: var(--cds-color-danger-100);
+  --color-component-status-action-required-text: var(--cds-color-danger-500);
+  --color-component-status-action-required-border: var(--cds-color-danger-500);
+
+  --color-component-status-action-reviewed-bg: var(--cds-color-success-50);
+  --color-component-status-action-reviewed-text: var(--cds-color-success-500);
+  --color-component-status-action-reviewed-border: var(--cds-color-success-500);
+
+  --color-component-status-under-review-bg: var(--cds-color-warning-100);
+  --color-component-status-under-review-text: var(--cds-color-warning-800);
+  --color-component-status-under-review-border: var(--cds-color-warning-800);
+
+  --color-component-risk-badge-critical: var(--cds-color-danger-500);
+  --color-component-risk-badge-high: var(--cds-color-warning-800);
+  --color-component-risk-badge-medium: var(--cds-color-warning-800);
+  --color-component-risk-badge-low: var(--cds-color-neutral-500);
+
+
+  --gradient-primary: linear-gradient(135deg, var(--cds-color-brand-700) 0%, var(--cds-color-brand-400) 100%);
+  --gradient-info: linear-gradient(135deg, var(--cds-color-highlight-300) 0%, var(--cds-color-highlight-600) 100%);
+  --gradient-success: linear-gradient(135deg, var(--cds-color-success-500) 0%, var(--cds-color-success-600) 100%);
+  --gradient-warning: linear-gradient(135deg, var(--cds-color-warning-300) 0%, var(--cds-color-warning-800) 100%);
+
+
+  --shadow-primary: var(--cds-elevation-shadow-raised);
+  --shadow-info: var(--cds-elevation-shadow-raised);
+  --shadow-success: var(--cds-elevation-shadow-raised);
+  --shadow-warning: var(--cds-elevation-shadow-raised);
+  --shadow-error: var(--cds-elevation-shadow-raised);
+  --shadow-overlay: var(--cds-elevation-shadow-overlay);
+  --shadow-hairline: var(--cds-elevation-shadow-hairline);
+}
+
+
+.text-brand-primary { color: var(--cds-color-brand-700); }
+.text-brand-secondary { color: var(--cds-color-highlight-400); }
+.bg-brand-primary { background-color: var(--cds-color-brand-700); }
+.bg-brand-secondary { background-color: var(--cds-color-highlight-400); }
+
+.text-success { color: var(--cds-color-success-500); }
+.text-warning { color: var(--cds-color-warning-300); }
+.text-error { color: var(--cds-color-danger-500); }
+.text-info { color: var(--cds-color-highlight-300); }
+
+.bg-success { background-color: var(--cds-color-success-500); }
+.bg-warning { background-color: var(--cds-color-warning-300); }
+.bg-error { background-color: var(--cds-color-danger-500); }
+.bg-info { background-color: var(--cds-color-highlight-300); }
+
+.border-brand-primary { border-color: var(--cds-color-brand-700); }
+.border-success { border-color: var(--cds-color-success-500); }
+.border-warning { border-color: var(--cds-color-warning-300); }
+.border-error { border-color: var(--cds-color-danger-500); }
+.border-info { border-color: var(--cds-color-highlight-300); }
+
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-info { background: var(--gradient-info); }
+.bg-gradient-success { background: var(--gradient-success); }
+.bg-gradient-warning { background: var(--gradient-warning); }
+
+.shadow-brand-primary { box-shadow: var(--cds-elevation-shadow-raised); }
+.shadow-info { box-shadow: var(--cds-elevation-shadow-raised); }
+.shadow-success { box-shadow: var(--cds-elevation-shadow-raised); }
+.shadow-warning { box-shadow: var(--cds-elevation-shadow-raised); }
+.shadow-error { box-shadow: var(--cds-elevation-shadow-raised); }
+.shadow-overlay { box-shadow: var(--cds-elevation-shadow-overlay); }
+.shadow-hairline { box-shadow: var(--cds-elevation-shadow-hairline); }
+
+.focus-ring { box-shadow: var(--cds-focus-ring-default); }
+.focus-ring-subtle { box-shadow: var(--cds-focus-ring-subtle); }
+
+.space-1 { margin: var(--cds-size-space-1); }
+.space-2 { margin: var(--cds-size-space-2); }
+.space-3 { margin: var(--cds-size-space-3); }
+.space-4 { margin: var(--cds-size-space-4); }
+.space-5 { margin: var(--cds-size-space-5); }
+.space-6 { margin: var(--cds-size-space-6); }
+.space-8 { margin: var(--cds-size-space-8); }
+.space-10 { margin: var(--cds-size-space-10); }
+.space-12 { margin: var(--cds-size-space-12); }
+.space-16 { margin: var(--cds-size-space-16); }
+.space-20 { margin: var(--cds-size-space-20); }
+
+.p-1 { padding: var(--cds-size-space-1); }
+.p-2 { padding: var(--cds-size-space-2); }
+.p-3 { padding: var(--cds-size-space-3); }
+.p-4 { padding: var(--cds-size-space-4); }
+.p-5 { padding: var(--cds-size-space-5); }
+.p-6 { padding: var(--cds-size-space-6); }
+.p-8 { padding: var(--cds-size-space-8); }
+
+.font-brand { font-family: var(--cds-text-font-family-brand); }
+.font-medium { font-weight: var(--cds-text-font-weight-medium); }
+.font-semibold { font-weight: var(--cds-text-font-weight-semibold); }
+.font-bold { font-weight: var(--cds-text-font-weight-bold); }
+
+.text-2xs { font-size: var(--cds-size-font-2xs); }
+.text-xs { font-size: var(--cds-size-font-xs); }
+.text-sm { font-size: var(--cds-size-font-sm); }
+.text-md { font-size: var(--cds-size-font-md); }
+.text-lg { font-size: var(--cds-size-font-lg); }
+.text-xl { font-size: var(--cds-size-font-xl); }
+.text-2xl { font-size: var(--cds-size-font-2xl); }
+.text-3xl { font-size: var(--cds-size-font-3xl); }
+
+.rounded-none { border-radius: var(--cds-size-border-radius-none); }
+.rounded-sm { border-radius: var(--cds-size-border-radius-sm); }
+.rounded-md { border-radius: var(--cds-size-border-radius-md); }
+.rounded-lg { border-radius: var(--cds-size-border-radius-lg); }
+.rounded-full { border-radius: var(--cds-size-border-radius-full); }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-ui-background-primary: var(--cds-color-neutral-900);
+    --color-ui-background-secondary: var(--cds-color-neutral-800);
+    --color-ui-text-primary: var(--cds-color-neutral-0);
+    --color-ui-text-secondary: var(--cds-color-neutral-300);
+  }
+}

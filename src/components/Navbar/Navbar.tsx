@@ -1,12 +1,7 @@
 import { ChevronDown, type LucideIcon } from "lucide-react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { Link } from "react-router";
-import {
-  isUnmodifiedPrimaryClick,
-  type NavbarSelectEvent,
-} from "./navbarEvents";
-
-export type { NavbarSelectEvent } from "./navbarEvents";
+import { isUnmodifiedPrimaryClick, NavbarSelectEvent } from ".";
 
 export type NavbarItem = {
   id: string;
@@ -55,14 +50,12 @@ export function Navbar<TItem extends NavbarItem>({
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const mobileButtonRef = useRef<HTMLButtonElement>(null);
   const listId = useId();
-  const activeItem = items.find((item) => item.id === activeId);
-  const mobileButtonText = activeItem
-    ? `${mobileLabel}: ${activeItem.label}`
-    : mobileLabel;
+  const activeItem = items.find(item => item.id === activeId);
+  const mobileButtonText = activeItem ? `${mobileLabel}: ${activeItem.label}` : mobileLabel;
   const listClasses = [
     mobileExpanded ? "flex" : "hidden",
     "flex-col gap-1 pb-3",
-    "md:flex md:h-16 md:flex-row md:items-center md:gap-6 md:pb-0",
+    "md:flex md:h-16 md:flex-row md:items-center md:gap-0 md:pb-0",
     listClassName,
   ]
     .filter(Boolean)
@@ -91,19 +84,13 @@ export function Navbar<TItem extends NavbarItem>({
     onSelect(item, event);
 
     if (shouldClose) {
-      const mobileButtonVisible = window.matchMedia(
-        "(max-width: 767px)",
-      ).matches;
+      const mobileButtonVisible = window.matchMedia("(max-width: 767px)").matches;
       closeMobileDisclosure(mobileButtonVisible);
     }
   };
 
   return (
-    <nav
-      aria-label={ariaLabel}
-      className={className}
-      onKeyDown={handleKeyDown}
-    >
+    <nav aria-label={ariaLabel} className={className} onKeyDown={handleKeyDown}>
       <div className={innerClassName}>
         <button
           ref={mobileButtonRef}
@@ -111,7 +98,7 @@ export function Navbar<TItem extends NavbarItem>({
           aria-controls={listId}
           aria-expanded={mobileExpanded}
           className="flex min-h-16 w-full items-center justify-between gap-3 text-left text-sm font-semibold text-slate-950 md:hidden"
-          onClick={() => setMobileExpanded((expanded) => !expanded)}
+          onClick={() => setMobileExpanded(expanded => !expanded)}
         >
           <span>{mobileButtonText}</span>
           <ChevronDown
@@ -124,40 +111,36 @@ export function Navbar<TItem extends NavbarItem>({
         </button>
 
         <ul id={listId} className={listClasses}>
-          {items.map((item) => {
+          {items.map(item => {
             const Icon = item.icon;
             const resolvedIconPosition = item.iconPosition ?? iconPosition;
             const content = (
               <>
-                {Icon ? (
-                  <Icon
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0"
-                    strokeWidth={2}
-                  />
-                ) : null}
+                {Icon ? <Icon aria-hidden="true" className="h-4 w-4 shrink-0" strokeWidth={2} /> : null}
 
                 <span>{item.label}</span>
               </>
             );
             const active = item.id === activeId;
             const itemClassName = [
-              "flex min-h-11 w-full items-center rounded-md border-l-2 px-3 py-2 text-sm font-medium",
-              "md:h-16 md:w-auto md:rounded-none md:border-b-2 md:border-l-0 md:px-0 md:py-0",
+              "relative flex min-h-11 w-full items-center justify-center gap-2.5 rounded-md border-l-2 px-4 py-3 text-sm font-medium",
+              "md:h-16 md:w-auto md:rounded-none md:border-l-0 md:px-4 md:py-3",
+              "before:content-[''] before:absolute before:-left-px before:-right-px before:bottom-0 before:h-px before:bg-transparent",
+              "after:content-[''] after:absolute after:-left-px after:-right-px after:bottom-0 after:h-[2px] after:bg-transparent",
               iconPositionClasses[resolvedIconPosition],
               active
-                ? "border-violet-600 bg-violet-50 text-violet-700 md:bg-transparent"
-                : "border-transparent text-slate-500 hover:text-slate-950",
+                ? "border-brand-primary-main bg-violet-50 text-brand-primary-main md:bg-transparent md:after:bg-brand-primary-main"
+                : "border-transparent text-ui-text-secondary hover:text-slate-950 md:hover:before:bg-interactive-primary-hover",
             ].join(" ");
 
             return (
-              <li key={item.id} className="w-full md:w-auto">
+              <li key={item.id} className="w-full md:w-auto md:-ml-px first:md:ml-0">
                 {item.to ? (
                   <Link
                     to={item.to}
                     aria-current={active ? ariaCurrent : undefined}
                     className={itemClassName}
-                    onClick={(e) => handleSelect(item, e)}
+                    onClick={e => handleSelect(item, e)}
                     onFocus={() => onIntent?.(item)}
                     onPointerEnter={() => onIntent?.(item)}
                   >
@@ -168,7 +151,7 @@ export function Navbar<TItem extends NavbarItem>({
                     type="button"
                     aria-pressed={active}
                     className={itemClassName}
-                    onClick={(e) => handleSelect(item, e)}
+                    onClick={e => handleSelect(item, e)}
                     onFocus={() => onIntent?.(item)}
                     onPointerEnter={() => onIntent?.(item)}
                   >
