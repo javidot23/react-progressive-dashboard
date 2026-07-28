@@ -1,0 +1,236 @@
+import { useEffect, useRef } from "react";
+import type {
+  SectionNavigationPhase,
+  SectionScrollCompletionOptions,
+} from "./types";
+
+type UseProgrammaticSectionScrollOptions<TId extends string> = {
+  nodes: ReadonlyMap<TId, HTMLElement>;
+  phase: SectionNavigationPhase<TId>;
+  completion: SectionScrollCompletionOptions;
+  onComplete: (transactionId: number) => void;
+  onFailure: (transactionId: number) => void;
+};
+
+export function getExpectedSectionScrollY(node: HTMLElement) {
+  const targetTop = node.getBoundingClientRect().top + window.scrollY;
+  const scrollMarginTop =
+    Number.parseFloat(window.getComputedStyle(node).scrollMarginTop) || 0;
+  const documentHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+  );
+  const maximumScrollY = Math.max(0, documentHeight - window.innerHeight);
+
+  return Math.min(
+    Math.max(0, targetTop - scrollMarginTop),
+    maximumScrollY,
+  );
+}
+
+function isSectionAligned(node: HTMLElement, tolerance: number) {
+  return (
+    Math.abs(window.scrollY - getExpectedSectionScrollY(node)) <= tolerance
+  );
+}
+
+export function useProgrammaticSectionScroll<TId extends string>({
+  nodes,
+  phase,
+  completion,
+  onComplete,
+  onFailure,
+}: UseProgrammaticSectionScrollOptions<TId>) {
+  const startedTransaction = useRef<number | null>(null);
+  const targetNode =
+    phase.kind === "programmatic" ? nodes.get(phase.targetId) : undefined;
+
+  useEffect(() => {
+    if (phase.kind !== "programmatic") return;
+
+    const {
+      behavior,
+      targetId,
+      transactionId,
+    } = phase;
+    const initialTarget = targetNode;
+
+    if (!initialTarget) {
+      if (startedTransaction.current === transactionId) {
+        startedTransaction.current = null;
+        onFailure(transactionId);
+      }
+      return;
+    }
+
+    startedTransaction.current = transactionId;
+
+    let cancelled = false;
+    let initialFrame: number | null = null;
+    let idleTimer: number | null = null;
+    let layoutFrame: number | null = null;
+    let resizeObserver: ResizeObserver | null = null;
+    let listening = false;
+
+    const clearResources = () => {
+      if (listening) {
+        document.removeEventListener("scroll", handleScroll);
+        document.removeEventListener("scrollend", handleScrollEnd);
+        listening = false;
+      }
+
+      resizeObserver?.disconnect();
+      resizeObserver = null;
+
+      if (initialFrame !== null) {
+        window.cancelAnimationFrame(initialFrame);
+        initialFrame = null;
+      }
+
+      if (idleTimer !== null) {
+        window.clearTimeout(idleTimer);
+        idleTimer = null;
+      }
+
+      if (layoutFrame !== null) {
+        window.cancelAnimationFrame(layoutFrame);
+        layoutFrame = null;
+      }
+    };
+
+    const fail = () => {
+      if (cancelled) return;
+
+      cancelled = true;
+      clearResources();
+      if (startedTransaction.current === transactionId) {
+        startedTransaction.current = null;
+      }
+      onFailure(transactionId);
+    };
+
+    const complete = () => {
+      if (cancelled) return;
+
+      cancelled = true;
+      clearResources();
+      if (startedTransaction.current === transactionId) {
+        startedTransaction.current = null;
+      }
+      onComplete(transactionId);
+    };
+
+    const getCurrentTarget = () => {
+      const target = nodes.get(targetId);
+      return target === initialTarget && target.isConnected ? target : null;
+    };
+
+    const alignOrComplete = () => {
+      idleTimer = null;
+      const target = getCurrentTarget();
+
+      if (!target) {
+        fail();
+        return;
+      }
+
+      if (isSectionAligned(target, completion.alignmentTolerance)) {
+        complete();
+        return;
+      }
+
+      window.scrollTo({
+        behavior: "auto",
+        top: getExpectedSectionScrollY(target),
+      });
+      scheduleAlignmentCheck(completion.settleDelay);
+    };
+
+    const scheduleAlignmentCheck = (delay = completion.idleDelay) => {
+      if (cancelled) return;
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(alignOrComplete, delay);
+    };
+
+    function handleScroll() {
+      scheduleAlignmentCheck();
+    }
+
+    function handleScrollEnd() {
+      scheduleAlignmentCheck(completion.settleDelay);
+    }
+
+    initialFrame = window.requestAnimationFrame(() => {
+      initialFrame = null;
+      const target = getCurrentTarget();
+
+      if (!target) {
+        fail();
+        return;
+      }
+
+      let lastTargetTop =
+        target.getBoundingClientRect().top + window.scrollY;
+
+      if (typeof ResizeObserver !== "undefined") {
+        resizeObserver = new ResizeObserver(() => {
+          if (cancelled) return;
+
+          if (layoutFrame !== null) {
+            window.cancelAnimationFrame(layoutFrame);
+          }
+
+          layoutFrame = window.requestAnimationFrame(() => {
+            layoutFrame = null;
+            const currentTarget = getCurrentTarget();
+
+            if (!currentTarget) {
+              fail();
+              return;
+            }
+
+            const nextTargetTop =
+              currentTarget.getBoundingClientRect().top + window.scrollY;
+
+            if (
+              Math.abs(nextTargetTop - lastTargetTop) <=
+              completion.alignmentTolerance
+            ) {
+              return;
+            }
+
+            lastTargetTop = nextTargetTop;
+            scheduleAlignmentCheck();
+          });
+        });
+        resizeObserver.observe(document.body);
+      }
+
+      document.addEventListener("scroll", handleScroll, { passive: true });
+      document.addEventListener("scrollend", handleScrollEnd);
+      listening = true;
+
+      try {
+        target.scrollIntoView({
+          behavior,
+          block: "start",
+        });
+        scheduleAlignmentCheck();
+      } catch {
+        fail();
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      clearResources();
+    };
+  }, [
+    completion,
+    nodes,
+    onComplete,
+    onFailure,
+    phase,
+    targetNode,
+  ]);
+}
