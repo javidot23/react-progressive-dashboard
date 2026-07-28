@@ -1,6 +1,7 @@
 import eslint from '@eslint/js'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import storybook from 'eslint-plugin-storybook'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -8,6 +9,7 @@ export default tseslint.config(
   { ignores: ['dist', 'coverage'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  ...storybook.configs['flat/recommended'],
   {
     files: ['**/*.cjs'],
     languageOptions: {
