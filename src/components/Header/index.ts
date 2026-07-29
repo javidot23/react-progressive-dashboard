@@ -4,4 +4,5 @@ export type {
   HeaderActionSelectEvent,
   HeaderNavigationConfig,
   HeaderProps,
+  MobileMenuLabels,
 } from "./Header";

@@ -6,7 +6,7 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
-import { Link } from "react-router";
+import { NavbarItemControl } from "./NavbarItemControl";
 import {
   isUnmodifiedPrimaryClick,
   type NavbarSelectEvent,
@@ -22,13 +22,6 @@ export type NavbarItem = {
 
 export type NavbarIconPosition = "top" | "right" | "bottom" | "left";
 export type NavbarMobileMode = "disclosure" | "horizontal-scroll";
-
-const iconPositionClasses: Record<NavbarIconPosition, string> = {
-  top: "flex-col justify-center gap-1",
-  right: "flex-row-reverse gap-2",
-  bottom: "flex-col-reverse justify-center gap-1",
-  left: "flex-row gap-2",
-};
 
 export type NavbarProps<TItem extends NavbarItem> = {
   items: readonly TItem[];
@@ -173,15 +166,6 @@ export function Navbar<TItem extends NavbarItem>({
 
         <ul ref={listRef} id={listId} className={listClasses}>
           {items.map(item => {
-            const Icon = item.icon;
-            const resolvedIconPosition = item.iconPosition ?? iconPosition;
-            const content = (
-              <>
-                {Icon ? <Icon aria-hidden="true" className="h-4 w-4 shrink-0" strokeWidth={2} /> : null}
-
-                <span>{item.label}</span>
-              </>
-            );
             const active = item.id === activeId;
             const itemClassName = [
               "relative flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium",
@@ -191,7 +175,6 @@ export function Navbar<TItem extends NavbarItem>({
               horizontalScroll
                 ? "h-16 w-auto rounded-none border-l-0"
                 : "min-h-11 w-full rounded-md border-l-2 md:h-16 md:w-auto md:rounded-none md:border-l-0",
-              iconPositionClasses[resolvedIconPosition],
               horizontalScroll
                 ? active
                   ? "border-transparent bg-transparent text-brand-primary-main after:bg-brand-primary-main"
@@ -217,29 +200,15 @@ export function Navbar<TItem extends NavbarItem>({
                     : "w-full md:-ml-px md:w-auto first:md:ml-0"
                 }
               >
-                {item.to ? (
-                  <Link
-                    to={item.to}
-                    aria-current={active ? ariaCurrent : undefined}
-                    className={itemClassName}
-                    onClick={e => handleSelect(item, e)}
-                    onFocus={() => onIntent?.(item)}
-                    onPointerEnter={() => onIntent?.(item)}
-                  >
-                    {content}
-                  </Link>
-                ) : (
-                  <button
-                    type="button"
-                    aria-pressed={active}
-                    className={itemClassName}
-                    onClick={e => handleSelect(item, e)}
-                    onFocus={() => onIntent?.(item)}
-                    onPointerEnter={() => onIntent?.(item)}
-                  >
-                    {content}
-                  </button>
-                )}
+                <NavbarItemControl
+                  active={active}
+                  ariaCurrent={ariaCurrent}
+                  className={itemClassName}
+                  iconPosition={iconPosition}
+                  item={item}
+                  onIntent={onIntent}
+                  onSelect={handleSelect}
+                />
               </li>
             );
           })}

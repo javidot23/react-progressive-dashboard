@@ -12,11 +12,10 @@ import type { NavbarItem } from "../Navbar";
 import { Header, type HeaderAction } from "./Header";
 
 const primaryItems = [
-  { id: "link-1", label: "Link 1", to: "/link-1" },
-  { id: "link-2", label: "Link 2", to: "/link-2" },
-  { id: "link-3", label: "Link 3", to: "/link-3" },
-  { id: "link-4", label: "Link 4", to: "/link-4" },
-  { id: "link-5", label: "Link 5", to: "/link-5" },
+  { id: "dashboard", label: "Dashboard", to: "/dashboard" },
+  { id: "team", label: "Team", to: "/team" },
+  { id: "projects", label: "Projects", to: "/projects" },
+  { id: "calendar", label: "Calendar", to: "/calendar" },
 ] satisfies readonly NavbarItem[];
 
 const sectionItems = [
@@ -95,6 +94,9 @@ const meta = {
     ),
   ],
   parameters: {
+    a11y: {
+      test: "error",
+    },
     layout: "fullscreen",
     viewport: {
       viewports,
@@ -120,7 +122,7 @@ const meta = {
   args: {
     primaryNavigation: {
       items: primaryItems,
-      activeId: null,
+      activeId: "dashboard",
       ariaLabel: "Primary navigation",
       onIntent: fn(),
       onSelect: fn(),
@@ -137,6 +139,7 @@ const meta = {
     actionsAriaLabel: "Header actions",
     logoAriaLabel: "Cencora home",
     logoTo: "/",
+    sectionParentId: "dashboard",
   },
 } satisfies Meta<typeof Header>;
 
@@ -203,17 +206,21 @@ export const Mobile320: Story = {
       canvasElement.ownerDocument.defaultView?.matchMedia(
         "(max-width: 767px)",
       ).matches ?? false;
-    const primaryNavigation = canvasElement.querySelector(
-      'nav[aria-label="Primary navigation"]',
-    );
     const sectionNavigation = canvas.getByRole("navigation", {
       name: "Dashboard sections",
     });
+    const menuButton = canvasElement.querySelector<HTMLButtonElement>(
+      'button[aria-label="Open navigation menu"]',
+    );
 
-    await expect(primaryNavigation).not.toBeNull();
+    await expect(menuButton).not.toBeNull();
 
     if (mobileViewport) {
-      await expect(primaryNavigation).not.toBeVisible();
+      await expect(menuButton).toBeVisible();
+      await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+      await expect(
+        canvas.queryByRole("navigation", { name: "Primary navigation" }),
+      ).not.toBeInTheDocument();
     }
 
     await expect(sectionNavigation).toBeVisible();
@@ -231,6 +238,50 @@ export const Mobile320: Story = {
   },
 };
 
+export const MobileMenuOpen: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile320",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const mobileViewport =
+      canvasElement.ownerDocument.defaultView?.matchMedia(
+        "(max-width: 767px)",
+      ).matches ?? false;
+
+    if (!mobileViewport) {
+      return;
+    }
+
+    const menuButton = canvas.getByRole("button", {
+      name: "Open navigation menu",
+    });
+
+    await userEvent.click(menuButton);
+
+    const dialog = canvas.getByRole("dialog", {
+      name: "Navigation menu",
+    });
+    const dialogCanvas = within(dialog);
+    const closeButton = dialogCanvas.getByRole("button", {
+      name: "Close navigation menu",
+    });
+    const dashboardItem = dialogCanvas
+      .getByRole("link", { name: "Dashboard" })
+      .closest("li");
+
+    await expect(dialog).toBeVisible();
+    await expect(closeButton).toHaveFocus();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+    await expect(dashboardItem).not.toBeNull();
+    await expect(
+      within(dashboardItem!).getByRole("link", { name: "Summary" }),
+    ).toHaveAttribute("aria-current", "location");
+  },
+};
+
 export const MobileLastActive: Story = {
   args: {
     sectionNavigation: {
@@ -241,6 +292,7 @@ export const MobileLastActive: Story = {
       onIntent: fn(),
       onSelect: fn(),
     },
+    sectionParentId: "dashboard",
   },
   parameters: {
     viewport: {

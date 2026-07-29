@@ -7,7 +7,8 @@ import * as HeaderStories from "./Header.stories";
 
 A controlled, two-level Cencora application header. It composes `Navbar` for
 primary links and persistent section tabs without owning routing, active state,
-or product actions.
+or product actions. On handset viewports it presents the same navigation in an
+internal modal dialog.
 
 <Canvas of={HeaderStories.Desktop1440} />
 
@@ -15,15 +16,20 @@ or product actions.
 
 ## Responsive behavior
 
-- Below 768px, the primary navigation is hidden, the Cencora logo is reduced,
-  and all header actions remain available.
+- Below 768px, a 44px hamburger opens the full-screen handset menu. The Cencora
+  logo is reduced in the closed header and all header actions remain available.
+- The handset menu repeats the controlled primary links and semantically nests
+  the section links under the item identified by `sectionParentId`.
 - The section navigation always stays visible as a single horizontally
-  scrollable row.
+  scrollable row with no visible scrollbar.
 - At 768px and above, the primary navigation appears beside the full-size logo.
+- If an open handset crosses the 768px breakpoint, it closes automatically.
 - Positioning is intentionally external. Add sticky classes through
   `className` only when a consuming page requires them.
 
 <Canvas of={HeaderStories.Mobile320} />
+
+<Canvas of={HeaderStories.MobileMenuOpen} />
 
 <Canvas of={HeaderStories.Tablet768} />
 
@@ -37,12 +43,17 @@ The horizontal list also keeps a remotely activated item visible:
 |---|---|
 | `primaryNavigation` | Items, active ID, accessible label, and callbacks for global navigation |
 | `sectionNavigation` | Items, active ID, accessible label, and callbacks for section navigation |
+| `sectionParentId` | Required primary item ID under which section links are nested in the handset |
 | `actions` | Icon, label, optional destination, and selection callback for each header action |
+| `mobileMenuLabels` | Optional accessible labels for opening, closing, and naming the handset dialog |
 | `logoTo` | Destination for the Cencora logo |
 | `className` | Optional positioning or page-level classes for the outer header |
 
 The consumer owns every active ID and callback. An action with `to` renders a
 router link; an action without `to` renders a button.
+
+`MobileNavigationDialog` is an internal Header implementation detail and is not
+exported as a generic design-system component.
 
 Because `Header` and `Navbar` render React Router links, mount them inside a
 Router provider such as `BrowserRouter` or `MemoryRouter`.
@@ -50,12 +61,18 @@ Router provider such as `BrowserRouter` or `MemoryRouter`.
 ## Accessibility
 
 - Give the two navigation landmarks unique `ariaLabel` values.
+- Pass a `sectionParentId` that exists in `primaryNavigation.items`; this keeps
+  the two navigation levels explicit and predictable.
 - Give each action a concise, unique `label`; the icon is decorative and the
   label becomes its accessible name.
 - The logo link defaults to the accessible name `Cencora home`.
 - All links and buttons retain a 44px touch target and a visible focus ring.
 - Do not use color alone to identify the active section; `Navbar` also renders
   the active underline and `aria-current`.
+- The native modal moves initial focus to the close button, keeps background
+  controls inert, closes with Escape, and restores focus to the hamburger after
+  dismissal. Selecting a destination closes without forcing focus backward.
+- The document is scroll-locked while the handset is open.
 
 ## Tokens
 
@@ -66,6 +83,7 @@ introduce component CSS or new design-system variables.
 ## Do and don't
 
 - Do pass route-aware data and callbacks from the consuming module.
+- Do provide specific destination labels such as `Dashboard` and `Projects`.
 - Do keep labels short enough to scan in the horizontal row.
 - Do test every real integration at its narrowest supported viewport.
 - Don't add routing or section state inside `Header`.
@@ -75,4 +93,5 @@ introduce component CSS or new design-system variables.
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.1.0 | 2026-07-28 | Added the accessible handset navigation dialog |
 | 1.0.0 | 2026-07-28 | Added the controlled two-level Header component |
