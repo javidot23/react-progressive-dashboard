@@ -157,6 +157,16 @@ const meta = {
         defaultValue: { summary: '"Sections"' },
       },
     },
+    mobileMode: {
+      description:
+        "Mobile presentation. `disclosure` collapses the list behind a trigger; `horizontal-scroll` keeps one scrollable row visible.",
+      control: "inline-radio",
+      options: ["disclosure", "horizontal-scroll"],
+      table: {
+        defaultValue: { summary: '"disclosure"' },
+        type: { summary: '"disclosure" | "horizontal-scroll"' },
+      },
+    },
     iconPosition: {
       description:
         "Default placement of item icons relative to their labels. An item's own `iconPosition` takes precedence over this value.",
@@ -194,6 +204,7 @@ const meta = {
     className: "border-b border-slate-200 bg-white/95 px-6 backdrop-blur",
     innerClassName: "mx-auto max-w-6xl",
     mobileLabel: "Sections",
+    mobileMode: "disclosure",
     iconPosition: "left",
     onIntent: fn(),
     onSelect: fn(),
@@ -322,5 +333,36 @@ export const MobileInteraction: Story = {
     );
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await expect(toggle).toHaveFocus();
+  },
+};
+
+export const HorizontalScroll: Story = {
+  args: {
+    items: itemsWithoutIcons,
+    mobileMode: "horizontal-scroll",
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile1",
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const list = canvas.getByRole("list");
+    const demandLink = canvas.getByRole("link", { name: "Demand" });
+
+    await expect(
+      canvas.queryByRole("button", { name: "Sections: Summary" }),
+    ).not.toBeInTheDocument();
+    await expect(list).toHaveClass("overflow-x-auto", "whitespace-nowrap");
+    await expect(
+      canvas.getByRole("link", { name: "Summary" }),
+    ).toHaveAttribute("aria-current", "location");
+
+    await userEvent.click(demandLink);
+    await expect(args.onSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "demand" }),
+      expect.anything(),
+    );
   },
 };

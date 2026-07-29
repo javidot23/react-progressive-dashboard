@@ -1,0 +1,78 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks";
+import * as HeaderStories from "./Header.stories";
+
+<Meta of={HeaderStories} />
+
+# Header
+
+A controlled, two-level Cencora application header. It composes `Navbar` for
+primary links and persistent section tabs without owning routing, active state,
+or product actions.
+
+<Canvas of={HeaderStories.Desktop1440} />
+
+<Controls of={HeaderStories.Desktop1440} />
+
+## Responsive behavior
+
+- Below 768px, the primary navigation is hidden, the Cencora logo is reduced,
+  and all header actions remain available.
+- The section navigation always stays visible as a single horizontally
+  scrollable row.
+- At 768px and above, the primary navigation appears beside the full-size logo.
+- Positioning is intentionally external. Add sticky classes through
+  `className` only when a consuming page requires them.
+
+<Canvas of={HeaderStories.Mobile320} />
+
+<Canvas of={HeaderStories.Tablet768} />
+
+The horizontal list also keeps a remotely activated item visible:
+
+<Canvas of={HeaderStories.MobileLastActive} />
+
+## Controlled interfaces
+
+| Prop | Purpose |
+|---|---|
+| `primaryNavigation` | Items, active ID, accessible label, and callbacks for global navigation |
+| `sectionNavigation` | Items, active ID, accessible label, and callbacks for section navigation |
+| `actions` | Icon, label, optional destination, and selection callback for each header action |
+| `logoTo` | Destination for the Cencora logo |
+| `className` | Optional positioning or page-level classes for the outer header |
+
+The consumer owns every active ID and callback. An action with `to` renders a
+router link; an action without `to` renders a button.
+
+Because `Header` and `Navbar` render React Router links, mount them inside a
+Router provider such as `BrowserRouter` or `MemoryRouter`.
+
+## Accessibility
+
+- Give the two navigation landmarks unique `ariaLabel` values.
+- Give each action a concise, unique `label`; the icon is decorative and the
+  label becomes its accessible name.
+- The logo link defaults to the accessible name `Cencora home`.
+- All links and buttons retain a 44px touch target and a visible focus ring.
+- Do not use color alone to identify the active section; `Navbar` also renders
+  the active underline and `aria-current`.
+
+## Tokens
+
+The component uses existing semantic Tailwind tokens for backgrounds, text,
+borders, focus, brand color, spacing, and the hairline shadow. It does not
+introduce component CSS or new design-system variables.
+
+## Do and don't
+
+- Do pass route-aware data and callbacks from the consuming module.
+- Do keep labels short enough to scan in the horizontal row.
+- Do test every real integration at its narrowest supported viewport.
+- Don't add routing or section state inside `Header`.
+- Don't replace the horizontal row with a disclosure when matching this design.
+
+## Changelog
+
+| Version | Date | Notes |
+|---|---|---|
+| 1.0.0 | 2026-07-28 | Added the controlled two-level Header component |

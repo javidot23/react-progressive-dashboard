@@ -11,6 +11,16 @@ A responsive navigation list for switching between related sections.
 
 <Controls of={NavbarStories.DesktopLinks} />
 
+## Mobile presentations
+
+Use the default `mobileMode="disclosure"` when the navigation should collapse
+behind a labeled trigger. Use `mobileMode="horizontal-scroll"` for persistent
+tab-style navigation that remains in one scrollable row. When `activeId`
+changes, the horizontal mode scrolls only its own list far enough to keep the
+active item visible.
+
+<Canvas of={NavbarStories.HorizontalScroll} />
+
 ## Accessibility
 
 ### Keyboard Interaction
@@ -37,6 +47,7 @@ A responsive navigation list for switching between related sections.
 
 - Keep labels short, unique, and descriptive.
 - Provide `ariaCurrent="location"` when links identify locations within one page.
+- Keep horizontal-scroll navigation inside a width-constrained parent so overflow remains local to the list.
 - Maintain the 44px minimum touch target when overriding classes.
 - Do not rely on the active color alone; the border and ARIA state also communicate selection.
 
@@ -44,4 +55,5 @@ A responsive navigation list for switching between related sections.
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.1.0 | 2026-07-28 | Added the opt-in horizontal-scroll mobile presentation |
 | 1.0.0 | 2026-07-28 | Added component stories and usage documentation |
