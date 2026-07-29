@@ -1,9 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import {
-  defaultInventoryFilters,
-  inventoryRiskQueryOptions,
-} from "../../features/inventory/inventoryQueryOptions";
 import {
   manageSections,
   type ManageSectionId,
@@ -15,8 +10,6 @@ const manageSectionById = new Map(
 const manageSectionIds = manageSections.map((section) => section.id);
 
 export function useManageSectionPreparation() {
-  const queryClient = useQueryClient();
-
   const preloadSectionChunk = useCallback((id: ManageSectionId) => {
     void manageSectionById
       .get(id)
@@ -24,23 +17,11 @@ export function useManageSectionPreparation() {
       .catch(() => undefined);
   }, []);
 
-  const prefetchSectionData = useCallback(
-    (id: ManageSectionId) => {
-      if (id !== "inventory") return;
-
-      void queryClient.prefetchInfiniteQuery(
-        inventoryRiskQueryOptions(defaultInventoryFilters),
-      );
-    },
-    [queryClient],
-  );
-
   const prepareSection = useCallback(
     (id: ManageSectionId) => {
       preloadSectionChunk(id);
-      prefetchSectionData(id);
     },
-    [prefetchSectionData, preloadSectionChunk],
+    [preloadSectionChunk],
   );
 
   const preloadNextSection = useCallback(

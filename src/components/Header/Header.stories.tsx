@@ -171,11 +171,17 @@ export const Desktop1440: Story = {
 
     const header = canvasElement.querySelector("header");
     const upperSection = header?.firstElementChild as HTMLElement | null;
+    const logo = canvas.getByRole("link", {
+      name: "Cencora home",
+    });
     const primaryNavigation = canvas.getByRole("navigation", {
       name: "Primary navigation",
     });
     const activePrimaryLink = within(primaryNavigation).getByRole("link", {
       name: "Dashboard",
+    });
+    const inactivePrimaryLink = within(primaryNavigation).getByRole("link", {
+      name: "Team",
     });
     const sectionNavigation = canvas.getByRole("navigation", {
       name: "Dashboard sections",
@@ -183,17 +189,52 @@ export const Desktop1440: Story = {
     const activeSectionLink = within(sectionNavigation).getByRole("link", {
       name: "Summary",
     });
+    const inactiveSectionLink = within(sectionNavigation).getByRole("link", {
+      name: "Demand",
+    });
 
     await waitFor(() => {
       expect(upperSection).not.toBeNull();
 
       const upperRect = upperSection!.getBoundingClientRect();
+      const logoRect = logo.getBoundingClientRect();
       const activeRect = activePrimaryLink.getBoundingClientRect();
       const sectionRect = sectionNavigation.getBoundingClientRect();
       const activeSectionRect = activeSectionLink.getBoundingClientRect();
-      const sectionUnderline = canvasElement.ownerDocument.defaultView
-        ?.getComputedStyle(activeSectionLink, "::after");
+      const view = canvasElement.ownerDocument.defaultView;
+      const upperStyles = view?.getComputedStyle(upperSection!);
+      const sectionInner = sectionNavigation.firstElementChild as HTMLElement;
+      const sectionInnerStyles = view?.getComputedStyle(sectionInner);
+      const activePrimaryStyles = view?.getComputedStyle(activePrimaryLink);
+      const inactivePrimaryStyles = view?.getComputedStyle(
+        inactivePrimaryLink,
+      );
+      const activeSectionStyles = view?.getComputedStyle(activeSectionLink);
+      const inactiveSectionStyles = view?.getComputedStyle(
+        inactiveSectionLink,
+      );
+      const sectionUnderline = view?.getComputedStyle(
+        activeSectionLink,
+        "::after",
+      );
 
+      expect(upperRect.height).toBeCloseTo(64, 0);
+      expect(sectionRect.height).toBeCloseTo(40, 0);
+      expect(activeSectionRect.height).toBeCloseTo(40, 0);
+      expect(upperStyles?.paddingLeft).toBe("16px");
+      expect(upperStyles?.paddingRight).toBe("16px");
+      expect(sectionInnerStyles?.paddingLeft).toBe("40px");
+      expect(sectionInnerStyles?.paddingRight).toBe("40px");
+      expect(activePrimaryStyles?.fontSize).toBe("14px");
+      expect(activePrimaryStyles?.fontFamily).toContain("Cencora-Gilroy");
+      expect(activePrimaryStyles?.fontWeight).toBe("700");
+      expect(activePrimaryStyles?.lineHeight).toBe("20px");
+      expect(inactivePrimaryStyles?.fontWeight).toBe("500");
+      expect(activeSectionStyles?.fontSize).toBe("13px");
+      expect(activeSectionStyles?.fontWeight).toBe("600");
+      expect(inactiveSectionStyles?.fontSize).toBe("13px");
+      expect(inactiveSectionStyles?.fontWeight).toBe("500");
+      expect(activeRect.left - logoRect.right).toBeCloseTo(16, 0);
       expect(Math.abs(activeRect.height - upperRect.height)).toBeLessThanOrEqual(
         1,
       );
@@ -232,13 +273,30 @@ export const Tablet768: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const sectionNavigation = canvas.getByRole("navigation", {
+      name: "Dashboard sections",
+    });
+    const logo = canvas.getByRole("link", {
+      name: "Cencora home",
+    });
+    const primaryNavigation = canvas.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    const firstPrimaryLink = within(primaryNavigation).getByRole("link", {
+      name: "Dashboard",
+    });
+    const sectionInner = sectionNavigation.firstElementChild as HTMLElement;
+    const sectionInnerStyles =
+      canvasElement.ownerDocument.defaultView?.getComputedStyle(sectionInner);
 
+    await expect(primaryNavigation).toBeVisible();
+    await expect(sectionNavigation).toBeVisible();
+    await expect(sectionInnerStyles?.paddingLeft).toBe("40px");
+    await expect(sectionInnerStyles?.paddingRight).toBe("40px");
     await expect(
-      canvas.getByRole("navigation", { name: "Primary navigation" }),
-    ).toBeVisible();
-    await expect(
-      canvas.getByRole("navigation", { name: "Dashboard sections" }),
-    ).toBeVisible();
+      firstPrimaryLink.getBoundingClientRect().left -
+        logo.getBoundingClientRect().right,
+    ).toBeCloseTo(16, 0);
   },
 };
 
@@ -258,11 +316,18 @@ export const Mobile320: Story = {
     const sectionNavigation = canvas.getByRole("navigation", {
       name: "Dashboard sections",
     });
+    const sectionInner = sectionNavigation.firstElementChild as HTMLElement;
+    const sectionInnerStyles =
+      canvasElement.ownerDocument.defaultView?.getComputedStyle(sectionInner);
+    const upperSection = canvasElement.querySelector<HTMLElement>(
+      "header > div",
+    );
     const menuButton = canvasElement.querySelector<HTMLButtonElement>(
       'button[aria-label="Open navigation menu"]',
     );
 
     await expect(menuButton).not.toBeNull();
+    await expect(upperSection).not.toBeNull();
 
     if (mobileViewport) {
       await expect(menuButton).toBeVisible();
@@ -281,6 +346,15 @@ export const Mobile320: Story = {
     await expect(
       within(sectionNavigation).getByRole("list"),
     ).toHaveClass("overflow-x-auto", "whitespace-nowrap");
+    await expect(upperSection!.getBoundingClientRect().height).toBeCloseTo(
+      64,
+      0,
+    );
+    await expect(
+      sectionNavigation.getBoundingClientRect().height,
+    ).toBeCloseTo(40, 0);
+    await expect(sectionInnerStyles?.paddingLeft).toBe("16px");
+    await expect(sectionInnerStyles?.paddingRight).toBe("16px");
     await expect(documentElement.scrollWidth).toBeLessThanOrEqual(
       documentElement.clientWidth,
     );
@@ -317,17 +391,49 @@ export const MobileMenuOpen: Story = {
     const closeButton = dialogCanvas.getByRole("button", {
       name: "Close navigation menu",
     });
-    const dashboardItem = dialogCanvas
-      .getByRole("link", { name: "Dashboard" })
-      .closest("li");
+    const primaryNavigation = dialogCanvas.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    const dashboardLink = within(primaryNavigation).getByRole("link", {
+      name: "Dashboard",
+    });
+    const dashboardItem = dashboardLink.closest("li");
+    const summaryLink = within(dashboardItem!).getByRole("link", {
+      name: "Summary",
+    });
 
     await expect(dialog).toBeVisible();
     await expect(closeButton).toHaveFocus();
     await expect(menuButton).toHaveAttribute("aria-expanded", "true");
     await expect(dashboardItem).not.toBeNull();
-    await expect(
-      within(dashboardItem!).getByRole("link", { name: "Summary" }),
-    ).toHaveAttribute("aria-current", "location");
+    await expect(summaryLink).toHaveAttribute("aria-current", "location");
+
+    const dashboardStyles =
+      canvasElement.ownerDocument.defaultView?.getComputedStyle(
+        dashboardLink,
+      );
+    const summaryStyles =
+      canvasElement.ownerDocument.defaultView?.getComputedStyle(
+        summaryLink,
+      );
+    const navigationRect = primaryNavigation.getBoundingClientRect();
+    const dashboardRect = dashboardLink.getBoundingClientRect();
+    const summaryRect = summaryLink.getBoundingClientRect();
+
+    await expect(dashboardRect.height).toBeCloseTo(40, 0);
+    await expect(dashboardRect.left).toBeCloseTo(navigationRect.left, 0);
+    await expect(dashboardRect.right).toBeCloseTo(navigationRect.right, 0);
+    await expect(dashboardStyles?.borderLeftWidth).toBe("4px");
+    await expect(dashboardStyles?.borderRadius).toBe("0px");
+    await expect(dashboardStyles?.backgroundColor).not.toBe(
+      "rgba(0, 0, 0, 0)",
+    );
+    await expect(summaryRect.height).toBeCloseTo(40, 0);
+    await expect(summaryStyles?.borderLeftWidth).toBe("4px");
+    await expect(summaryStyles?.borderRadius).toBe("0px");
+    await expect(summaryStyles?.backgroundColor).not.toBe(
+      "rgba(0, 0, 0, 0)",
+    );
   },
 };
 

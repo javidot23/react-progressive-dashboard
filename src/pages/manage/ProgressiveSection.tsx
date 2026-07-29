@@ -66,7 +66,7 @@ export function ProgressiveSection({
       ref={setNode}
       id={id}
       aria-label={label}
-      className="scroll-mt-20 px-6 py-12"
+      className="scroll-mt-[104px] px-6 py-12"
       style={{ minHeight: `calc(${placeholderMinHeight}px + 6rem)` }}
     >
       {activated ? (

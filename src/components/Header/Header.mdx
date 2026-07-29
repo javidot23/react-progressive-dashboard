@@ -16,10 +16,19 @@ internal modal dialog.
 
 ## Responsive behavior
 
-- Below 768px, a 44px hamburger opens the full-screen handset menu. The Cencora
-  logo is reduced in the closed header and all header actions remain available.
+- The upper row is 64px tall and always uses 16px of horizontal padding.
+- From 768px onward, the space between the logo and the first primary
+  navigation item stays fixed at 16px, including at the 1024px breakpoint.
+- The section-navigation row is 40px tall. Its horizontal padding is 16px
+  below 768px and 40px from the 768px breakpoint onward.
+- Below 768px, a 32px hamburger with a centered 18px icon and 3px control
+  padding opens the full-screen handset menu. The Cencora logo is reduced in
+  the closed header and all header actions remain available.
 - The handset menu repeats the controlled primary links and semantically nests
   the section links under the item identified by `sectionParentId`.
+- Its selected primary item and selected nested subitem use 40px rows with
+  square corners, a 4px brand-colored left border, and the existing light
+  brand background. Nested items retain their semantic indentation.
 - The section navigation always stays visible as a single horizontally
   scrollable row with no visible scrollbar. It meets the upper row directly
   without a dividing border.
@@ -40,6 +49,15 @@ The horizontal list also keeps a remotely activated item visible:
 
 <Canvas of={HeaderStories.MobileLastActive} />
 
+## Navigation typography
+
+- Primary navigation uses the existing `body-sm` CDS font-size, font-family,
+  and line-height utilities. Inactive items use weight 500 and the active item
+  uses weight 700.
+- Section navigation uses a 13px font size. Inactive items use weight 500 and
+  the active item uses weight 600.
+- The handset dialog preserves the same primary and section typography.
+
 ## Controlled interfaces
 
 | Prop | Purpose |
@@ -47,13 +65,15 @@ The horizontal list also keeps a remotely activated item visible:
 | `primaryNavigation` | Items, active ID, accessible label, and callbacks for global navigation |
 | `sectionNavigation` | Items, active ID, accessible label, and callbacks for section navigation |
 | `sectionParentId` | Required primary item ID under which section links are nested in the handset |
-| `actions` | Icon, label, optional destination, and selection callback for each header action |
+| `actions` | Enabled link/button actions or native disabled icon buttons |
 | `mobileMenuLabels` | Optional accessible labels for opening, closing, and naming the handset dialog |
 | `logoTo` | Destination for the Cencora logo |
 | `className` | Optional positioning or page-level classes for the outer header |
 
-The consumer owns every active ID and callback. An action with `to` renders a
-router link; an action without `to` renders a button.
+The consumer owns every active ID and callback. An enabled action with `to`
+renders a router link; an enabled action without `to` renders a button.
+Set `disabled: true` without `to` or `onSelect` when an action must remain
+visible but unavailable.
 
 `MobileNavigationDialog` is an internal Header implementation detail and is not
 exported as a generic design-system component.
@@ -68,8 +88,13 @@ Router provider such as `BrowserRouter` or `MemoryRouter`.
   the two navigation levels explicit and predictable.
 - Give each action a concise, unique `label`; the icon is decorative and the
   label becomes its accessible name.
+- Use the disabled action contract for unavailable actions instead of a
+  focusable control with an empty callback.
 - The logo link defaults to the accessible name `Cencora home`.
-- All links and buttons retain a 44px touch target and a visible focus ring.
+- The hamburger and action controls render at 32px by 32px with 3px padding
+  and centered 18px icons. The logo link retains a 44px minimum target, and
+  section links fill the specified 40px secondary row. Every interactive
+  control retains a visible focus ring.
 - Do not use color alone to identify the active section; `Navbar` also renders
   the active underline and `aria-current`.
 - The native modal moves initial focus to the close button, keeps background
@@ -99,6 +124,8 @@ easy to inspect independently of the operating-system color scheme.
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.4.0 | 2026-07-29 | Added a typed native-disabled action variant |
+| 1.3.0 | 2026-07-29 | Set row geometry, icon sizing, navigation typography, and the full-width handset selected state |
 | 1.2.0 | 2026-07-29 | Aligned desktop primary items with the full upper-row height, removed the inter-row divider, restored the section underline, and fixed light story previews |
 | 1.1.0 | 2026-07-28 | Added the accessible handset navigation dialog |
 | 1.0.0 | 2026-07-28 | Added the controlled two-level Header component |

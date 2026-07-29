@@ -28,6 +28,7 @@ describe("ProgressiveSection", () => {
     const section = container.querySelector("#inventory");
 
     expect(sectionRef).toHaveBeenCalledWith(section);
+    expect(section).toHaveClass("scroll-mt-[104px]");
 
     unmount();
 

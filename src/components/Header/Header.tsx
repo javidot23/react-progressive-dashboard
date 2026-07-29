@@ -32,16 +32,28 @@ export type HeaderActionSelectEvent = MouseEvent<
   HTMLAnchorElement | HTMLButtonElement
 >;
 
-export type HeaderAction = {
+type HeaderActionBase = {
   id: string;
   label: string;
   icon: LucideIcon;
+};
+
+export type HeaderEnabledAction = HeaderActionBase & {
+  disabled?: false;
   to?: string;
   onSelect: (
-    action: HeaderAction,
+    action: HeaderEnabledAction,
     event: HeaderActionSelectEvent,
   ) => void;
 };
+
+export type HeaderDisabledAction = HeaderActionBase & {
+  disabled: true;
+  onSelect?: never;
+  to?: never;
+};
+
+export type HeaderAction = HeaderEnabledAction | HeaderDisabledAction;
 
 export type MobileMenuLabels = MobileNavigationDialogLabels & {
   open: string;
@@ -69,10 +81,26 @@ const defaultMobileMenuLabels: MobileMenuLabels = {
 };
 
 const actionClassName = [
-  "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md",
+  "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md p-[3px]",
   "text-brand-primary-main transition-colors hover:bg-brand-primary-50",
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-interactive-primary-focus",
+  "disabled:cursor-not-allowed disabled:text-ui-text-muted disabled:opacity-50 disabled:hover:bg-transparent",
   "motion-reduce:transition-none",
+].join(" ");
+
+const primaryNavigationListClassName = [
+  "scrollbar-hide min-w-0 overflow-x-auto whitespace-nowrap",
+  "[&>li>a]:!font-body-sm [&>li>a]:!text-body-sm [&>li>a]:!font-medium [&>li>a]:!leading-body-sm",
+  "[&>li>button]:!font-body-sm [&>li>button]:!text-body-sm [&>li>button]:!font-medium [&>li>button]:!leading-body-sm",
+  "[&>li>a[aria-current]]:!font-bold [&>li>button[aria-pressed=true]]:!font-bold",
+].join(" ");
+
+const sectionNavigationListClassName = [
+  "!h-10",
+  "[&>li]:h-10",
+  "[&>li>a]:!h-10 [&>li>a]:!py-0 [&>li>a]:!text-[13px] [&>li>a]:!font-medium",
+  "[&>li>button]:!h-10 [&>li>button]:!py-0 [&>li>button]:!text-[13px] [&>li>button]:!font-medium",
+  "[&>li>a[aria-current]]:!font-semibold [&>li>button[aria-pressed=true]]:!font-semibold",
 ].join(" ");
 
 export function Header<
@@ -121,7 +149,7 @@ export function Header<
 
   return (
     <header className={headerClassName}>
-      <div className="flex min-h-20 w-full min-w-0 items-center gap-2 px-3 sm:gap-4 sm:px-6 md:h-24 lg:gap-8 lg:px-12">
+      <div className="flex h-16 w-full min-w-0 items-center gap-2 px-4 sm:gap-4">
         <button
           ref={mobileMenuButtonRef}
           type="button"
@@ -129,10 +157,14 @@ export function Header<
           aria-expanded={mobileMenuOpen}
           aria-haspopup="dialog"
           aria-label={resolvedMobileMenuLabels.open}
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-brand-primary-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-interactive-primary-focus md:hidden"
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md p-[3px] text-brand-primary-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-interactive-primary-focus md:hidden"
           onClick={() => setMobileMenuOpen(true)}
         >
-          <Menu aria-hidden="true" className="h-6 w-6" strokeWidth={2} />
+          <Menu
+            aria-hidden="true"
+            className="h-[18px] w-[18px]"
+            strokeWidth={2}
+          />
         </button>
 
         <Link
@@ -143,7 +175,7 @@ export function Header<
           <img
             src={cencoraLogo}
             alt=""
-            className="h-auto w-[5.75rem] sm:w-[8.5rem] md:w-[9.8125rem]"
+            className="h-auto w-[5.25rem] sm:w-[8.5rem] md:w-[9.8125rem]"
           />
         </Link>
 
@@ -151,7 +183,7 @@ export function Header<
           {...primaryNavigation}
           className="hidden min-w-0 flex-1 self-stretch md:block"
           innerClassName="h-full min-w-0"
-          listClassName="scrollbar-hide min-w-0 overflow-x-auto whitespace-nowrap"
+          listClassName={primaryNavigationListClassName}
         />
 
         <div
@@ -165,12 +197,25 @@ export function Header<
               <>
                 <Icon
                   aria-hidden="true"
-                  className="h-6 w-6"
+                  className="h-[18px] w-[18px]"
                   strokeWidth={2}
                 />
                 <span className="sr-only">{action.label}</span>
               </>
             );
+
+            if (action.disabled) {
+              return (
+                <button
+                  key={action.id}
+                  type="button"
+                  disabled
+                  className={actionClassName}
+                >
+                  {content}
+                </button>
+              );
+            }
 
             return action.to ? (
               <Link
@@ -198,8 +243,9 @@ export function Header<
       <Navbar
         {...sectionNavigation}
         mobileMode="horizontal-scroll"
-        className="w-full min-w-0"
-        innerClassName="min-w-0 px-3 sm:px-6 md:px-10 lg:px-12"
+        className="h-10 w-full min-w-0"
+        innerClassName="h-full min-w-0 px-4 md:px-10"
+        listClassName={sectionNavigationListClassName}
       />
 
       <MobileNavigationDialog

@@ -1,0 +1,180 @@
+import {
+  Controls,
+  Description,
+  Meta,
+} from "@storybook/blocks";
+import * as DashboardLayoutStories from "./DashboardLayout.stories";
+
+<Meta of={DashboardLayoutStories} />
+
+# DashboardLayout
+
+`DashboardLayout` is the application shell for the React Progressive Dashboard.
+It composes the controlled two-level `Header`, fixes the four primary
+destinations, displays unavailable header actions as native disabled buttons,
+and renders page-owned content below the sticky header.
+
+The layout does not own section state, hash history, lazy activation, or
+scrolling. Overview, React, Plan, and Manage supply their own secondary
+configuration and content.
+
+---
+
+## When to use
+
+- Use it as the outer shell for each top-level dashboard route.
+- Use `onPrimarySelect` when an active route needs a deliberate reselection
+  behavior, such as resetting Manage from Sales to Summary.
+- Supply controlled secondary navigation from the page that owns its sections.
+
+---
+
+## Responsibilities
+
+| DashboardLayout owns | Route page owns |
+|---|---|
+| Fixed primary labels and destinations | Active primary destination |
+| Header composition and disabled actions | Secondary items and active section |
+| Placement of page children below the sticky Header | Hash, history, preload, lazy activation, and scroll |
+| Forwarding optional primary selections | Route heading, document title, and page content |
+
+---
+
+## Route matrix
+
+| Primary item | Destination | Secondary items | Page behavior |
+|---|---|---|---|
+| Overview | `/#under-construction` | Under Construction | Shared construction page |
+| React | `/react#under-construction` | Under Construction | Shared construction page |
+| Plan | `/plan#under-construction` | Under Construction | Shared construction page |
+| Manage | `/manage#summary` | Summary, Demand, Orders, Suppliers, Inventory, Sales, Perfect Order | Controlled hash and section scrolling |
+
+---
+
+## Interactive example
+
+The single story uses the production routes and components. Its interaction
+starts in Manage, visits Overview, React, and Plan, returns to Manage, traverses
+all seven sections, and finally reselects Manage to reset the view to Summary.
+After the interaction completes, every destination remains available for
+manual exploration. Scroll inside the embedded preview to see the Header remain
+sticky within the dashboard viewport.
+
+<Description of={DashboardLayoutStories.InteractiveDashboard} />
+
+<iframe
+  title="Interactive DashboardLayout preview"
+  src="./iframe.html?id=templates-dashboardlayout--interactive-dashboard&viewMode=story&shortcuts=false&singleStory=true&embed=true"
+  width="100%"
+  height="720"
+  loading="lazy"
+  style={{
+    display: "block",
+    border: "1px solid #d9d9e3",
+    borderRadius: "8px",
+    background: "#ffffff",
+  }}
+/>
+
+---
+
+## Controlled API
+
+<Controls />
+
+| Prop | Owner | Purpose |
+|---|---|---|
+| `activePrimaryId` | Route page | Marks exactly one of Overview, React, Plan, or Manage current |
+| `sectionNavigation` | Route page | Supplies secondary items, active ID, accessible name, intent, and selection callbacks |
+| `onPrimarySelect` | Route page | Optionally intercepts a primary selection without changing normal Link behavior by default |
+| `children` | Route page | Renders the page heading and primary content after Header |
+
+The fixed primary item and action collections live with the layout. Consumers
+cannot silently diverge from the application navigation contract.
+
+---
+
+## Data and interaction flow
+
+1. The route selects `activePrimaryId`.
+2. The page passes its controlled secondary navigation to the layout.
+3. `Header` renders both levels and reports intent or selection.
+4. Under Construction pages allow normal Router link behavior.
+5. Manage intercepts only unmodified section selections and active Manage
+   reselection, then coordinates preload, history, and scroll completion.
+6. `SectionedView` renders every ordered Manage section and receives the
+   controller refs and programmatic-scroll state.
+
+---
+
+## Responsive behavior
+
+- The current Header uses a 64px upper row and a 40px section row.
+- The complete sticky offset is therefore 104px at the supported breakpoints.
+- Manage section `scroll-margin-top` and scroll-spy geometry use the same
+  exported offset.
+- At widths below 768px, the primary list moves into the full-screen dialog.
+- The secondary row remains a single horizontally scrollable 40px row.
+- At 320px, the document must not introduce horizontal overflow.
+
+---
+
+## Design tokens
+
+| Token or utility | Usage |
+|---|---|
+| `bg-ui-background-primary` | Header surface |
+| `bg-slate-50` | Application page background |
+| `text-brand-primary-main` | Active navigation and header actions |
+| `shadow-hairline` | Header separation |
+| `focus-visible:ring-interactive-primary-focus` | Keyboard focus |
+| `text-ui-text-muted` | Disabled action state |
+
+The component adds no new design-system variables.
+
+---
+
+## Accessibility
+
+| Behavior | Contract |
+|---|---|
+| Navigation landmarks | Primary and secondary navs always have distinct accessible names |
+| Current state | Primary links use `aria-current="page"`; section links use `aria-current="location"` |
+| Disabled actions | Render as native disabled buttons and are removed from sequential focus |
+| Mobile dialog | Uses the Header native modal, focus trap, Escape dismissal, and focus restoration |
+| Route focus | Every page supplies a focusable level-one heading through `useRouteView` |
+| Decorative icons | Header and section icons remain `aria-hidden` |
+
+Do not replace disabled actions with focusable controls that have empty
+callbacks. Do not communicate active state through color alone.
+
+---
+
+## Do and don't
+
+| Do | Don't |
+|---|---|
+| Keep page-specific state in the page/controller | Put Manage hashes or scroll state in DashboardLayout |
+| Use the fixed route and label collection | Fork primary destinations per page |
+| Preserve native modified clicks | Prevent every primary click |
+| Keep secondary IDs equal to section IDs | Maintain duplicate navigation and section identifiers |
+| Test the full shell at 320px | Validate the Header and page only in isolation |
+
+---
+
+## Related components
+
+- [Header](?path=/docs/organisms-header--docs) renders the two navigation
+  levels and disabled action controls.
+- [Navbar](?path=/docs/components-navbar--docs) renders each controlled
+  navigation collection.
+- [SectionedView](?path=/docs/components-sectionedview--docs) composes the
+  ordered Manage sections.
+
+---
+
+## Changelog
+
+| Version | Date | Notes |
+|---|---|---|
+| 1.0.0 | 2026-07-29 | Added the four-route controlled dashboard shell, disabled actions, Manage integration, one interactive story, and documentation |

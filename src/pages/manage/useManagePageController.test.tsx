@@ -12,7 +12,7 @@ const mockPreloadNextSection = jest.fn();
 let mockLocation = {
   hash: "#summary",
   key: "location-key",
-  pathname: "/manage-v2",
+  pathname: "/manage",
   search: "",
 };
 let mockNavigationType = "PUSH";
@@ -68,7 +68,7 @@ describe("useManagePageController", () => {
     mockLocation = {
       hash: "#summary",
       key: "location-key",
-      pathname: "/manage-v2",
+      pathname: "/manage",
       search: "",
     };
     mockNavigationType = "PUSH";
@@ -106,7 +106,7 @@ describe("useManagePageController", () => {
     });
     expect(mockNavigate).toHaveBeenCalledWith(
       {
-        pathname: "/manage-v2",
+        pathname: "/manage",
         search: "",
         hash: "#inventory",
       },
@@ -258,7 +258,7 @@ describe("useManagePageController", () => {
 
     expect(mockNavigate).toHaveBeenCalledWith(
       {
-        pathname: "/manage-v2",
+        pathname: "/manage",
         search: "",
         hash: "#inventory",
       },

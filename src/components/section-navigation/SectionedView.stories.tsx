@@ -12,10 +12,7 @@ import { useCallback, useRef, useState, type RefCallback } from "react";
 import { MemoryRouter } from "react-router";
 import { lightStoryTheme } from "../../stories/lightStoryTheme";
 import { Header, type HeaderAction } from "../Header";
-import {
-  isUnmodifiedPrimaryClick,
-  type NavbarItem,
-} from "../Navbar";
+import { isUnmodifiedPrimaryClick, type NavbarItem } from "../Navbar";
 import { SectionedView } from "./SectionedView";
 import type { SectionedViewProps } from "./types";
 
@@ -85,7 +82,7 @@ const navigationGroups = [
   },
 ] satisfies readonly ReportNavigationGroup[];
 
-const primaryNavigationItems = navigationGroups.map(group => ({
+const primaryNavigationItems = navigationGroups.map((group) => ({
   id: group.id,
   label: group.label,
   to: `/${group.id}#${group.sections[0].slug}`,
@@ -118,7 +115,7 @@ function getReportSectionId(section: ReportSection) {
 }
 
 function getNavigationGroup(id: ReportAreaId) {
-  return navigationGroups.find(group => group.id === id)!;
+  return navigationGroups.find((group) => group.id === id)!;
 }
 
 function unusedSectionRef(): RefCallback<HTMLElement> {
@@ -135,13 +132,11 @@ function SectionedViewHarness(args: StoryArgs) {
   );
   const activeGroup = getNavigationGroup(activePrimaryId);
   const currentSections =
-    activePrimaryId === "dashboard"
-      ? args.sections
-      : activeGroup.sections;
+    activePrimaryId === "dashboard" ? args.sections : activeGroup.sections;
   const activeSection = currentSections.find(
-    section => section.slug === activeId,
+    (section) => section.slug === activeId,
   );
-  const sectionNavigationItems = currentSections.map(section => ({
+  const sectionNavigationItems = currentSections.map((section) => ({
     id: section.slug,
     label: section.title,
     to: `/${activePrimaryId}#${section.slug}`,
@@ -151,7 +146,7 @@ function SectionedViewHarness(args: StoryArgs) {
     let callback = sectionRefCallbacks.current.get(id);
 
     if (!callback) {
-      callback = node => {
+      callback = (node) => {
         if (node) {
           sectionNodes.current.set(id, node);
         } else {
@@ -232,9 +227,7 @@ function SectionedViewHarness(args: StoryArgs) {
             {args.renderHeader?.()}
           </>
         )}
-        renderNavigation={({
-          isProgrammaticScrolling,
-        }) => {
+        renderNavigation={({ isProgrammaticScrolling }) => {
           const contentLabel =
             typeof args.contentProps?.["aria-label"] === "string"
               ? args.contentProps["aria-label"]
@@ -248,8 +241,8 @@ function SectionedViewHarness(args: StoryArgs) {
             >
               <div className="mx-auto flex max-w-4xl flex-wrap items-start justify-between gap-4">
                 <p className="max-w-md text-xs text-slate-600">
-                  Select a Header destination to update the consumer-owned
-                  group and section state.
+                  Select a Header destination to update the consumer-owned group
+                  and section state.
                 </p>
                 <div
                   role="status"
@@ -263,9 +256,7 @@ function SectionedViewHarness(args: StoryArgs) {
                     <dt className="text-slate-300">Active group</dt>
                     <dd className="font-semibold">{activeGroup.label}</dd>
                     <dt className="text-slate-300">Active section</dt>
-                    <dd className="font-semibold">
-                      {activeSection?.title}
-                    </dd>
+                    <dd className="font-semibold">{activeSection?.title}</dd>
                     <dt className="text-slate-300">Scroll mode</dt>
                     <dd className="font-semibold">
                       {isProgrammaticScrolling ? "Programmatic" : "Manual"}
@@ -327,10 +318,10 @@ function SectionedViewHarness(args: StoryArgs) {
 }
 
 const meta = {
-  title: "Components/SectionedView",
+  title: "Templates/SectionedView",
   component: SectionedView,
   decorators: [
-    Story => (
+    (Story) => (
       <MemoryRouter initialEntries={["/dashboard#summary"]}>
         <div
           data-sectioned-view-story-theme="light"
@@ -342,7 +333,7 @@ const meta = {
       </MemoryRouter>
     ),
   ],
-  render: args => <SectionedViewHarness key={args.activeId} {...args} />,
+  render: (args) => <SectionedViewHarness key={args.activeId} {...args} />,
   parameters: {
     a11y: {
       test: "error",
@@ -369,7 +360,7 @@ const meta = {
       description:
         "Initial active section ID for the Dashboard group. The harness continues to control it after Header selections.",
       control: "select",
-      options: dashboardSections.map(section => section.slug),
+      options: dashboardSections.map((section) => section.slug),
       table: {
         category: "Data and state",
         type: { summary: "TId" },
@@ -463,8 +454,7 @@ const meta = {
       },
     },
     rootClassName: {
-      description:
-        "Classes applied to the complete SectionedView composition.",
+      description: "Classes applied to the complete SectionedView composition.",
       control: "text",
       table: {
         category: "Semantics and styling",
@@ -496,9 +486,7 @@ const meta = {
     isProgrammaticScrolling: false,
     getSectionId: getReportSectionId,
     getSectionRef: unusedSectionRef,
-    renderHeader: () => (
-      <h1 className="sr-only">Sectioned dashboard</h1>
-    ),
+    renderHeader: () => <h1 className="sr-only">Sectioned dashboard</h1>,
     renderNavigation: () => null,
     renderSection: () => null,
     contentAs: "main",
@@ -550,26 +538,23 @@ export const Default: Story = {
         name: "Sectioned dashboard",
       }),
     ).toBeInTheDocument();
+    await expect(within(primaryNavigation).getAllByRole("link")).toHaveLength(
+      3,
+    );
+    await expect(within(sectionNavigation).getAllByRole("link")).toHaveLength(
+      3,
+    );
     await expect(
-      within(primaryNavigation).getAllByRole("link"),
-    ).toHaveLength(3);
-    await expect(
-      within(sectionNavigation).getAllByRole("link"),
-    ).toHaveLength(3);
-    await expect(
-      renderedSections.map(section => section.dataset.sectionId),
+      renderedSections.map((section) => section.dataset.sectionId),
     ).toEqual(["summary", "demand", "orders"]);
     await expect(dashboardLink).toHaveAttribute("aria-current", "page");
-    await expect(summaryLink).toHaveAttribute(
-      "aria-current",
-      "location",
-    );
+    await expect(summaryLink).toHaveAttribute("aria-current", "location");
     await expect(
       canvas.getByRole("article", { name: "Summary" }),
     ).toHaveAttribute("data-active", "true");
-    await expect(
-      canvas.getAllByRole("link", { current: "page" }),
-    ).toHaveLength(1);
+    await expect(canvas.getAllByRole("link", { current: "page" })).toHaveLength(
+      1,
+    );
     await expect(
       canvas.getAllByRole("link", { current: "location" }),
     ).toHaveLength(1);
@@ -635,25 +620,23 @@ export const InteractiveNavigation: Story = {
     });
 
     await expect(operationsLink).toHaveAttribute("aria-current", "page");
-    await expect(suppliersLink).toHaveAttribute(
-      "aria-current",
-      "location",
-    );
+    await expect(suppliersLink).toHaveAttribute("aria-current", "location");
     await expect(
       within(operationsNavigation)
         .getAllByRole("link")
-        .map(link => link.textContent),
+        .map((link) => link.textContent),
     ).toEqual(["Suppliers", "Inventory", "Sales"]);
     await expect(
       within(content)
         .getAllByRole("article")
-        .map(section => section.dataset.sectionId),
+        .map((section) => section.dataset.sectionId),
     ).toEqual(["suppliers", "inventory", "sales"]);
     await expect(
       canvas.getByRole("article", { name: "Suppliers" }),
     ).toHaveAttribute("data-active", "true");
-    await expect(canvas.queryByRole("article", { name: "Summary" }))
-      .not.toBeInTheDocument();
+    await expect(
+      canvas.queryByRole("article", { name: "Summary" }),
+    ).not.toBeInTheDocument();
     await expect(canvas.getByRole("status")).toHaveTextContent(
       /Active group\s*Operations/,
     );
@@ -759,7 +742,7 @@ export const SemanticSectionContainer: Story = {
     await expect(
       within(content)
         .getAllByRole("article")
-        .map(section => section.dataset.sectionId),
+        .map((section) => section.dataset.sectionId),
     ).toEqual(["summary", "demand", "orders"]);
     await expect(canvas.getByRole("status")).toHaveTextContent(
       /Content wrapper\s*<section>\s*· Report collection/,
@@ -879,7 +862,7 @@ export const MobileHeaderNavigation: Story = {
         }),
       )
         .getAllByRole("link")
-        .map(link => link.textContent),
+        .map((link) => link.textContent),
     ).toEqual(["Suppliers", "Inventory", "Sales"]);
 
     fireEvent(

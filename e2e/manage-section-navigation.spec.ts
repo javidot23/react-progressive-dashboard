@@ -1,5 +1,6 @@
 import {
   expect,
+  type Locator,
   type Page,
   test as base,
 } from "@playwright/test";
@@ -35,22 +36,40 @@ const test = base.extend<QaFixtures>({
 
 const sectionLabels = {
   summary: "Summary",
-  inventory: "Inventory",
   demand: "Demand",
-  supply: "Supply",
+  orders: "Orders",
+  suppliers: "Suppliers",
+  inventory: "Inventory",
   sales: "Sales",
+  "perfect-order": "Perfect Order",
 } as const;
 
 type SectionId = keyof typeof sectionLabels;
 
+function primaryNavigation(page: Page) {
+  return page.getByRole("navigation", {
+    name: "Primary navigation",
+  });
+}
+
+function primaryLink(page: Page, name: string) {
+  return primaryNavigation(page).getByRole("link", {
+    name,
+    exact: true,
+  });
+}
+
+function manageNavigation(page: Page) {
+  return page.getByRole("navigation", {
+    name: "Manage sections",
+  });
+}
+
 function sectionLink(page: Page, id: SectionId) {
-  return page
-    .getByRole("navigation", { name: "Manage sections" })
-    .getByRole("link", {
-      name: sectionLabels[id],
-      exact: true,
-      includeHidden: true,
-    });
+  return manageNavigation(page).getByRole("link", {
+    name: sectionLabels[id],
+    exact: true,
+  });
 }
 
 async function expectActiveSection(page: Page, id: SectionId) {
@@ -103,8 +122,8 @@ async function expectSectionAligned(page: Page, id: SectionId) {
 }
 
 async function openSection(page: Page, id: SectionId) {
-  await page.goto(`/manage-v2#${id}`);
-  await expect(page).toHaveURL(new RegExp(`#${id}$`));
+  await page.goto(`/manage#${id}`);
+  await expect(page).toHaveURL(new RegExp(`/manage#${id}$`));
   await expectActiveSection(page, id);
   await expectSectionAligned(page, id);
 }
@@ -138,21 +157,106 @@ async function selectSectionOnFirstFrame(page: Page, id: SectionId) {
   );
 }
 
-test.describe("Manage section navigation", () => {
-  test("navigates across cold Inventory without activating intermediate sections or losing alignment", async ({
+async function expectDisabledHeaderActions(page: Page | Locator) {
+  for (const label of ["Notifications", "Settings", "Profile"]) {
+    await expect(
+      page.getByRole("button", { name: label }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("link", { name: label }),
+    ).toHaveCount(0);
+  }
+}
+
+test.describe("Dashboard routes", () => {
+  for (const route of [
+    {
+      path: "/",
+      title: "Overview",
+      navigationName: "Overview sections",
+    },
+    {
+      path: "/react",
+      title: "React",
+      navigationName: "React sections",
+    },
+    {
+      path: "/plan",
+      title: "Plan",
+      navigationName: "Plan sections",
+    },
+  ]) {
+    test(`${route.title} exposes one Under Construction section`, async ({
+      page,
+    }) => {
+      await page.goto(route.path);
+
+      await expect(primaryLink(page, route.title)).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+      const sectionNavigation = page.getByRole("navigation", {
+        name: route.navigationName,
+      });
+      await expect(sectionNavigation.getByRole("link")).toHaveText(
+        "Under Construction",
+      );
+      await expect(
+        page.getByRole("heading", {
+          level: 2,
+          name: "Under Construction",
+        }),
+      ).toBeVisible();
+      await expectDisabledHeaderActions(page);
+    });
+  }
+
+  test("the removed manage-v2 route falls through to 404", async ({
     page,
   }) => {
-    // Every test starts with a fresh browser context and QueryClient. Click as
-    // soon as the initial current link is available so Inventory cannot be
-    // warmed by a previous navigation or test.
     await page.goto("/manage-v2#summary");
-    await expect(sectionLink(page, "summary")).toHaveAttribute(
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: "404" }),
+    ).toBeVisible();
+  });
+});
+
+test.describe("Manage section navigation", () => {
+  test("renders the requested navigation contract and sticky geometry", async ({
+    page,
+  }) => {
+    await page.goto("/manage#summary");
+
+    await expect(primaryLink(page, "Manage")).toHaveAttribute(
       "aria-current",
-      "location",
+      "page",
     );
-    await expect(page.getByText("Loading inventory…")).toBeAttached({
-      timeout: 2_000,
+    await expect(
+      manageNavigation(page)
+        .getByRole("link")
+        .allTextContents(),
+    ).resolves.toEqual(Object.values(sectionLabels));
+    await expectDisabledHeaderActions(page);
+
+    const geometry = await page.locator("header").evaluate((header) => ({
+      height: header.getBoundingClientRect().height,
+      position: getComputedStyle(header).position,
+      top: getComputedStyle(header).top,
+    }));
+
+    expect(geometry).toEqual({
+      height: 104,
+      position: "sticky",
+      top: "0px",
     });
+  });
+
+  test("navigates to Perfect Order without activating intermediate sections", async ({
+    page,
+  }) => {
+    await page.goto("/manage#summary");
+    await expectActiveSection(page, "summary");
 
     await page.evaluate(() => {
       const state = window as Window & {
@@ -185,16 +289,19 @@ test.describe("Manage section navigation", () => {
 
     const immediateSelection = await selectSectionOnFirstFrame(
       page,
-      "sales",
+      "perfect-order",
     );
 
-    // The selected destination becomes active immediately, while the local
-    // Inventory request and its resulting geometry change complete.
-    expect(immediateSelection.activeLabel).toBe("Sales");
+    expect(immediateSelection.activeLabel).toBe("Perfect Order");
     expect(immediateSelection.targetTop).toBeGreaterThan(1_000);
-    await expectActiveSection(page, "sales");
-    await expect(page.getByRole("heading", { name: "Inventory" })).toBeAttached();
-    await expectSectionAligned(page, "sales");
+    await expectActiveSection(page, "perfect-order");
+    await expectSectionAligned(page, "perfect-order");
+    await expect(
+      page.getByRole("heading", {
+        name: "Perfect Order",
+        exact: true,
+      }),
+    ).toBeAttached();
 
     const activeHistory = await page.evaluate(
       () =>
@@ -205,15 +312,26 @@ test.describe("Manage section navigation", () => {
         ).__manageActiveHistory ?? [],
     );
 
-    expect(activeHistory).toContain("Sales");
-    expect(activeHistory).not.toContain("Inventory");
-    expect(activeHistory).not.toContain("Demand");
-    expect(activeHistory).not.toContain("Supply");
-
-    await selectSection(page, "summary");
+    expect(activeHistory).toContain("Perfect Order");
+    for (const intermediate of [
+      "Demand",
+      "Orders",
+      "Suppliers",
+      "Inventory",
+      "Sales",
+    ]) {
+      expect(activeHistory).not.toContain(intermediate);
+    }
   });
 
-  for (const id of ["demand", "supply", "sales"] as const) {
+  for (const id of [
+    "demand",
+    "orders",
+    "suppliers",
+    "inventory",
+    "sales",
+    "perfect-order",
+  ] as const) {
     test(`restores and aligns a deep #${id} URL after refresh`, async ({
       page,
     }) => {
@@ -230,14 +348,7 @@ test.describe("Manage section navigation", () => {
     page,
   }) => {
     await openSection(page, "summary");
-    await sectionLink(page, "demand").click();
-    await expect(page).toHaveURL(/#demand$/);
-    await expectActiveSection(page, "demand");
-    await expectSectionAligned(page, "demand");
-    await page.reload();
-    await expect(page).toHaveURL(/#demand$/);
-    await expectActiveSection(page, "demand");
-    await expectSectionAligned(page, "demand");
+    await selectSection(page, "demand");
     await selectSection(page, "sales");
 
     await page.goBack();
@@ -251,18 +362,28 @@ test.describe("Manage section navigation", () => {
     await expectSectionAligned(page, "sales");
   });
 
-  test("returns active-section control to the scroll spy after navigation", async ({
+  test("reselecting Manage resets the current section to Summary", async ({
+    page,
+  }) => {
+    await openSection(page, "sales");
+    await primaryLink(page, "Manage").click();
+
+    await expect(page).toHaveURL(/\/manage#summary$/);
+    await expectActiveSection(page, "summary");
+    await expectSectionAligned(page, "summary");
+  });
+
+  test("returns active-section control to the scroll spy after interruption", async ({
     page,
   }) => {
     await openSection(page, "summary");
     const interruptedSelection = await selectSectionOnFirstFrame(
       page,
-      "sales",
+      "perfect-order",
     );
-    expect(interruptedSelection.activeLabel).toBe("Sales");
+    expect(interruptedSelection.activeLabel).toBe("Perfect Order");
     expect(interruptedSelection.targetTop).toBeGreaterThan(1_000);
 
-    // Interrupt the smooth transaction before its stability confirmation.
     await page.mouse.wheel(0, -100_000);
 
     await expectActiveSection(page, "summary");
@@ -287,52 +408,42 @@ test.describe("Manage section navigation", () => {
     await expect(page).toHaveURL(/#demand$/);
     await expectActiveSection(page, "demand");
     await expectSectionAligned(page, "demand");
-    await expect(
-      page.getByRole("heading", { name: "Demand", exact: true }),
-    ).toBeAttached();
   });
 
-  test("aligns the destination using its computed scroll margin", async ({
-    page,
-  }) => {
-    await openSection(page, "summary");
-    await selectSection(page, "demand");
-
-    const geometry = await page.locator("#demand").evaluate((element) => {
-      const node = element as HTMLElement;
-
-      return {
-        top: node.getBoundingClientRect().top,
-        scrollMarginTop:
-          Number.parseFloat(getComputedStyle(node).scrollMarginTop) || 0,
-      };
-    });
-
-    expect(Math.abs(geometry.top - geometry.scrollMarginTop)).toBeLessThanOrEqual(
-      5,
-    );
-  });
-
-  test("keeps the navigation usable without horizontal page scrolling at 320px", async ({
+  test("keeps the mobile Header and section navigation usable at 320px", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await openSection(page, "summary");
 
-    const toggle = page.getByRole("button", {
-      name: /^Sections:/,
+    await expect(manageNavigation(page).getByRole("list")).toHaveClass(
+      /overflow-x-auto/,
+    );
+    await expectDisabledHeaderActions(page);
+    await page
+      .getByRole("button", { name: "Open navigation menu" })
+      .click();
+
+    const dialog = page.getByRole("dialog", {
+      name: "Navigation menu",
     });
-    await expect(toggle).toHaveAccessibleName("Sections: Summary");
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const dialogPrimaryNavigation = dialog.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    const manageItem = dialogPrimaryNavigation
+      .getByRole("link", { name: "Manage" })
+      .locator("..");
+    const nestedSections = manageItem.getByRole("list", {
+      name: "Manage sections",
+    });
 
-    await sectionLink(page, "sales").click();
+    await expect(dialogPrimaryNavigation.getByRole("link")).toHaveCount(11);
+    await expect(nestedSections.getByRole("link")).toHaveCount(7);
+    await nestedSections.getByRole("link", { name: "Sales" }).click();
 
+    await expect(dialog).not.toBeVisible();
     await expectActiveSection(page, "sales");
     await expectSectionAligned(page, "sales");
-    await expect(toggle).toHaveAccessibleName("Sections: Sales");
-    await expect(toggle).toBeFocused();
     await expect
       .poll(() =>
         page.evaluate(
@@ -367,13 +478,6 @@ test.describe("Manage section navigation with reduced motion", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
 
     await openSection(page, "summary");
-    await expect
-      .poll(() =>
-        page.evaluate(() =>
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-        ),
-      )
-      .toBe(true);
     await page.evaluate(() => {
       const state = window as Window & {
         __manageScrollBehaviors?: string[];
@@ -381,10 +485,10 @@ test.describe("Manage section navigation with reduced motion", () => {
       state.__manageScrollBehaviors = [];
     });
 
-    await sectionLink(page, "sales").click();
+    await sectionLink(page, "perfect-order").click();
 
-    await expectActiveSection(page, "sales");
-    await expectSectionAligned(page, "sales");
+    await expectActiveSection(page, "perfect-order");
+    await expectSectionAligned(page, "perfect-order");
     await expect
       .poll(() =>
         page.evaluate(

@@ -175,10 +175,15 @@ describe("Header", () => {
     const primaryNavigation = document.querySelector<HTMLElement>(
       'header > div nav[aria-label="Primary navigation"]',
     );
+    const primaryList = within(primaryNavigation!).getByRole("list");
     const upperSection =
       document.querySelector<HTMLElement>("header > div");
     const sectionNavigation = screen.getByRole("navigation", {
       name: "Dashboard sections",
+    });
+    const sectionList = within(sectionNavigation).getByRole("list");
+    const activeSectionLink = within(sectionNavigation).getByRole("link", {
+      name: "Summary",
     });
     const actionGroup = screen.getByRole("group", {
       name: "Header actions",
@@ -188,8 +193,12 @@ describe("Header", () => {
     });
 
     expect(logo).toHaveAttribute("href", "/");
-    expect(upperSection).toHaveClass("md:h-24");
-    expect(upperSection).not.toHaveClass("md:min-h-24");
+    expect(upperSection).toHaveClass("h-16", "px-4", "sm:gap-4");
+    expect(upperSection).not.toHaveClass(
+      "md:h-24",
+      "sm:px-6",
+      "lg:gap-8",
+    );
     expect(primaryNavigation).not.toBeNull();
     expect(primaryNavigation).toHaveClass(
       "hidden",
@@ -200,34 +209,75 @@ describe("Header", () => {
     expect(
       primaryNavigation?.querySelector('a[href="/dashboard"]'),
     ).toHaveClass("md:h-full", "md:min-h-16");
-    expect(menuButton).toHaveClass("h-11", "w-11", "md:hidden");
+    expect(primaryList).toHaveClass(
+      "[&>li>a]:!font-body-sm",
+      "[&>li>a]:!text-body-sm",
+      "[&>li>a]:!font-medium",
+      "[&>li>a]:!leading-body-sm",
+      "[&>li>a[aria-current]]:!font-bold",
+      "[&>li>button[aria-pressed=true]]:!font-bold",
+    );
+    expect(menuButton).toHaveClass(
+      "h-8",
+      "w-8",
+      "p-[3px]",
+      "md:hidden",
+    );
+    expect(menuButton.querySelector("svg")).toHaveClass(
+      "h-[18px]",
+      "w-[18px]",
+    );
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
     expect(menuButton).toHaveAttribute(
       "aria-controls",
       document.querySelector("dialog")?.id,
     );
-    expect(
-      within(sectionNavigation).getByRole("list"),
-    ).toHaveClass(
+    expect(sectionNavigation).toHaveClass("h-10");
+    expect(sectionNavigation.firstElementChild).toHaveClass(
+      "h-full",
+      "px-4",
+      "md:px-10",
+    );
+    expect(sectionList).toHaveClass(
+      "!h-10",
       "scrollbar-hide",
       "overflow-x-auto",
       "whitespace-nowrap",
+      "[&>li>a]:!h-10",
+      "[&>li>a]:!py-0",
+      "[&>li>a]:!text-[13px]",
+      "[&>li>a]:!font-medium",
+      "[&>li>button]:!h-10",
+      "[&>li>button]:!py-0",
+      "[&>li>button]:!text-[13px]",
+      "[&>li>button]:!font-medium",
+      "[&>li>a[aria-current]]:!font-semibold",
+      "[&>li>button[aria-pressed=true]]:!font-semibold",
     );
     expect(sectionNavigation).not.toHaveClass(
       "border-t",
       "border-border-secondary",
     );
-    expect(
-      within(sectionNavigation).getByRole("link", { name: "Summary" }),
-    ).toHaveAttribute("aria-current", "location");
+    expect(activeSectionLink).toHaveAttribute("aria-current", "location");
     expect(
       within(sectionNavigation).queryByRole("button", {
         name: /^Sections:/,
       }),
     ).not.toBeInTheDocument();
-    expect(
-      within(actionGroup).getByRole("button", { name: "Notifications" }),
-    ).toHaveClass("h-11", "w-11", "focus-visible:ring-2");
+    const notificationsButton = within(actionGroup).getByRole("button", {
+      name: "Notifications",
+    });
+
+    expect(notificationsButton).toHaveClass(
+      "h-8",
+      "w-8",
+      "p-[3px]",
+      "focus-visible:ring-2",
+    );
+    expect(notificationsButton.querySelector("svg")).toHaveClass(
+      "h-[18px]",
+      "w-[18px]",
+    );
   });
 
   it("opens a modal with focus on close and nests sections under the explicit parent", () => {
@@ -242,24 +292,59 @@ describe("Header", () => {
     const dashboard = within(mobileNavigation).getByRole("link", {
       name: "Dashboard",
     });
+    const team = within(mobileNavigation).getByRole("link", {
+      name: "Team",
+    });
     const dashboardListItem = dashboard.closest("li");
+    const summary = within(dashboardListItem!).getByRole("link", {
+      name: "Summary",
+    });
+    const demand = within(dashboardListItem!).getByRole("link", {
+      name: "Demand",
+    });
 
     expect(dialog).toHaveAttribute("open");
     expect(opener).toHaveAttribute("aria-expanded", "true");
     expect(closeButton).toHaveFocus();
     expect(document.body).toHaveStyle({ overflow: "hidden" });
+    expect(mobileNavigation).toHaveClass("py-4");
+    expect(mobileNavigation).not.toHaveClass("px-3", "sm:px-6");
     expect(dashboard).toHaveAttribute("aria-current", "page");
+    expect(dashboard).toHaveClass(
+      "h-10",
+      "rounded-none",
+      "border-l-4",
+      "px-4",
+      "py-0",
+      "bg-brand-primary-50",
+      "font-body-sm",
+      "text-body-sm",
+      "leading-body-sm",
+      "!font-bold",
+    );
+    expect(dashboard).not.toHaveClass("rounded-md");
+    expect(team).toHaveClass("!font-medium");
     expect(dashboardListItem).not.toBeNull();
     expect(
       within(dashboardListItem!).getByRole("list", {
         name: "Dashboard sections",
       }),
     ).toContainElement(
-      within(dashboardListItem!).getByRole("link", { name: "Summary" }),
+      summary,
     );
-    expect(
-      within(dashboardListItem!).getByRole("link", { name: "Summary" }),
-    ).toHaveAttribute("aria-current", "location");
+    expect(summary).toHaveAttribute("aria-current", "location");
+    expect(summary).toHaveClass(
+      "h-10",
+      "rounded-none",
+      "border-l-4",
+      "px-4",
+      "py-0",
+      "bg-brand-primary-50",
+      "text-[13px]",
+      "!font-semibold",
+    );
+    expect(summary).not.toHaveClass("rounded-md", "border-l-2");
+    expect(demand).toHaveClass("text-[13px]", "!font-medium");
     expect(
       within(mobileNavigation)
         .getByRole("link", { name: "Team" })
@@ -444,6 +529,53 @@ describe("Header", () => {
       expect.objectContaining({ id: "profile" }),
       expect.anything(),
     );
+  });
+
+  it("renders disabled actions as inert native buttons", () => {
+    const actions = [
+      {
+        id: "notifications",
+        label: "Notifications",
+        icon: Bell,
+        disabled: true,
+      },
+      {
+        id: "settings",
+        label: "Settings",
+        icon: Settings,
+        disabled: true,
+      },
+    ] satisfies readonly HeaderAction[];
+
+    render(
+      <MemoryRouter>
+        <Header
+          primaryNavigation={{
+            items: primaryItems,
+            activeId: "dashboard",
+            ariaLabel: "Primary navigation",
+            onSelect: jest.fn(),
+          }}
+          sectionNavigation={{
+            items: sectionItems,
+            activeId: "summary",
+            ariaLabel: "Dashboard sections",
+            onSelect: jest.fn(),
+          }}
+          sectionParentId="dashboard"
+          actions={actions}
+        />
+      </MemoryRouter>,
+    );
+
+    for (const action of actions) {
+      expect(
+        screen.getByRole("button", { name: action.label }),
+      ).toBeDisabled();
+      expect(
+        screen.queryByRole("link", { name: action.label }),
+      ).not.toBeInTheDocument();
+    }
   });
 
   it("uses custom mobile labels and preserves the logo destination in the handset", () => {

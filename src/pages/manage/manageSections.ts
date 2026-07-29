@@ -1,12 +1,13 @@
 import { ComponentType, lazy, LazyExoticComponent } from "react";
-import { inventoryInitialPlaceholderMinHeight } from "../../features/inventory/inventoryConfig";
 
 export type ManageSectionId =
   | "summary"
-  | "inventory"
   | "demand"
-  | "supply"
-  | "sales";
+  | "orders"
+  | "suppliers"
+  | "inventory"
+  | "sales"
+  | "perfect-order";
 
 type SectionModule = {
   default: ComponentType;
@@ -21,10 +22,12 @@ export type ManageSectionDefinition = {
 };
 
 const loadSummary = () => import("./sections/SummarySection");
-const loadInventory = () => import("./sections/InventorySection");
 const loadDemand = () => import("./sections/DemandSection");
-const loadSupply = () => import("./sections/SupplySection");
+const loadOrders = () => import("./sections/OrdersSection");
+const loadSuppliers = () => import("./sections/SuppliersSection");
+const loadInventory = () => import("./sections/InventorySection");
 const loadSales = () => import("./sections/SalesSection");
+const loadPerfectOrder = () => import("./sections/PerfectOrderSection");
 
 export const manageSections: ManageSectionDefinition[] = [
   {
@@ -35,13 +38,6 @@ export const manageSections: ManageSectionDefinition[] = [
     Component: lazy(loadSummary),
   },
   {
-    id: "inventory",
-    label: "Inventory",
-    placeholderMinHeight: inventoryInitialPlaceholderMinHeight,
-    load: loadInventory,
-    Component: lazy(loadInventory),
-  },
-  {
     id: "demand",
     label: "Demand",
     placeholderMinHeight: 900,
@@ -49,18 +45,39 @@ export const manageSections: ManageSectionDefinition[] = [
     Component: lazy(loadDemand),
   },
   {
-    id: "supply",
-    label: "Supply",
-    placeholderMinHeight: 860,
-    load: loadSupply,
-    Component: lazy(loadSupply),
+    id: "orders",
+    label: "Orders",
+    placeholderMinHeight: 900,
+    load: loadOrders,
+    Component: lazy(loadOrders),
+  },
+  {
+    id: "suppliers",
+    label: "Suppliers",
+    placeholderMinHeight: 900,
+    load: loadSuppliers,
+    Component: lazy(loadSuppliers),
+  },
+  {
+    id: "inventory",
+    label: "Inventory",
+    placeholderMinHeight: 900,
+    load: loadInventory,
+    Component: lazy(loadInventory),
   },
   {
     id: "sales",
     label: "Sales",
-    placeholderMinHeight: 920,
+    placeholderMinHeight: 900,
     load: loadSales,
     Component: lazy(loadSales),
+  },
+  {
+    id: "perfect-order",
+    label: "Perfect Order",
+    placeholderMinHeight: 900,
+    load: loadPerfectOrder,
+    Component: lazy(loadPerfectOrder),
   },
 ];
 

@@ -50,12 +50,12 @@ type MobileNavigationDialogProps<
 };
 
 const itemBaseClassName = [
-  "relative flex w-full items-center justify-start gap-2.5 rounded-md border-l-2 px-4 py-3 text-left text-sm font-medium",
+  "relative flex w-full items-center justify-start gap-2.5 text-left",
   "focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-interactive-primary-focus",
 ].join(" ");
 
-const primaryItemClassName = `${itemBaseClassName} min-h-12`;
-const sectionItemClassName = `${itemBaseClassName} min-h-11`;
+const primaryItemClassName = `${itemBaseClassName} h-10 rounded-none border-l-4 px-4 py-0 font-body-sm text-body-sm leading-body-sm`;
+const sectionItemClassName = `${itemBaseClassName} h-10 rounded-none border-l-4 px-4 py-0 text-[13px]`;
 
 export function MobileNavigationDialog<
   TPrimaryItem extends NavbarItem,
@@ -194,8 +194,8 @@ export function MobileNavigationDialog<
       {sectionNavigation.items.map(item => {
         const active = item.id === sectionNavigation.activeId;
         const stateClassName = active
-          ? "border-brand-primary-main bg-brand-primary-50 text-brand-primary-main"
-          : "border-transparent text-ui-text-secondary hover:text-ui-text-primary";
+          ? "border-brand-primary-main bg-brand-primary-50 text-brand-primary-main !font-semibold"
+          : "border-transparent text-ui-text-secondary hover:text-ui-text-primary !font-medium";
 
         return (
           <li key={item.id} className="min-w-0">
@@ -253,13 +253,13 @@ export function MobileNavigationDialog<
         </button>
       </div>
 
-      <nav aria-label={primaryNavigation.ariaLabel} className="px-3 py-4 sm:px-6">
+      <nav aria-label={primaryNavigation.ariaLabel} className="py-4">
         <ul className="min-w-0 space-y-1">
           {primaryNavigation.items.map(item => {
             const active = item.id === primaryNavigation.activeId;
             const stateClassName = active
-              ? "border-brand-primary-main bg-brand-primary-50 text-brand-primary-main"
-              : "border-transparent text-ui-text-secondary hover:text-ui-text-primary";
+              ? "border-brand-primary-main bg-brand-primary-50 text-brand-primary-main !font-bold"
+              : "border-transparent text-ui-text-secondary hover:text-ui-text-primary !font-medium";
 
             return (
               <li key={item.id} className="min-w-0">

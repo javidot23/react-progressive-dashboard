@@ -15,6 +15,7 @@ import {
   isUnmodifiedPrimaryClick,
   type NavbarSelectEvent,
 } from "../../components/Navbar";
+import { dashboardHeaderOffset } from "../../components/DashboardLayout/dashboardNavigation";
 import {
   getSectionIdFromHash,
   manageSections,
@@ -81,7 +82,7 @@ export function useManagePageController() {
     initialId: initialSetup.initialId,
     initialNavigation: initialSetup.initialNavigation,
     scrollSpy: {
-      topOffset: 72,
+      topOffset: dashboardHeaderOffset,
       bottomMarginPercent: 60,
     },
     scrollCompletion: {
