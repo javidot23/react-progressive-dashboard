@@ -7,8 +7,9 @@ import {
   TrendingUp,
   Truck,
 } from "lucide-react";
-import { Navbar, type NavbarItem } from "./Navbar";
 import { MemoryRouter } from "react-router";
+import { lightStoryTheme } from "../../stories/lightStoryTheme";
+import { Navbar, type NavbarItem } from "./Navbar";
 
 const linkItems = [
   {
@@ -88,7 +89,11 @@ const meta = {
   decorators: [
     (Story) => (
       <MemoryRouter initialEntries={["/manage#summary"]}>
-        <div className="min-h-24 bg-slate-50 p-6">
+        <div
+          data-navbar-story-theme="light"
+          className="min-h-24 bg-slate-50 p-6 text-ui-text-primary"
+          style={lightStoryTheme}
+        >
           <Story />
         </div>
       </MemoryRouter>
@@ -244,6 +249,17 @@ export const DesktopLinks: Story = {
     await userEvent.hover(inventoryLink);
     await expect(args.onIntent).toHaveBeenCalledWith(
       expect.objectContaining({ id: "inventory" }),
+    );
+
+    const lightPreview = canvasElement.querySelector<HTMLElement>(
+      '[data-navbar-story-theme="light"]',
+    );
+    const view = canvasElement.ownerDocument.defaultView;
+
+    await expect(lightPreview).not.toBeNull();
+    await expect(inventoryLink).toHaveClass("hover:text-ui-text-primary");
+    await expect(view?.getComputedStyle(lightPreview!).colorScheme).toBe(
+      "light",
     );
 
     await userEvent.click(inventoryLink);

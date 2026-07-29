@@ -8,6 +8,7 @@ import {
 } from "@storybook/test";
 import { Bell, CircleUserRound, Settings } from "lucide-react";
 import { MemoryRouter } from "react-router";
+import { lightStoryTheme } from "../../stories/lightStoryTheme";
 import type { NavbarItem } from "../Navbar";
 import { Header, type HeaderAction } from "./Header";
 
@@ -84,7 +85,10 @@ const meta = {
   decorators: [
     Story => (
       <MemoryRouter initialEntries={["/dashboard#summary"]}>
-        <div className="min-h-screen bg-ui-background-secondary">
+        <div
+          className="min-h-screen bg-ui-background-secondary"
+          style={lightStoryTheme}
+        >
           <Story />
           <main>
             <h1 className="sr-only">Header preview</h1>
@@ -164,6 +168,51 @@ export const Desktop1440: Story = {
     await expect(
       canvas.getByRole("link", { name: "Summary" }),
     ).toHaveAttribute("aria-current", "location");
+
+    const header = canvasElement.querySelector("header");
+    const upperSection = header?.firstElementChild as HTMLElement | null;
+    const primaryNavigation = canvas.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    const activePrimaryLink = within(primaryNavigation).getByRole("link", {
+      name: "Dashboard",
+    });
+    const sectionNavigation = canvas.getByRole("navigation", {
+      name: "Dashboard sections",
+    });
+    const activeSectionLink = within(sectionNavigation).getByRole("link", {
+      name: "Summary",
+    });
+
+    await waitFor(() => {
+      expect(upperSection).not.toBeNull();
+
+      const upperRect = upperSection!.getBoundingClientRect();
+      const activeRect = activePrimaryLink.getBoundingClientRect();
+      const sectionRect = sectionNavigation.getBoundingClientRect();
+      const activeSectionRect = activeSectionLink.getBoundingClientRect();
+      const sectionUnderline = canvasElement.ownerDocument.defaultView
+        ?.getComputedStyle(activeSectionLink, "::after");
+
+      expect(Math.abs(activeRect.height - upperRect.height)).toBeLessThanOrEqual(
+        1,
+      );
+      expect(Math.abs(activeRect.bottom - sectionRect.top)).toBeLessThanOrEqual(
+        1,
+      );
+      expect(
+        Math.abs(activeSectionRect.bottom - sectionRect.bottom),
+      ).toBeLessThanOrEqual(1);
+      expect(
+        canvasElement.ownerDocument.defaultView?.getComputedStyle(
+          sectionNavigation,
+        ).borderTopWidth,
+      ).toBe("0px");
+      expect(sectionUnderline?.height).toBe("2px");
+      expect(sectionUnderline?.backgroundColor).not.toBe(
+        "rgba(0, 0, 0, 0)",
+      );
+    });
 
     await userEvent.click(
       canvas.getByRole("button", { name: "Notifications" }),

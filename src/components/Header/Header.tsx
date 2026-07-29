@@ -121,7 +121,7 @@ export function Header<
 
   return (
     <header className={headerClassName}>
-      <div className="flex min-h-20 w-full min-w-0 items-center gap-2 px-3 sm:gap-4 sm:px-6 md:min-h-24 md:gap-8 md:px-10 lg:px-12">
+      <div className="flex min-h-20 w-full min-w-0 items-center gap-2 px-3 sm:gap-4 sm:px-6 md:h-24 lg:gap-8 lg:px-12">
         <button
           ref={mobileMenuButtonRef}
           type="button"
@@ -149,8 +149,8 @@ export function Header<
 
         <Navbar
           {...primaryNavigation}
-          className="hidden min-w-0 flex-1 md:block"
-          innerClassName="min-w-0"
+          className="hidden min-w-0 flex-1 self-stretch md:block"
+          innerClassName="h-full min-w-0"
           listClassName="scrollbar-hide min-w-0 overflow-x-auto whitespace-nowrap"
         />
 
@@ -198,7 +198,7 @@ export function Header<
       <Navbar
         {...sectionNavigation}
         mobileMode="horizontal-scroll"
-        className="w-full min-w-0 border-t border-border-secondary"
+        className="w-full min-w-0"
         innerClassName="min-w-0 px-3 sm:px-6 md:px-10 lg:px-12"
       />
 

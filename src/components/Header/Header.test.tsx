@@ -175,6 +175,8 @@ describe("Header", () => {
     const primaryNavigation = document.querySelector<HTMLElement>(
       'header > div nav[aria-label="Primary navigation"]',
     );
+    const upperSection =
+      document.querySelector<HTMLElement>("header > div");
     const sectionNavigation = screen.getByRole("navigation", {
       name: "Dashboard sections",
     });
@@ -186,8 +188,18 @@ describe("Header", () => {
     });
 
     expect(logo).toHaveAttribute("href", "/");
+    expect(upperSection).toHaveClass("md:h-24");
+    expect(upperSection).not.toHaveClass("md:min-h-24");
     expect(primaryNavigation).not.toBeNull();
-    expect(primaryNavigation).toHaveClass("hidden", "md:block");
+    expect(primaryNavigation).toHaveClass(
+      "hidden",
+      "self-stretch",
+      "md:block",
+    );
+    expect(primaryNavigation?.firstElementChild).toHaveClass("h-full");
+    expect(
+      primaryNavigation?.querySelector('a[href="/dashboard"]'),
+    ).toHaveClass("md:h-full", "md:min-h-16");
     expect(menuButton).toHaveClass("h-11", "w-11", "md:hidden");
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
     expect(menuButton).toHaveAttribute(
@@ -200,6 +212,10 @@ describe("Header", () => {
       "scrollbar-hide",
       "overflow-x-auto",
       "whitespace-nowrap",
+    );
+    expect(sectionNavigation).not.toHaveClass(
+      "border-t",
+      "border-border-secondary",
     );
     expect(
       within(sectionNavigation).getByRole("link", { name: "Summary" }),

@@ -19,7 +19,15 @@ tab-style navigation that remains in one scrollable row. When `activeId`
 changes, the horizontal mode scrolls only its own list far enough to keep the
 active item visible.
 
+At desktop widths, disclosure-mode items fill the height supplied by their
+parent, with a 64px minimum. This lets a composed header place the active
+underline flush with the bottom edge without adding item-specific classes.
+
 <Canvas of={NavbarStories.HorizontalScroll} />
+
+Navbar previews intentionally use a light story surface and light semantic
+tokens, so default and hover text remain legible regardless of the
+operating-system color scheme. This does not change the component theme.
 
 ## Accessibility
 
@@ -55,5 +63,6 @@ active item visible.
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.2.0 | 2026-07-29 | Made disclosure-mode desktop items fill the available parent height, fixed the horizontal active underline, and stabilized light story previews |
 | 1.1.0 | 2026-07-28 | Added the opt-in horizontal-scroll mobile presentation |
 | 1.0.0 | 2026-07-28 | Added component stories and usage documentation |

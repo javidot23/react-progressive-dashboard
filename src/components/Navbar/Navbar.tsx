@@ -71,7 +71,7 @@ export function Navbar<TItem extends NavbarItem>({
     : [
         mobileExpanded ? "flex" : "hidden",
         "flex-col gap-1 pb-3",
-        "md:flex md:h-16 md:flex-row md:items-center md:gap-0 md:pb-0",
+        "md:flex md:h-full md:min-h-16 md:flex-row md:items-stretch md:gap-0 md:pb-0",
         listClassName,
       ]
         .filter(Boolean)
@@ -171,10 +171,10 @@ export function Navbar<TItem extends NavbarItem>({
               "relative flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium",
               "focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-interactive-primary-focus",
               "before:content-[''] before:absolute before:-left-px before:-right-px before:bottom-0 before:h-px before:bg-transparent",
-              "after:content-[''] after:absolute after:-left-px after:-right-px after:bottom-0 after:h-[2px] after:bg-transparent",
+              "after:content-[''] after:absolute after:-left-px after:-right-px after:bottom-0 after:h-[2px]",
               horizontalScroll
                 ? "h-16 w-auto rounded-none border-l-0"
-                : "min-h-11 w-full rounded-md border-l-2 md:h-16 md:w-auto md:rounded-none md:border-l-0",
+                : "min-h-11 w-full rounded-md border-l-2 md:h-full md:min-h-16 md:w-auto md:rounded-none md:border-l-0",
               horizontalScroll
                 ? active
                   ? "border-transparent bg-transparent text-brand-primary-main after:bg-brand-primary-main"
@@ -197,7 +197,7 @@ export function Navbar<TItem extends NavbarItem>({
                 className={
                   horizontalScroll
                     ? "w-auto shrink-0"
-                    : "w-full md:-ml-px md:w-auto first:md:ml-0"
+                    : "w-full md:-ml-px md:h-full md:w-auto first:md:ml-0"
                 }
               >
                 <NavbarItemControl

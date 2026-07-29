@@ -21,8 +21,11 @@ internal modal dialog.
 - The handset menu repeats the controlled primary links and semantically nests
   the section links under the item identified by `sectionParentId`.
 - The section navigation always stays visible as a single horizontally
-  scrollable row with no visible scrollbar.
+  scrollable row with no visible scrollbar. It meets the upper row directly
+  without a dividing border.
 - At 768px and above, the primary navigation appears beside the full-size logo.
+  Its items fill the upper header row so the active underline sits directly on
+  the boundary with the section navigation.
 - If an open handset crosses the 768px breakpoint, it closes automatically.
 - Positioning is intentionally external. Add sticky classes through
   `className` only when a consuming page requires them.
@@ -80,6 +83,9 @@ The component uses existing semantic Tailwind tokens for backgrounds, text,
 borders, focus, brand color, spacing, and the hairline shadow. It does not
 introduce component CSS or new design-system variables.
 
+Header previews use a light neutral story background so the component remains
+easy to inspect independently of the operating-system color scheme.
+
 ## Do and don't
 
 - Do pass route-aware data and callbacks from the consuming module.
@@ -93,5 +99,6 @@ introduce component CSS or new design-system variables.
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.2.0 | 2026-07-29 | Aligned desktop primary items with the full upper-row height, removed the inter-row divider, restored the section underline, and fixed light story previews |
 | 1.1.0 | 2026-07-28 | Added the accessible handset navigation dialog |
 | 1.0.0 | 2026-07-28 | Added the controlled two-level Header component |

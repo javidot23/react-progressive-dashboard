@@ -64,9 +64,21 @@ describe("Navbar", () => {
       name: "Sections: Summary",
     });
     const list = screen.getByRole("list", { hidden: true });
+    const summaryLink = screen.getByRole("link", {
+      hidden: true,
+      name: "Summary",
+    });
+    const summaryListItem = summaryLink.closest("li");
 
     expect(toggle).toHaveAttribute("aria-expanded", "false");
-    expect(list).toHaveClass("hidden");
+    expect(list).toHaveClass(
+      "hidden",
+      "md:h-full",
+      "md:min-h-16",
+      "md:items-stretch",
+    );
+    expect(summaryLink).toHaveClass("md:h-full", "md:min-h-16");
+    expect(summaryListItem).toHaveClass("md:h-full");
 
     fireEvent.click(toggle);
 
@@ -93,7 +105,14 @@ describe("Navbar", () => {
     const demandLink = screen.getByRole("link", { name: "Demand" });
 
     expect(list).toHaveClass("overflow-x-auto", "whitespace-nowrap");
+    expect(list).toHaveClass("h-16");
+    expect(list).not.toHaveClass("md:h-full");
     expect(list).not.toHaveClass("hidden");
+    expect(summaryLink).toHaveClass("h-16");
+    expect(summaryLink).not.toHaveClass("md:h-full");
+    expect(summaryLink).toHaveClass("after:bg-brand-primary-main");
+    expect(summaryLink).not.toHaveClass("after:bg-transparent");
+    expect(demandLink).not.toHaveClass("after:bg-brand-primary-main");
     expect(summaryLink).toHaveAttribute("aria-current", "location");
     expect(demandLink).not.toHaveAttribute("aria-current");
 
