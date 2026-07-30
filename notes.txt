@@ -1,0 +1,24 @@
+PR Template
+ 
+ 
+PR Title
+[Concise, action-oriented title]
+ 
+Summary
+Brief description of the problem and solution.
+ 
+Why
+Why this change is needed and the value it provides.
+ 
+Technical Notes
+Important implementation details, architectural decisions, dependencies, migrations, configuration changes, or deployment considerations.
+ 
+Testing / Validation
+Validation performed
+Tests executed
+Evidence collected
+Related Work
+Jira / Azure DevOps / GitHub issue references (if provided)
+Reviewer Notes
+Specific areas that deserve extra attention during review.
+ 
