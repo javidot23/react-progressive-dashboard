@@ -21,4 +21,119 @@ Related Work
 Jira / Azure DevOps / GitHub issue references (if provided)
 Reviewer Notes
 Specific areas that deserve extra attention during review.
- 
+
+
+-------
+
+# PR Title
+
+[CPR-841] Add controlled dashboard layout and progressive Storybook navigation
+
+## Summary
+
+Adds `StratiumDashboardLayout`, a reusable controlled dashboard shell with configurable primary and secondary navigation.
+
+The accompanying Storybook implementation demonstrates routing, hash synchronization, focus management, progressive lazy loading, real code splitting, preload behavior, dynamic-height scroll correction, responsive navigation, and accessible loading states without introducing fixture pages into production routes.
+
+The branch also improves Header, Navbar, and Typography stories and configures Storybook MSW support for authenticated previews.
+
+## Why
+
+Dashboard modules need a consistent application shell without coupling navigation state, routing, content loading, or scrolling behavior to the layout itself.
+
+This change provides:
+
+- A reusable and type-safe dashboard layout.
+- Consumer-defined primary modules and section navigation.
+- A reference implementation for routing and progressive section loading.
+- Stable, accessible Storybook previews across light-theme environments.
+- Better test isolation for stories that depend on authentication or API data.
+
+## Technical Notes
+
+- Adds a controlled `StratiumDashboardLayout` API requiring:
+  - `primaryItems`
+  - `activePrimaryId`
+  - `sectionNavigation`
+  - `children`
+- Primary navigation IDs and callbacks are inferred from the supplied item collection.
+- Existing Stratium navigation is available as an explicit reusable collection but is never applied implicitly.
+- The existing dashboard layout remains unchanged.
+- Adds seven private Storybook section fixtures loaded through independent dynamic imports:
+  - Summary
+  - Demand
+  - Orders
+  - Suppliers
+  - Inventory
+  - Sales
+  - Perfect Order
+- The Storybook controller implements:
+  - Immediate active-state updates on selection.
+  - Route and hash normalization.
+  - Back/Forward synchronization.
+  - Intent and proximity-based preload.
+  - `React.lazy` and `Suspense` fallbacks.
+  - Programmatic scrolling with manual-interruption handling.
+  - `ResizeObserver` correction when preceding sections change height.
+  - Reduced-motion support.
+  - A content scrollbar constrained below the sticky Header.
+- Demand includes a Storybook-only control for repeatedly appending skeleton groups and validating dynamic-height realignment.
+- Story controls configure:
+  - Initial primary module.
+  - Initial Manage section.
+  - Lazy-loading delay.
+  - Programmatic scroll motion.
+  - Opt-in `play` interactions.
+- Embedded Docs previews omit `play` to prevent focus and scroll changes in the documentation page.
+- Header and Storybook previews use the light theme consistently.
+- Adds `msw-storybook-addon`, the generated service worker, and shared mock handlers so authenticated stories can render in isolation.
+- No production routes, fixture pages, migrations, or deployment changes are introduced.
+
+## Testing / Validation
+
+### Validation performed
+
+- Verified routing, hashes, immediate navigation state, Back/Forward behavior, focus management, lazy activation, preload, skeletons, dynamic section heights, scroll correction, and manual scroll interruption.
+- Verified system, animated, and reduced-motion behavior.
+- Verified the sticky Header and content-only scrollbar.
+- Verified Docs iframe isolation and suppression of embedded `play`.
+- Verified responsive behavior at 320px, 768px, and 1440px.
+- Verified no horizontal overflow at the supported viewports.
+- Verified Header actions retain native disabled semantics.
+
+### Tests executed
+
+- Application TypeScript validation.
+- Storybook TypeScript validation.
+- Prettier validation.
+- Scoped ESLint validation for changed files.
+- `npm run build-storybook`.
+- Storybook interaction test with opt-in `play`.
+- Browser-based responsive and navigation QA.
+
+The repository-wide `npm run lint` currently scans generated output and existing configuration files, so it reports unrelated baseline findings. Scoped linting for this change passes.
+
+### Evidence collected
+
+- Storybook accessibility scan: **0 violations and 0 incomplete results**.
+- Seven independent lazy-loaded section chunks confirmed in the static Storybook build.
+- Full interaction test completed without application console errors.
+- Embedded preview confirmed not to execute automated interactions.
+- Senior QA and code-review loops completed with **0 open findings within scope**.
+
+## Related Work
+
+- CPR-841
+
+## Reviewer Notes
+
+Please pay particular attention to:
+
+- The controlled API boundary between `StratiumDashboardLayout` and its consumers.
+- Generic type inference for custom primary-navigation collections.
+- Hash and active-state synchronization during route changes.
+- Cleanup and concurrency handling for observers, listeners, timers, and programmatic scrolling.
+- Dynamic-height correction when sections above the destination resize.
+- Storybook-only fixture isolation and the seven generated lazy chunks.
+- Storybook MSW configuration and the associated package-lock changes.
+- Accessibility and responsive behavior of both navigation levels.
