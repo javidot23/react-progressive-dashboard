@@ -1,68 +1,10 @@
-# PR Title
-
-Introduce routed Stratium shell and progressive Manage navigation
-
-## Summary
-
-Introduces a shared authenticated application shell using `StratiumDashboardLayout` and `Header`, with routed navigation for Overview, React, Plan, and Manage.
-
-Manage now uses five code-split placeholder sections—Summary, Inventory, Demand, Supply, and Sales—to validate progressive navigation without mounting existing business pages or making Manage data requests.
-
-## Why
-
-This establishes the navigation and layout architecture needed to incrementally refactor Stratium pages while preserving existing functionality.
-
-It provides:
-
-- Consistent application-level navigation and page composition.
-- Short, explicit Manage URLs.
-- Progressive lazy loading and section navigation.
-- Clear separation between reusable templates and application-specific layout behavior.
-- Dummy Manage pages that can later be replaced independently with refactored implementations.
-
-## Technical Notes
-
-- Added an application-specific routed layout under `src/pages/stratium/layout/`.
-- Kept `StratiumDashboardLayout` as a controlled reusable template.
-- Added routed wrappers for Overview, React, and Plan.
-- Added five Manage placeholder modules under `src/pages/manage/sections/`.
-- Implemented memoized dynamic imports producing independent section chunks.
-- Added immediate section selection, intent preload, scroll-spy synchronization, Back/Forward support, reduced-motion handling, manual-scroll cancellation, and `ResizeObserver` realignment.
-- Added canonical `/manage/summary`, `/manage/inventory`, `/manage/demand`, `/manage/supply`, and `/manage/sales` routes.
-- Preserved existing tenant and module gates.
-- Legacy primary Manage URLs redirect to their short canonical destinations.
-- Removed unused lazy registrations for primary Manage business pages that no longer have routes.
-- Manage preserves only `gf_*` parameters during section navigation.
-- Added `showGlobalFilters` support to the routed layout; Manage disables global filters and `MainKPIs`.
-- Existing secondary Manage routes continue using the current Manage shell.
-- No dependencies, migrations, deployment changes, or lockfile modifications are included.
-
-## Testing/Validation
-
-- Application TypeScript check passed.
-- Storybook TypeScript check passed.
-- Full Jest suite passed:
-  - 136 test suites.
-  - 1,585 tests.
-- Storybook production build passed.
-- Production builds passed for all four tenants:
-  - Stratium.
-  - Stratium Customer.
-  - Stratium Vendor.
-  - Stratium Customer Vendor.
-- Confirmed five independent Manage placeholder chunks in applicable tenant builds.
-- Confirmed Customer excludes the Inventory chunk according to its tenant gate.
-- Scoped ESLint and Prettier checks passed for changed files.
-- `git diff --check` passed.
-- Senior QA completed with zero open findings.
-- Senior code review completed with zero open findings.
-
-## Related Work
-
-- No Jira, Azure DevOps, or GitHub issue reference was provided.
-
-
-| Filter | Endpoint | Missing Backend Support |
-|---|---|---|
-| Product Name | `GET /order-transaction/material-order-quantities/` | Multiple product-name values are not supported. |
-| NDC | `GET /order-transaction/material-order-quantities/` | NDC filtering is not supported for either a single NDC or multiple NDCs. |
+| Section | Secondary Page                     | Filter          | Endpoint                                            | Missing Backend Support                                                  |
+| ------- | ---------------------------------- | --------------- | --------------------------------------------------- | ------------------------------------------------------------------------ |
+| Demand  | Products in High Demand            | Product Name    | `GET /order-transaction/material-order-quantities/` | Multiple product-name values are not supported.                          |
+| Demand  | Products in High Demand            | NDC             | `GET /order-transaction/material-order-quantities/` | NDC filtering is not supported for either a single NDC or multiple NDCs. |
+| Supply  | Purchase Orders by Product         | Product Name    | `GET /purchase-order/material-lines/`               | Multiple product-name values are not supported.                          |
+| Supply  | Purchase Orders by Product         | NDC             | `GET /purchase-order/material-lines/`               | Multiple NDC values and format-insensitive matching are not supported.   |
+| Supply  | Purchase Orders by Product         | PO Number       | `GET /purchase-order/material-lines/`               | Multiple PO-number values are not supported.                             |
+| Supply  | Products Low Outbound Line Service | Product Name    | `GET /order-transaction/fail-to-supply/materials/`  | Multiple product-name values are not supported.                          |
+| Supply  | Products Low Outbound Line Service | NDC             | `GET /order-transaction/fail-to-supply/materials/`  | Multiple NDC values and format-insensitive matching are not supported.   |
+| Supply  | Products Low Outbound Line Service | Material Status | `GET /order-transaction/fail-to-supply/materials/`  | Multiple material-status values are not supported.                       |
