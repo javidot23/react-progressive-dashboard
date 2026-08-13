@@ -62,27 +62,7 @@ It provides:
 - No Jira, Azure DevOps, or GitHub issue reference was provided.
 
 
-
-
-/order-transaction/material-order-quantities-mtd/
-{
-  "success": true,
-  "data": {
-    "count": 43,
-    "next": "http://localhost:8000/api/order-transaction/material-order-quantities-mtd/?limit=1&offset=1",
-    "previous": null,
-    "results": [
-      {
-        "material_number": "0431303173",
-        "material_name": "Nation Syrup",
-        "ndc": "72600128827",
-        "total_demand_mtd_units": 1375,
-        "fill_rate_percentage": 22.69090909090909,
-        "material_status": "NW",
-        "formulary": [
-          "PGEN"
-        ]
-      }
-    ]
-  }
-}
+| Filter | Endpoint | Missing Backend Support |
+|---|---|---|
+| Product Name | `GET /order-transaction/material-order-quantities/` | Multiple product-name values are not supported. |
+| NDC | `GET /order-transaction/material-order-quantities/` | NDC filtering is not supported for either a single NDC or multiple NDCs. |
