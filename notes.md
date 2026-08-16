@@ -1,9 +1,12 @@
-display: flex;
-padding-left: 24px;
-justify-content: space-between;
-align-items: center;
-align-self: stretch;
+color: #0A0A0A;
 
+/* heading/3xl */
+font-family: var(--cds-text-heading-3xl-font-family);
+font-size: var(--cds-text-heading-3xl-font-size);
+font-style: normal;
+font-weight: 600;
+line-height: var(--cds-text-heading-3xl-line-height); /* 120% */
+letter-spacing: var(--cds-text-heading-3xl-letter-spacing);
 
 color: var(--Cencora-text-heading, var(--color-text-heading, #1E1E1E));
 
