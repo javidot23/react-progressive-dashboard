@@ -1,25 +1,32 @@
-| Section | Secondary Page                     | Filter          | Endpoint                                            | Missing Backend Support                                                  |
-| ------- | ---------------------------------- | --------------- | --------------------------------------------------- | ------------------------------------------------------------------------ |
-| Demand  | Products in High Demand            | Product Name    | `GET /order-transaction/material-order-quantities/` | Multiple product-name values are not supported.                          |
-| Demand  | Products in High Demand            | NDC             | `GET /order-transaction/material-order-quantities/` | NDC filtering is not supported for either a single NDC or multiple NDCs. |
-| Supply  | Purchase Orders by Product         | Product Name    | `GET /purchase-order/material-lines/`               | Multiple product-name values are not supported.                          |
-| Supply  | Purchase Orders by Product         | NDC             | `GET /purchase-order/material-lines/`               | Multiple NDC values and format-insensitive matching are not supported.   |
-| Supply  | Purchase Orders by Product         | PO Number       | `GET /purchase-order/material-lines/`               | Multiple PO-number values are not supported.                             |
-| Supply  | Products Low Outbound Line Service | Product Name    | `GET /order-transaction/fail-to-supply/materials/`  | Multiple product-name values are not supported.                          |
-| Supply  | Products Low Outbound Line Service | NDC             | `GET /order-transaction/fail-to-supply/materials/`  | Multiple NDC values and format-insensitive matching are not supported.   |
-| Supply  | Products Low Outbound Line Service | Material Status | `GET /order-transaction/fail-to-supply/materials/`  | Multiple material-status values are not supported.                       |
+display: flex;
+padding-left: 24px;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;
 
-The multiple product name filter should be done differently. You have the endpoint `/material/` and when user writes the material name (search input filter), you should list materials that match that name, and on selected ones (checkbox list), you should send material numbers as a list.
 
-The material number as list is supported through global filter on all endpoints.
-For material you can send: `?material=2023232,23123123,1233332`.
-Keep in mind there are two concepts there, material id and material number.
+color: var(--Cencora-text-heading, var(--color-text-heading, #1E1E1E));
 
-The material id is an auto incremental integer that we use on postgres for efficient indexing while `mat_nbr` or material number is the actual identifier. The Data Engineering team, or actual users, they don't know what material id is, it doesn't mean anything for them, only material number does.
-We support both as filters through our APIs. If you send `?material=2023232,23123123,1233332` this will filter on `mat_nbr` or Material Number. If you send: `?material_id=100,101,103` this will filter on Material ID
+/* heading/xl */
+font-family: var(--cds-text-heading-xl-font-family);
+font-size: var(--cds-text-heading-xl-font-size);
+font-style: normal;
+font-weight: 600;
+line-height: var(--cds-text-heading-xl-line-height); /* 120% */
+letter-spacing: var(--cds-text-heading-xl-letter-spacing);
 
-Now there is ndc support across all apis that its POSSIBLE to support it.
-The endpoints updated now support `?ndc=123123123,123123123`
 
-For `po_number` or line filter the endpoint now supports `?po_number_or_line_number=123123,4124124124`.
-Added as a customer filter for both.
+color: var(--Cencora-text-secondary, var(--cds-color-text-secondary));
+
+/* body/sm */
+font-family: var(--cds-text-body-sm-font-family);
+font-size: var(--cds-text-body-sm-font-size);
+font-style: normal;
+font-weight: 500;
+line-height: var(--cds-text-body-sm-line-height); /* 142.857% */
+text-decoration-line: underline;
+text-decoration-style: wavy;
+text-decoration-skip-ink: auto;
+text-decoration-thickness: 11%; /* 1.54px */
+text-underline-offset: auto;
+text-underline-position: from-font;
