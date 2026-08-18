@@ -12,54 +12,132 @@
 
 - Jira story: [CPR-849](https://abc-jira.atlassian.net/browse/CPR-849)
 
-# CPR-849: Create the upstream Manage Demand analysis experience
+Summary of all failing tests
+ FAIL  src/routes/AppRoutes.test.tsx
+  ● Forecast status changes route gating › registers the route for vendor tenants
 
-## Summary
+    useAuth must be used within an AuthProvider
 
-- Creates a dedicated Demand analysis page within Manage for upstream tenants.
-- Introduces demand, forecast, fulfillment, product-group, and class-of-trade metrics and visualizations.
-- Creates high-demand and forecast-change product summaries with dedicated detail pages.
-- Adds filtering, sorting, search, and infinite scrolling for detailed demand analysis.
-- Establishes navigation, layouts, routes, and filter controls aligned with Manage standards.
+      49 |   const context = useContext(AppAuthContext);
+      50 |   if (!context) {
+    > 51 |     throw new Error("useAuth must be used within an AuthProvider");
+         |           ^
+      52 |   }
+      53 |   return context;
+      54 | };
 
-## Why
+      at useAuth (src/contexts/AuthContext.tsx:51:11)
+      at PostLoginTenantWelcomeRedirect (src/components/PostLoginTenantWelcomeRedirect.tsx:7:49)
+      at Object.react-stack-bottom-frame (node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
+      at updateFunctionComponent (node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
+      at beginWork (node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom-client.development.js:14936:11)
+      at performWorkOnRoot (node_modules/react-dom/cjs/react-dom-client.development.js:14462:44)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-dom/cjs/react-dom-client.development.js:16216:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:566:34)
+      at process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:859:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:47:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:190:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:292:10)
+      at renderRoute (src/routes/AppRoutes.test.tsx:39:16)
+      at renderRoute (src/routes/AppRoutes.test.tsx:49:5)
 
-Demand planners need a centralized experience to identify demand patterns, monitor forecast changes, evaluate fulfillment performance, and understand which products are experiencing the highest demand.
+  ● Forecast status changes route gating › registers the route for customer_vendor tenants
 
-This PR creates that experience for upstream tenants within the Manage module.
+    useAuth must be used within an AuthProvider
 
-## Technical Notes
+      49 |   const context = useContext(AppAuthContext);
+      50 |   if (!context) {
+    > 51 |     throw new Error("useAuth must be used within an AuthProvider");
+         |           ^
+      52 |   }
+      53 |   return context;
+      54 | };
 
-- Creates protected, lazy-loaded detail routes for:
-  - `/manage/demand/high-demand-products`
-  - `/manage/demand/forecast-status-changes`
-- Introduces an Outbound Unfilled Rate metric and visualizations for:
-  - Demand vs. Forecast Comparison
-  - Customer Units Ordered vs. Shipped by Category
-  - Product Group Units Trend
-  - Class of Trade
-- Adds a Products in High Demand summary using MTD demand, fill-rate, product-status, and formulary data.
-- Adds forecast-change summaries, including PRxO and PharmaGen product counts, month-over-month demand changes, and days on hand.
-- Creates typed TanStack Query integrations for demand metrics, forecast comparisons, product lookup, material statuses, and paginated detail data.
-- Adds server-backed filters for product name, Product ID, NDC, and material status. Table search remains scoped to currently loaded rows.
-- Carries existing Manage global-filter selections into Demand drill-down navigation and data requests.
-- Includes loading, updating, empty, malformed-response, partial-data, and retry states.
+      at useAuth (src/contexts/AuthContext.tsx:51:11)
+      at PostLoginTenantWelcomeRedirect (src/components/PostLoginTenantWelcomeRedirect.tsx:7:49)
+      at Object.react-stack-bottom-frame (node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
+      at updateFunctionComponent (node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
+      at beginWork (node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom-client.development.js:14936:11)
+      at performWorkOnRoot (node_modules/react-dom/cjs/react-dom-client.development.js:14462:44)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-dom/cjs/react-dom-client.development.js:16216:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:566:34)
+      at process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:859:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:47:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:190:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:292:10)
+      at renderRoute (src/routes/AppRoutes.test.tsx:39:16)
+      at renderRoute (src/routes/AppRoutes.test.tsx:49:5)
 
-## Testing/Validation
+  ● Forecast status changes route gating › does not register the route for customer
 
-- `npm run test:all -- --runInBand`
-  - 164 test suites passed
-  - 1,700 tests passed
-- `npm run typecheck` — passed
-- `npm run format:check` — passed
-- ESLint for files changed from `dev` — passed with no warnings
-- `npm run lint` — passed with 0 errors; the repository reports 569 warnings
-- `npm run build` — passed with non-blocking CSS optimization and chunk-size warnings
-- `git diff --check dev...HEAD` — passed
+    useAuth must be used within an AuthProvider
 
-## Related Work
+      49 |   const context = useContext(AppAuthContext);
+      50 |   if (!context) {
+    > 51 |     throw new Error("useAuth must be used within an AuthProvider");
+         |           ^
+      52 |   }
+      53 |   return context;
+      54 | };
 
-- Jira story: [CPR-849](https://abc-jira.atlassian.net/browse/CPR-849)
+      at useAuth (src/contexts/AuthContext.tsx:51:11)
+      at PostLoginTenantWelcomeRedirect (src/components/PostLoginTenantWelcomeRedirect.tsx:7:49)
+      at Object.react-stack-bottom-frame (node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
+      at updateFunctionComponent (node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
+      at beginWork (node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom-client.development.js:14936:11)
+      at performWorkOnRoot (node_modules/react-dom/cjs/react-dom-client.development.js:14462:44)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-dom/cjs/react-dom-client.development.js:16216:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:566:34)
+      at process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:859:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:47:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:190:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:292:10)
+      at renderRoute (src/routes/AppRoutes.test.tsx:39:16)
+      at renderRoute (src/routes/AppRoutes.test.tsx:55:5)
 
+  ● Forecast status changes route gating › does not register the route for undefined
 
-import { downloadCsv, toCsv, type CsvColumn } from "@/lib/csv";
+    useAuth must be used within an AuthProvider
+
+      49 |   const context = useContext(AppAuthContext);
+      50 |   if (!context) {
+    > 51 |     throw new Error("useAuth must be used within an AuthProvider");
+         |           ^
+      52 |   }
+      53 |   return context;
+      54 | };
+
+      at useAuth (src/contexts/AuthContext.tsx:51:11)
+      at PostLoginTenantWelcomeRedirect (src/components/PostLoginTenantWelcomeRedirect.tsx:7:49)
+      at Object.react-stack-bottom-frame (node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
+      at updateFunctionComponent (node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
+      at beginWork (node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
+      at runWithFiberInDEV (node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom-client.development.js:14936:11)
+      at performWorkOnRoot (node_modules/react-dom/cjs/react-dom-client.development.js:14462:44)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-dom/cjs/react-dom-client.development.js:16216:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:566:34)
+      at process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:859:10)
+      at node_modules/@testing-library/react/dist/act-compat.js:47:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:190:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:292:10)
+      at renderRoute (src/routes/AppRoutes.test.tsx:39:16)
+      at renderRoute (src/routes/AppRoutes.test.tsx:55:5)
