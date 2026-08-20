@@ -12,58 +12,21 @@
 
 - Jira story: [CPR-849](https://abc-jira.atlassian.net/browse/CPR-849)
 
-# PR Title
-
-CPR-850: Create the Supply section in the Manage module
-
-## Summary
-
-- Creates the Supply section within the Manage module.
-- Adds API-backed KPIs for Products Without EPCIS, Unsuccessful Scans, and Failure to Supply Exposure.
-- Introduces Supply overview content for purchase-order performance, organization performance, and outbound line service.
-- Adds secondary drill-down pages for:
-  - EPCIS Data Coverage
-  - Purchase Order Scans
-  - Purchase Orders by Product
-  - Line Service Levels by Product
-  - Material FTS Quantity Exposure
-- Provides responsive layouts, remote filtering and sorting, horizontal scrolling, and infinite table pagination.
-
-## Why
-
-Supply users need a centralized experience for identifying product availability risks, inbound scanning problems, purchase-order performance issues, and failure-to-supply exposure.
-
-This section provides high-level visibility through the Manage dashboard while supporting detailed investigation through dedicated secondary pages.
-
-## Technical Notes
-
-- Registers protected, lazy-loaded Supply routes under `/manage/supply`.
-- Uses TanStack Query for API state, cancellation, pagination, cache isolation, and tenant transitions.
-- Integrates existing Manage `gf2_*` global-filter selections into Supply requests and drill-down navigation.
-- Uses the established DataGrid and TableFilter architecture for server-backed filtering, sorting, loading, empty, error, retry, and infinite-scroll states.
-- Adds the Material FTS service-level KPI cards and material exposure table using:
-  - `/order-transaction/fail-to-supply/service-level-kpis/`
-  - `/order-transaction-aggregated/fail-to-supply/material-exposure/`
-- Preserves the responsive Manage header behavior used by Sales, adapted for the three Supply KPIs.
-- Keeps unavailable functionality, including complete CSV export and “See By DC,” disabled until its supporting contract is available.
-
-## Testing/Validation
-
-- `npm run lint` — passed with no errors.
-- `npm run format:check` — passed.
-- `npm run typecheck` — passed.
-- `npm run typecheck:storybook` — passed.
-- `npm run test:all -- --runInBand` — 194 suites and 1,875 tests passed.
-- `npm run build` — passed.
-- `npm run build-storybook` — passed.
-- `git diff --check` — passed.
-- Validated Supply KPI responsiveness at 639px, 640px, 1279px, and 1280px.
-- Validated KPI drill-down navigation, preserved global filters, dividers, and responsive padding behavior.
-
-## Reviewer Note
-
-- The Contract Status filter is present in the Material FTS Quantity Exposure UI but remains disabled. Its server-side filtering behavior must be implemented once the endpoint supports the required Contract Status parameter.
-
-## Related Work
-
-- Jira story: [CPR-850](https://abc-jira.atlassian.net/browse/CPR-850)
+Map pin icon
+```
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.5625 5.50016C7.56247 4.84973 7.74698 4.21263 8.09459 3.66288C8.4422 3.11313 8.93866 2.67328 9.52628 2.39443C10.1139 2.11558 10.7686 2.00917 11.4143 2.08756C12.06 2.16595 12.6702 2.42592 13.174 2.83728C13.6778 3.24863 14.0546 3.79449 14.2606 4.41145C14.4666 5.02841 14.4933 5.69115 14.3376 6.32268C14.1819 6.95421 13.8503 7.52861 13.3812 7.97918C12.9121 8.42974 12.3248 8.73796 11.6875 8.86805V15.1252C11.6875 15.3075 11.6151 15.4824 11.4861 15.6113C11.3572 15.7402 11.1823 15.8127 11 15.8127C10.8177 15.8127 10.6428 15.7402 10.5139 15.6113C10.3849 15.4824 10.3125 15.3075 10.3125 15.1252V8.86805C9.53658 8.70884 8.83931 8.28688 8.33834 7.67334C7.83737 7.0598 7.56334 6.29225 7.5625 5.50016ZM18.7344 12.5977C17.6808 12.0013 16.2319 11.5433 14.5432 11.2726C14.4539 11.2585 14.3626 11.2621 14.2747 11.2833C14.1868 11.3044 14.1039 11.3427 14.0308 11.3958C13.9576 11.449 13.8957 11.5161 13.8485 11.5932C13.8013 11.6704 13.7697 11.756 13.7556 11.8454C13.7415 11.9347 13.7451 12.0259 13.7663 12.1138C13.7874 12.2018 13.8257 12.2847 13.8789 12.3578C13.932 12.4309 13.9991 12.4929 14.0762 12.5401C14.1534 12.5873 14.239 12.6189 14.3284 12.633C15.8357 12.8753 17.1643 13.2887 18.0598 13.7974C18.8203 14.2228 19.25 14.7075 19.25 15.1252C19.25 16.2733 16.1116 17.8752 11 17.8752C5.88844 17.8752 2.75 16.2733 2.75 15.1252C2.75 14.7075 3.17969 14.2228 3.94023 13.794C4.83914 13.2852 6.1643 12.8719 7.67164 12.6295C7.76286 12.6176 7.85076 12.5875 7.93014 12.541C8.00952 12.4945 8.07875 12.4325 8.13374 12.3588C8.18873 12.285 8.22837 12.201 8.25029 12.1117C8.27221 12.0223 8.27598 11.9295 8.26137 11.8386C8.24675 11.7478 8.21406 11.6608 8.16523 11.5829C8.11639 11.5049 8.05241 11.4375 7.97706 11.3848C7.90171 11.332 7.81654 11.2948 7.72658 11.2756C7.63662 11.2563 7.54372 11.2553 7.45336 11.2726C5.76469 11.5433 4.31578 12.0013 3.26219 12.5977C1.70242 13.4812 1.375 14.46 1.375 15.1252C1.375 17.8047 6.33445 19.2502 11 19.2502C15.6655 19.2502 20.625 17.8047 20.625 15.1252C20.625 14.46 20.2976 13.4812 18.7344 12.5977Z" fill="#461E96"/>
+</svg>
+```
+Map pin icon ellipse 1
+```
+<svg width="31" height="14" viewBox="0 0 31 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="15.125" cy="6.53125" rx="15.125" ry="6.53125" fill="#A89DE6"/>
+</svg>
+```
+Map pin icon ellipse 2
+```
+<svg width="36" height="16" viewBox="0 0 36 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="18" cy="8" rx="18" ry="8" fill="#A89DE6" fill-opacity="0.41"/>
+</svg>
+```
