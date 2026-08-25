@@ -12,11 +12,12 @@
 
 - Jira story: [CPR-849](https://abc-jira.atlassian.net/browse/CPR-849)
 
-Outbound Unfilled Rate KPI
-This is using the current week’s unfilled rate as the denominator instead of the previous week’s unfilled rate:
+1521
+Fixes the temporary 404 displayed when refreshing the Inventory and Sales pages. These routes now remain registered while authentication and tenant context resolve, showing the existing loading state before permissions are evaluated.
+Unauthorized tenants still receive a legitimate 404, while existing legacy redirects, filters, and navigation behavior remain unchanged. Tests were added for the relevant tenant types and loading states.
 
-current unfilled rate: 3.76
-previous unfilled rate: 3.44
+1516
+Enables the Contract Status filter on the Material FTS Quantity Exposure page, defaulting to PRxO and supporting PharmaGen. The selected sales group is now applied consistently to table results and CSV exports.
 
-(current - previous) / previous = 9.2% (right)
-(current - previous) / current = 8.4% (wrong)
+1524
+Standardizes responsive chart headers across Demand, Sales, and Inventory. It also keeps the Top Units Sales controls together and removes the dividers before Inventory chart legends.
