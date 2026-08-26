@@ -13,17 +13,11 @@
 - Jira story: [CPR-849](https://abc-jira.atlassian.net/browse/CPR-849)
 
 Summary
-Fixes CPR-1536 by updating the Unit Sales Trend comparison dates to use two consecutive, non-overlapping four-week periods.
-Changes
 
-- Uses the current week’s Monday as current_week.
-- Uses the Monday four weeks earlier as previous_week.
-- Preserves existing filters, query keys, cancellation, chart behavior, CSV export, and API contract.
-- Adds coverage for the expected date calculation, year boundaries, request parameters, and non-overlapping periods.
-  Validation
-- npm run lint
-- npm run format:check
-- npm run typecheck
-- npm run typecheck:storybook
-- npm run test:all — 251 suites and 2,310 tests passed
-- npm run build
+- Standardizes secondary-page layouts across Sales, Demand, Supply, Inventory, and Summary.
+- Aligns spacing between the back link, page title, subtitle, and legends.
+- Uses responsive title-to-description spacing: 10px on mobile and 30px from the md breakpoint.
+- Makes tables and product grids consume the remaining viewport height with internal scrolling.
+- Keeps the footer at the bottom of the viewport with consistent background, width, padding, and alignment.
+- Preserves existing filters, sorting, exports, pagination, table density, and data behavior.
+- Adds and updates tests for layout contracts and loading, empty, error, and populated states.
